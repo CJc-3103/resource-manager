@@ -1,0 +1,59 @@
+@use '../index' as *;
+
+$header-height: 60px;
+$body-height: calc(100vh - $header-height);
+$left-aside-max-width: 200px;
+$right-aside-max-width: 200px;
+
+// 头部
+.el-header {
+  border-bottom: var(--container-border);
+  height: $header-height;
+  line-height: $header-height;
+  z-index: 1; // 避免底部边框在主体滚动时被遮挡
+
+  .nav-bar {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+  }
+}
+
+// 左侧边栏
+.el-aside--left {
+  max-width: $left-aside-max-width;
+  border-right: var(--container-border);
+  padding: 0 0 20px;
+
+  .aside-title {
+    // display: block;
+    font-size: 1em;
+    font-weight: bold;
+    margin: 1.33em 0;
+  }
+
+  .el-menu {
+    border: none;
+  }
+  &,
+  .topic-item {
+    // border-top: var(--container-border);
+  }
+}
+
+// 右侧边栏
+.el-aside--right {
+  max-width: $right-aside-max-width;
+}
+
+// 主体
+.el-main {
+  width: 100%;
+  overflow-y: auto; // 主体可滚动，头部固定
+}
+
+// 部分通用
+.el-aside,
+.el-main {
+  height: $body-height;
+}

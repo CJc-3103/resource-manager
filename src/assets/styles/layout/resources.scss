@@ -1,0 +1,21 @@
+@use './index.scss' as *;
+
+.el-main {
+  .topic-menu {
+    .topic-item {
+      .topic-txt {
+        max-width: 150px;
+        text-overflow: ellipsis;
+        overflow: hidden;
+      }
+    }
+
+    //   .basic-topic {
+    //     background-color: var(--el-fill-color-darker);
+
+    //     &:hover {
+    //       background-color: var(--el-menu-hover-bg-color);
+    //     }
+    //   }
+  }
+}
