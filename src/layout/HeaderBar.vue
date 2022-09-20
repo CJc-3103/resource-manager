@@ -1,6 +1,5 @@
 <template>
   <div class="nav-bar">
-    <div></div>
     <el-menu
       mode="horizontal"
       :default-active="currentMenu"
@@ -21,11 +20,11 @@ const store = useStore();
 
 const menuList = [
   {
-    title: '资源中心',
-    index: '/',
+    title: '资源管理',
+    index: '/resources',
   },
   {
-    title: '标签中心',
+    title: '标签管理',
     index: '/tags',
   },
   {
