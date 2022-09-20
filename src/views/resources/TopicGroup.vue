@@ -76,19 +76,8 @@ const topics = [
 
 // 搜索主题
 const topicKeywords = ref('');
-// const filteredTopics = reactive([]);
-// const filteredTopics = reactive({ value: [] });
-// const filteredTopics = ref([]);
-// console.log('filteredTopics', filteredTopics);
-
-// const filteredTopics = computed(() => searchTopics(topicKeywords));
-// function handleChange(topicKeywords) {
-//   console.log('topicKeywords', topicKeywords);
-// }
 const filteredTopics = ref(topics);
-// watch(topicKeywords, (topicKeywords) => searchTopics(topicKeywords));
 
-// 通过 filter 方法
 const searchTopics = (topicKeywords) => {
   let filteredData = [];
   if (topicKeywords) {
@@ -100,80 +89,6 @@ const searchTopics = (topicKeywords) => {
     filteredTopics.value = topics;
   }
 };
-
-// 通过 computed 或 watch
-// const searchTopics = (topicKeywords) => {
-//   let filteredData = [];
-//   if (topicKeywords) {
-//     filteredData = topics.filter(
-//       (topic) => topic.title.indexOf(topicKeywords) > -1
-//     );
-//   } else {
-//     filteredData = topics;
-//   }
-//   //   filteredTopics._value = cloneDeep(filteredData);
-//   //   console.log('filteredData', filteredData);
-//   //   console.log('filteredTopics', filteredTopics);
-//   return filteredData;
-// };
-
-// 通过事件调用
-// const searchTopics = (topicKeywords) => {
-//   let filteredData = [];
-//   if (topicKeywords) {
-//     //   topics.filter((topic) => topic.title.indexOf(topicKeywords) > 0);
-//     filteredData = topics.filter(
-//       (topic) => topic.title.indexOf(topicKeywords) > -1
-//     );
-//     // filteredData.map((topic) => filteredTopics.value.push(topic));
-//   } else {
-//     filteredData = topics;
-//     // filteredTopics.value = cloneDeep(topics);
-//     // filteredTopics.value.length = 0;
-//     // filteredTopics.value.splice(0, filteredTopics.value.length);
-//   }
-//   filteredTopics._value = cloneDeep(filteredData);
-//   // filteredData.map((topic) => filteredTopics.value.push(topic));
-//   console.log('filteredData', filteredData);
-//   console.log('filteredTopics', filteredTopics);
-//   //   console.log('filteredTopics', filteredTopics._value);
-// };
-// const searchTopics = (topicKeywords) => {
-//   let filteredData = [];
-//   if (topicKeywords)
-//     //   topics.filter((topic) => topic.title.indexOf(topicKeywords) > 0);
-//     filteredData = topics.filter(
-//       (topic) => topic.title.indexOf(topicKeywords) > -1
-//     );
-//   else {
-//     filteredData = topics;
-//     // filteredTopics.length = 0;
-//     filteredTopics.splice(0, filteredTopics.length);
-//   }
-//   filteredData.map((topic) => filteredTopics.push(topic));
-//   console.log('filteredData', filteredData);
-//   console.log('filteredTopics', filteredTopics);
-
-//   //   if (topicKeywords)
-//   //     //   topics.filter((topic) => topic.title.indexOf(topicKeywords) > 0);
-//   //     topics.map((topic) => {
-//   //       if (topic.title.indexOf(topicKeywords) > 0) filteredTopics.push(topic);
-//   //     });
-//   //   else {
-//   //     filteredTopics.length = 0;
-//   //     topics.map((topic) => filteredTopics.push(topic));
-//   //     // filteredTopics = reactive([].concat(topics));
-//   //   }
-//   //   filteredTopics.length = 0;
-//   //   topics.map((topic) => {
-//   //     if (
-//   //       !topicKeywords ||
-//   //       (topicKeywords && topic.title.indexOf(topicKeywords) > 0)
-//   //     ) {
-//   //       filteredTopics.push(topic);
-//   //     }
-//   //   });
-// };
 
 // 选择主题
 const currentTopic = computed(() => store.state.currentTopic);
