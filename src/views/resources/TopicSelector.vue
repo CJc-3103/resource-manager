@@ -42,13 +42,10 @@
 
 <script setup>
 //#region 依赖
-import { ref, reactive, computed, watch, onMounted } from 'vue';
+import { ref, computed, onMounted } from 'vue';
 import { useStore } from 'vuex';
 import { fetchTopic } from '@/api';
 import { Search } from '@element-plus/icons-vue';
-import '@/assets/styles/index.scss';
-import { useArrayMap } from '@vueuse/shared';
-import { cloneDeep } from 'lodash';
 
 const store = useStore();
 //#endregion
@@ -104,14 +101,10 @@ function selectTopic(topic) {
   updateCurrentTopic(topic);
 }
 
+// 声明周期
 onMounted(() => {
   searchTopics(); // 初始化主题列表
 });
-// const currentTopic = ref(topics[0].title);
-// const selectTopic = (i, path, item) => {
-//   currentTopic.value = item.index;
-//   console.log(currentTopic.value);
-// };
 
 //#endregion
 </script>

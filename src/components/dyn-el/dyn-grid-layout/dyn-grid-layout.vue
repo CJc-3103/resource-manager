@@ -1,6 +1,6 @@
 <template>
   <div class="dyn-grid-layout">
-    <dynRowList :rows="rows">
+    <dynRowList :rows="layouts">
       <template v-slot="{ children }">
         <dynColList :children="children">
           <template v-slot="{ children }">
@@ -24,7 +24,7 @@ export default {
     return {};
   },
   props: {
-    rows: Array,
+    layouts: Array,
   },
 };
 </script>

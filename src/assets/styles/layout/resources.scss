@@ -10,4 +10,26 @@
       }
     }
   }
+
+  .tag-selector {
+    .tag-selector_header {
+      line-height: var(--el-component-size);
+    }
+    .tag-tree-group {
+      .tag-tree {
+        display: flex;
+        flex-direction: row;
+        justify-content: start;
+        .tag-tree_title {
+          font-weight: 400;
+          padding-right: 20px;
+        }
+        .tag-tree_children {
+          display: flex;
+          flex-direction: row;
+          justify-content: space-between;
+        }
+      }
+    }
+  }
 }

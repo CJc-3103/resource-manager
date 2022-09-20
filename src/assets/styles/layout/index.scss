@@ -5,6 +5,12 @@ $body-height: calc(100vh - $header-height);
 $left-aside-max-width: 200px;
 $right-aside-max-width: 200px;
 
+html,
+body,
+#app {
+  min-width: 700px;
+}
+
 // 头部
 .el-header {
   border-bottom: var(--container-border);

@@ -5,5 +5,6 @@ import 'element-plus/dist/index.css'
 import router from './router'
 import store from './store'
 import '@/assets/styles/normalize.scss'
+import '@/assets/styles/index.scss';
 
 createApp(App).use(ElementPlus).use(store).use(router).mount('#app')
