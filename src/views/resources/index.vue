@@ -1,7 +1,7 @@
 <template>
   <el-container>
     <el-aside class="el-aside--left" width="200px">
-      <TopicSelector />
+      <TopicMenu />
     </el-aside>
     <el-main>
       <TagSelector />
@@ -13,7 +13,7 @@
 
 <script setup>
 import ResourceContainer from './ResourceContainer.vue';
-import TopicSelector from './TopicSelector.vue';
+import TopicMenu from './TopicMenu.vue';
 import TagSelector from './TagSelector.vue';
 import '@/assets/styles/layout/resources.scss';
 </script>
