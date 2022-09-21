@@ -82,7 +82,6 @@ const searchTopics = (topicKeywords) => {
       (topic) => topic.title.indexOf(topicKeywords) > -1
     );
   } else {
-    // filteredTopics.value = cloneDeep(topics);
     filteredTopics.value = topics;
   }
 };
@@ -90,7 +89,7 @@ const searchTopics = (topicKeywords) => {
 // 选择主题
 const currentTopic = computed(() => store.state.currentTopic);
 const updateCurrentTopic = (topic) =>
-  store.dispatch('updateCurrentTopic', topic);
+  store.dispatch('resources/updateCurrentTopic', topic);
 
 function initTopic(currentTopic) {
   if (!currentTopic) updateCurrentTopic(topics[0].title);

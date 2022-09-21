@@ -1,7 +1,8 @@
-import nav from './nav.js'
-import resources from './resources.js'
+import nav from './nav'
+import resources from './resources'
 
-export default {
+const modules = {
     nav,
     resources,
 }
+export default modules
