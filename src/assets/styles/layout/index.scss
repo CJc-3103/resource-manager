@@ -13,7 +13,7 @@ body,
 
 // 头部
 .el-header {
-  border-bottom: var(--container-border);
+  border-bottom: var(--base-border);
   height: $header-height;
   line-height: $header-height;
   z-index: 1; // 避免底部边框在主体滚动时被遮挡
@@ -31,7 +31,7 @@ body,
 
 // 左侧边栏
 .el-aside--left {
-  border-right: var(--container-border);
+  border-right: var(--base-border);
   padding: 1.5em 0;
 
   .aside-title {
