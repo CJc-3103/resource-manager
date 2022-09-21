@@ -1,5 +1,5 @@
 import { createStore } from 'vuex'
-import * as modules from './modules'
+import * as modules from './modules/index'
 
 export default createStore({
     // state: {
@@ -14,27 +14,27 @@ export default createStore({
 
     state() {
         return {
-            currentMenu: '', // 顶部导航
-            currentTopic: '', // 资源管理页，左侧栏主题导航
+            currentNav: '', // 顶部导航
+            // currentTopic: '', // 资源管理页，左侧栏主题导航
         }
     },
     // getters: {
     // },
     mutations: {
-        setCurrentMenu(state, menuItem) {
-            state.currentMenu = menuItem;
+        setCurrentNav(state, navItem) {
+            state.currentNav = navItem;
         },
-        setCurrentTopic(state, topic) {
-            state.currentTopic = topic;
-        },
+        // setCurrentTopic(state, topic) {
+        //     state.currentTopic = topic;
+        // },
     },
     actions: {
-        updateCurrentMenu({ commit }, menuItem) {
-            commit('setCurrentMenu', menuItem);
+        updateCurrentNav({ commit }, navItem) {
+            commit('setCurrentNav', navItem);
         },
-        updateCurrentTopic({ commit }, topic) {
-            commit('setCurrentTopic', topic);
-        },
+        // updateCurrentTopic({ commit }, topic) {
+        //     commit('setCurrentTopic', topic);
+        // },
     },
-    // modules: {}
+    modules: {}
 })

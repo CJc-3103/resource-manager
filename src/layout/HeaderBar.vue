@@ -2,8 +2,8 @@
   <div class="nav-bar">
     <el-menu
       mode="horizontal"
-      :default-active="currentMenu"
-      @select="selectCurrenNav"
+      :default-active="currentNav"
+      @select="handleSelectNav"
       router
     >
       <dynMenuItemList :menuItems="menuList"></dynMenuItemList>
@@ -13,7 +13,7 @@
 
 <script setup>
 import { dynMenuItemList } from '@/components/dyn-el';
-import { ref, computed } from 'vue';
+import { ref, computed, onMounted } from 'vue';
 import { useStore } from 'vuex';
 
 const store = useStore();
@@ -33,16 +33,19 @@ const menuList = [
   },
 ];
 
-const currentMenu = computed(() => store.state.currentMenu);
+const currentNav = computed(() => store.state.currentNav);
 const updateCurrentNav = (navItem) =>
   store.dispatch('updateCurrentNav', navItem);
 
-const initMenu = (currentMenu) => {
-  if (!currentMenu) updateCurrentNav(menuList[0].index);
+const initMenu = (currentNav) => {
+  if (!currentNav) updateCurrentNav(menuList[0].index);
 };
-initMenu(currentMenu.value);
 
-function selectCurrenNav(navItem) {
+function handleSelectNav(navItem) {
   updateCurrentNav(navItem);
 }
+
+onMounted(() => {
+  initMenu(currentNav.value);
+});
 </script>
