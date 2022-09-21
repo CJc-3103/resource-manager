@@ -16,12 +16,12 @@
   <el-menu
     class="topic-menu"
     :default-active="currentTopic"
-    @select="selectTopic"
+    @select="handleSelectTopic"
   >
     <el-menu-item
       class="topic-item"
-      :index="title"
-      v-for="({ title }, i) in defaultTopics"
+      :index="index"
+      v-for="({ title, index }, i) in defaultTopics"
       :key="i"
     >
       <span class="topic-txt">{{ title }}</span>
@@ -33,7 +33,7 @@
       v-for="({ title }, i) in filteredTopics"
       :key="i"
     >
-      <el-menu-item class="topic-item" :index="title">
+      <el-menu-item class="topic-item" :index="i + ''">
         <span class="topic-txt">{{ title }}</span>
       </el-menu-item>
     </el-tooltip>
@@ -42,10 +42,11 @@
 
 <script setup>
 //#region 依赖
-import { ref, computed, onMounted } from 'vue';
+import { ref, computed, onBeforeMount } from 'vue';
 import { useStore } from 'vuex';
 import { fetchTopic } from '@/api';
 import { Search } from '@element-plus/icons-vue';
+import { cloneDeep } from 'lodash';
 
 const store = useStore();
 //#endregion
@@ -54,9 +55,11 @@ const store = useStore();
 const defaultTopics = [
   {
     title: '全部',
+    index: 'All',
   },
   {
     title: '未分组',
+    index: 'NoTopic',
   },
 ];
 const topics = [
@@ -76,9 +79,8 @@ const topicKeywords = ref('');
 const filteredTopics = ref(topics);
 
 const searchTopics = (topicKeywords) => {
-  let filteredData = [];
   if (topicKeywords) {
-    filteredTopics.value = filteredData = topics.filter(
+    filteredTopics.value = topics.filter(
       (topic) => topic.title.indexOf(topicKeywords) > -1
     );
   } else {
@@ -91,18 +93,26 @@ const currentTopic = computed(() => store.state.currentTopic);
 const updateCurrentTopic = (topic) =>
   store.dispatch('resources/updateCurrentTopic', topic);
 
-function initTopic(currentTopic) {
-  if (!currentTopic) updateCurrentTopic(topics[0].title);
+function initCurrentTopic(currentTopic) {
+  if (!currentTopic) updateCurrentTopic(defaultTopics[0].index);
 }
-initTopic(currentTopic.value);
 
-function selectTopic(topic) {
+function handleSelectTopic(topic) {
   updateCurrentTopic(topic);
 }
 
-// 声明周期
-onMounted(() => {
-  searchTopics(); // 初始化主题列表
+// 生命周期
+function init() {
+  initCurrentTopic(currentTopic.value);
+  searchTopics(topicKeywords.value); // 初始化主题列表
+}
+init();
+
+onBeforeMount(() => {
+  //   init();
+  //   initCurrentTopic(currentTopic.value);
+  //   searchTopics(topicKeywords.value); // 初始化主题列表
+  //   console.log('currentTopic.value', currentTopic);
 });
 
 //#endregion
