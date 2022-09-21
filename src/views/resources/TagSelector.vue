@@ -20,7 +20,7 @@
         <div class="tag-tree" v-for="({ title, children }, i) in tags" :key="i">
           <div class="tag-tree_title">{{ title }}</div>
           <el-radio-group
-            v-model="selectedTags[i]"
+            v-model="currentTags[i]"
             class="tag-tree_children"
             @change="handleTagSelect"
           >
@@ -259,30 +259,14 @@ const tags = [
   },
 ];
 
-// const selectedTags = new Array(tags.length).fill(ref(''));
-// const selectedTags = ref(new Array(tags.length).fill(''));
-const selectedTags = reactive(new Array(tags.length).fill(''));
-const initSelectedTags = () => {
-  for (let i = 0; i < tags.length; i++) {
-    // selectedTags[i].value = tags[i].title;
-    // selectedTags.value[i] = tags[i].title;
-    selectedTags[i] = tags[i].title;
-  }
-};
-console.log('selectedTags', selectedTags);
-
-// const layouts = ref([]);
-// layouts = tags.map((rootTag)=> {
-//     layouts.push({})
-// });
-
 //#endregion
 
 //#region 交互
 
 // 搜索主题
 const tagKeywords = ref('');
-const filteredTags = ref(tags);
+const filteredTags = reactive(tags);
+console.log('filteredTags', filteredTags);
 
 const searchTags = (tagKeywords) => {
   let filteredData = [];
@@ -291,30 +275,30 @@ const searchTags = (tagKeywords) => {
       (tag) => tag.title.indexOf(tagKeywords) > -1
     );
   } else {
-    // filteredTags.value = cloneDeep(tags);
     filteredTags.value = tags;
   }
 };
 
 // 选择主题
-const currentTags = computed(() => store.state.currentTags);
-const updateCurrentTags = (tag) => store.dispatch('updateCurrentTags', tag);
+const currentTags = reactive(new Array(tags.length).fill(''));
+const updateCurrentTags = (topic) =>
+  store.dispatch('resources/updateCurrentTags', topic);
+const initCurrentTags = () => {
+  for (let i = 0; i < tags.length; i++) {
+    currentTags[i] = '';
+  }
+  updateCurrentTags(currentTags);
+};
 
-function initTag(currentTags) {
-  if (!currentTags) updateCurrentTags(tags[0].title);
+function handleTagSelect() {
+  updateCurrentTags(currentTags);
 }
-initTag(currentTags.value);
 
-function handleTagSelect(tagTitle) {}
-
-function selectTag(tag) {
-  updateCurrentTags(tag);
-}
 //#endregion
 
 //#region 声明周期
 onMounted(() => {
-  initSelectedTags();
+  initCurrentTags();
 });
 
 //#endregion
