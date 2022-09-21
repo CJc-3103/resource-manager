@@ -1,5 +1,4 @@
 :root {
-  --container-border-width: 1px;
-  --container-border: var(--container-border-width) solid
+  --container-border: var(--el-border-width) solid
     var(--el-border-color, #dcdfe6);
 }
