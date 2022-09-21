@@ -266,12 +266,11 @@ const tags = [
 // 搜索主题
 const tagKeywords = ref('');
 const filteredTags = reactive(tags);
-console.log('filteredTags', filteredTags);
+// console.log('filteredTags', filteredTags);
 
 const searchTags = (tagKeywords) => {
-  let filteredData = [];
   if (tagKeywords) {
-    filteredTags.value = filteredData = tags.filter(
+    filteredTags.value = tags.filter(
       (tag) => tag.title.indexOf(tagKeywords) > -1
     );
   } else {
@@ -296,7 +295,7 @@ function handleTagSelect() {
 
 //#endregion
 
-//#region 声明周期
+//#region 生命周期
 onMounted(() => {
   initCurrentTags();
 });
