@@ -3,7 +3,7 @@
     <el-menu
       mode="horizontal"
       :default-active="currentMenu"
-      @select="selectCurrenMenu"
+      @select="selectCurrenNav"
       router
     >
       <dynMenuItemList :menuItems="menuList"></dynMenuItemList>
@@ -34,15 +34,15 @@ const menuList = [
 ];
 
 const currentMenu = computed(() => store.state.currentMenu);
-const updateCurrentMenu = (menuItem) =>
-  store.dispatch('updateCurrentMenu', menuItem);
+const updateCurrentNav = (navItem) =>
+  store.dispatch('updateCurrentNav', navItem);
 
 const initMenu = (currentMenu) => {
-  if (!currentMenu) updateCurrentMenu(menuList[0].index);
+  if (!currentMenu) updateCurrentNav(menuList[0].index);
 };
 initMenu(currentMenu.value);
 
-function selectCurrenMenu(menuItem) {
-  updateCurrentMenu(menuItem);
+function selectCurrenNav(navItem) {
+  updateCurrentNav(navItem);
 }
 </script>

@@ -1,7 +1,7 @@
-import menu from './menu.js'
-// import topic from './topic.js'
+import nav from './nav.js'
+import resources from './resources.js'
 
 export default {
-    menu,
-    // topic,
+    nav,
+    resources,
 }
