@@ -1,33 +1,50 @@
 @use './index.scss' as *;
 
-.el-main {
-  .topic-menu {
-    .topic-item {
-      .topic-txt {
-        max-width: 150px;
-        text-overflow: ellipsis;
-        overflow: hidden;
-      }
+.topic-menu {
+  .topic-item {
+    .topic-txt {
+      width: calc(
+        var(--el-aside-width) - var(--el-menu-level-padding) * 2 -
+          var(--el-border-width)
+      );
+      text-overflow: ellipsis;
+      overflow: hidden;
     }
   }
+}
 
-  .tag-selector {
-    .tag-selector_header {
-      line-height: var(--el-component-size);
-    }
+.tag-selector {
+  .tag-selector_header {
+    line-height: var(--el-component-size);
+  }
+
+  .tag-tree-container {
+    max-height: 10em;
+    overflow-y: auto;
     .tag-tree-group {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      flex-wrap: wrap;
+
       .tag-tree {
+        &:nth-child(n + 2) {
+          margin-top: 0.3em;
+        }
         display: flex;
         flex-direction: row;
-        justify-content: start;
+        justify-content: flex-start;
+        width: 45%;
         .tag-tree_title {
+          width: 3em;
           font-weight: 400;
-          padding-right: 20px;
+          padding-right: 1.5em;
         }
         .tag-tree_children {
           display: flex;
           flex-direction: row;
-          justify-content: space-between;
+          justify-content: flex-start;
+          flex-wrap: wrap;
         }
       }
     }

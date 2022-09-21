@@ -1,11 +1,11 @@
 <template>
   <el-card class="tag-selector">
     <template #header>
-      <el-row class="tag-selector_header" :gutter="10">
+      <el-row class="tag-selector_header" :gutter="10" justify="space-between">
         <el-col :xs="24" :sm="12" :md="6" :lg="6" class="tag-selector_title"
           >选择标签</el-col
         >
-        <el-col :xs="24" :sm="12" :md="18" :lg="18" class="tag-selector_action">
+        <el-col :xs="24" :sm="12" :md="6" :lg="6" class="tag-selector_action">
           <el-input placeholder="输入标签名" v-model="tagKeywords">
             <template #append>
               <el-button :icon="Search" @click="searchTags(tagKeywords)" />
@@ -15,17 +15,23 @@
       </el-row>
     </template>
 
-    <div class="tag-tree-group">
-      <div class="tag-tree" v-for="({ title, children }, i) in tags" :key="i">
-        <div class="tag-tree_title">{{ title }}</div>
-        <div class="tag-tree_children">
-          <el-button
-            size="small"
-            class="tag-tree_child"
-            v-for="({ title }, i) in children"
-            :key="i"
-            >{{ title }}</el-button
+    <div class="tag-tree-container">
+      <div class="tag-tree-group">
+        <div class="tag-tree" v-for="({ title, children }, i) in tags" :key="i">
+          <div class="tag-tree_title">{{ title }}</div>
+          <el-radio-group
+            v-model="selectedTags[i]"
+            class="tag-tree_children"
+            @change="handleTagSelect"
           >
+            <el-radio-button
+              :label="title"
+              size="small"
+              class="tag-tree_child"
+              v-for="({ title }, j) in children"
+              :key="j"
+            />
+          </el-radio-group>
         </div>
       </div>
     </div>
@@ -34,7 +40,7 @@
 
 <script setup>
 //#region 依赖
-import { ref, computed, onMounted } from 'vue';
+import { ref, reactive, computed, onMounted } from 'vue';
 import { useStore } from 'vuex';
 import { Search } from '@element-plus/icons-vue';
 import { dynGridLayout } from '@/components/dyn-el';
@@ -90,7 +96,180 @@ const tags = [
       },
     ],
   },
+  {
+    title: '关注点',
+    children: [
+      {
+        title: '体系梳理',
+      },
+      {
+        title: '概念阐释',
+      },
+      {
+        title: '对比分析',
+      },
+      {
+        title: '思维提升',
+      },
+      {
+        title: '问题处理',
+      },
+      {
+        title: '技巧',
+      },
+    ],
+  },
+  {
+    title: '关注点',
+    children: [
+      {
+        title: '体系梳理',
+      },
+      {
+        title: '概念阐释',
+      },
+      {
+        title: '对比分析',
+      },
+      {
+        title: '思维提升',
+      },
+      {
+        title: '问题处理',
+      },
+      {
+        title: '技巧',
+      },
+    ],
+  },
+  {
+    title: '关注点',
+    children: [
+      {
+        title: '体系梳理',
+      },
+      {
+        title: '概念阐释',
+      },
+      {
+        title: '对比分析',
+      },
+      {
+        title: '思维提升',
+      },
+      {
+        title: '问题处理',
+      },
+      {
+        title: '技巧',
+      },
+    ],
+  },
+  {
+    title: '关注点',
+    children: [
+      {
+        title: '体系梳理',
+      },
+      {
+        title: '概念阐释',
+      },
+      {
+        title: '对比分析',
+      },
+      {
+        title: '思维提升',
+      },
+      {
+        title: '问题处理',
+      },
+      {
+        title: '技巧',
+      },
+    ],
+  },
+  {
+    title: '关注点',
+    children: [
+      {
+        title: '体系梳理',
+      },
+      {
+        title: '概念阐释',
+      },
+      {
+        title: '对比分析',
+      },
+      {
+        title: '思维提升',
+      },
+      {
+        title: '问题处理',
+      },
+      {
+        title: '技巧',
+      },
+    ],
+  },
+  {
+    title: '关注点',
+    children: [
+      {
+        title: '体系梳理',
+      },
+      {
+        title: '概念阐释',
+      },
+      {
+        title: '对比分析',
+      },
+      {
+        title: '思维提升',
+      },
+      {
+        title: '问题处理',
+      },
+      {
+        title: '技巧',
+      },
+    ],
+  },
+  {
+    title: '关注点',
+    children: [
+      {
+        title: '体系梳理',
+      },
+      {
+        title: '概念阐释',
+      },
+      {
+        title: '对比分析',
+      },
+      {
+        title: '思维提升',
+      },
+      {
+        title: '问题处理',
+      },
+      {
+        title: '技巧',
+      },
+    ],
+  },
 ];
+
+// const selectedTags = new Array(tags.length).fill(ref(''));
+// const selectedTags = ref(new Array(tags.length).fill(''));
+const selectedTags = reactive(new Array(tags.length).fill(''));
+const initSelectedTags = () => {
+  for (let i = 0; i < tags.length; i++) {
+    // selectedTags[i].value = tags[i].title;
+    // selectedTags.value[i] = tags[i].title;
+    selectedTags[i] = tags[i].title;
+  }
+};
+console.log('selectedTags', selectedTags);
 
 // const layouts = ref([]);
 // layouts = tags.map((rootTag)=> {
@@ -126,6 +305,8 @@ function initTag(currentTags) {
 }
 initTag(currentTags.value);
 
+function handleTagSelect(tagTitle) {}
+
 function selectTag(tag) {
   updateCurrentTags(tag);
 }
@@ -133,7 +314,7 @@ function selectTag(tag) {
 
 //#region 声明周期
 onMounted(() => {
-  //   searchTags(); // 初始化主题列表
+  initSelectedTags();
 });
 
 //#endregion
