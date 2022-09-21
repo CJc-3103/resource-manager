@@ -1,11 +1,19 @@
 import { createStore } from 'vuex'
-// import { modules } from './modules/index'
 import modules from './modules'
 
 export default createStore({
     state() {
         return {
             currentNav: '', // 顶部导航
+            // currentNav: {
+            //     get() {
+            //         return localStorage.getItem('currentNav');
+            //     },
+            //     set(value) {
+            //         localStorage.setItem('currentNav', value);
+            //     },
+            // },
+            // ...currentNav,
         }
     },
     mutations: {
