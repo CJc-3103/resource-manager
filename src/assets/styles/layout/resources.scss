@@ -21,6 +21,7 @@
   .tag-tree-container {
     max-height: 10em;
     overflow-y: auto;
+
     .tag-tree-group {
       display: flex;
       flex-direction: row;
@@ -31,15 +32,20 @@
         &:nth-child(n + 2) {
           margin-top: 0.3em;
         }
+
         display: flex;
         flex-direction: row;
         justify-content: flex-start;
         width: 45%;
+
         .tag-tree_title {
           width: 3em;
+          flex-grow: 0;
+          flex-shrink: 0;
           font-weight: 400;
           padding-right: 1.5em;
         }
+
         .tag-tree_children {
           display: flex;
           flex-direction: row;
