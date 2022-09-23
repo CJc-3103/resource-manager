@@ -4,7 +4,7 @@
       <TopicMenu />
     </el-aside>
     <el-main>
-      <TagSelector />
+      <TagPicker />
       <ResourceContainer />
     </el-main>
     <el-aside class="el-aside--right" width="200px">AsideRight</el-aside>
@@ -14,6 +14,6 @@
 <script setup>
 import ResourceContainer from './ResourceContainer.vue';
 import TopicMenu from './TopicMenu.vue';
-import TagSelector from './TagSelector.vue';
+import TagPicker from './TagPicker.vue';
 import '@/assets/styles/layout/resources.scss';
 </script>

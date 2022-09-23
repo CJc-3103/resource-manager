@@ -1,11 +1,23 @@
 <template>
-  <el-card class="tag-selector">
+  <el-card class="tag-picker">
     <template #header>
-      <el-row class="tag-selector_header" :gutter="10" justify="space-between">
-        <el-col :xs="24" :sm="12" :md="6" :lg="6" class="tag-selector_title"
-          >选择标签</el-col
-        >
-        <el-col :xs="24" :sm="12" :md="6" :lg="6" class="tag-selector_action">
+      <el-row class="tag-picker_header" :gutter="10" justify="space-between">
+        <!-- <el-col :xs="24" :sm="12" :md="6" :lg="6" class="tag-picker_title">
+          <div class="tag-tree_title">选择标签</div>
+          <div class="tag-tree_children">
+            <template v-for="(tag, i) in currentTags" :key="i">
+              <el-tag
+                v-show="tag"
+                class="tag-tree_child"
+                closable
+                @close="handleClose(i)"
+              >
+                {{ tag }}
+              </el-tag></template
+            >
+          </div>
+        </el-col> -->
+        <el-col :xs="24" :sm="12" :md="8" :lg="6" class="tag-picker_action">
           <el-input placeholder="输入标签名" v-model="tagKeywords">
             <template #append>
               <el-button :icon="Search" @click="searchTags(tagKeywords)" />
@@ -15,25 +27,49 @@
       </el-row>
     </template>
 
-    <div class="tag-tree-container">
-      <div class="tag-tree-group">
-        <div class="tag-tree" v-for="({ title, children }, i) in tags" :key="i">
-          <div class="tag-tree_title">{{ title }}</div>
-          <el-radio-group
-            v-model="currentTags[i]"
-            class="tag-tree_children"
-            @change="handleTagSelect"
-          >
-            <el-radio-button
-              :label="title"
-              size="small"
+    <div class="tag-tree-panel">
+      <!-- <el-col :xs="24" :sm="12" :md="6" :lg="6" class="tag-picker_title"> -->
+      <div class="tag-tree tags--picked">
+        <div class="tag-tree_title">已选标签</div>
+        <div class="tag-tree_children">
+          <template v-for="(tag, i) in currentTags" :key="i">
+            <el-tag
+              v-show="tag"
               class="tag-tree_child"
-              v-for="({ title }, j) in children"
-              :key="j"
-            />
-          </el-radio-group>
+              closable
+              @close="handleClose(i)"
+            >
+              {{ tag }}
+            </el-tag></template
+          >
         </div>
       </div>
+      <!-- </el-col> -->
+
+      <dynScroll class="tag-tree-group_container">
+        <div class="tag-tree-group">
+          <div
+            class="tag-tree"
+            v-for="({ title, children }, i) in tags"
+            :key="i"
+          >
+            <div class="tag-tree_title">{{ title }}</div>
+            <el-radio-group
+              v-model="currentTags[i]"
+              class="tag-tree_children"
+              @change="handleTagSelect"
+            >
+              <el-radio-button
+                :label="title"
+                size="small"
+                class="tag-tree_child"
+                v-for="({ title }, j) in children"
+                :key="j"
+              />
+            </el-radio-group>
+          </div>
+        </div>
+      </dynScroll>
     </div>
   </el-card>
 </template>
@@ -43,7 +79,7 @@
 import { ref, reactive, computed, onMounted } from 'vue';
 import { useStore } from 'vuex';
 import { Search } from '@element-plus/icons-vue';
-import { dynGridLayout } from '@/components/dyn-el';
+import { dynGridLayout, dynScroll } from '@/components/dyn-el';
 
 const store = useStore();
 //#endregion
@@ -97,25 +133,25 @@ const tags = [
     ],
   },
   {
-    title: '关注点',
+    title: '领域',
     children: [
       {
-        title: '体系梳理',
+        title: 'IT',
       },
       {
-        title: '概念阐释',
+        title: '设计',
       },
       {
-        title: '对比分析',
+        title: '管理',
       },
       {
-        title: '思维提升',
+        title: '娱乐',
       },
       {
-        title: '问题处理',
+        title: '数学',
       },
       {
-        title: '技巧',
+        title: '语言',
       },
     ],
   },
@@ -291,6 +327,16 @@ const initCurrentTags = () => {
 
 function handleTagSelect() {
   updateCurrentTags(currentTags);
+}
+
+// 取消已选中标签
+
+function handleClose(tagIdx) {
+  clearSelectedTag(currentTags, tagIdx);
+}
+
+function clearSelectedTag(currentTags, tagIdx) {
+  currentTags[tagIdx] = '';
 }
 
 //#endregion

@@ -1,4 +1,6 @@
 @use './index.scss' as *;
+@use '../utils.scss' as *;
+@use '../vars.scss' as *;
 
 .topic-menu {
   .topic-item {
@@ -13,44 +15,55 @@
   }
 }
 
-.tag-selector {
-  .tag-selector_header {
+.tag-picker {
+  .tag-picker_header {
     line-height: var(--el-component-size);
   }
 
-  .tag-tree-container {
-    max-height: 10em;
-    overflow-y: auto;
+  .tag-tree-panel {
+    .tag-tree {
+      &.tags--picked {
+        $gap-between-bottom-line: 0.5em;
+        border-bottom: var(--el-border-width) solid var(--el-border-color-light);
+        margin-bottom: $gap-between-bottom-line;
+        padding-bottom: $gap-between-bottom-line;
+      }
 
-    .tag-tree-group {
       display: flex;
       flex-direction: row;
-      justify-content: space-between;
-      flex-wrap: wrap;
+      justify-content: flex-start;
+      //   width: 45%;
 
-      .tag-tree {
-        &:nth-child(n + 2) {
-          margin-top: 0.3em;
-        }
+      .tag-tree_title {
+        width: 4em;
+        flex-grow: 0;
+        flex-shrink: 0;
+        font-size: 0.8em;
+        font-weight: 600;
+        padding-right: 1em;
+        @include txt-v-center(--el-tag-height);
+      }
 
+      .tag-tree_children {
         display: flex;
         flex-direction: row;
         justify-content: flex-start;
-        width: 45%;
+        flex-wrap: wrap;
+      }
+    }
 
-        .tag-tree_title {
-          width: 3em;
-          flex-grow: 0;
-          flex-shrink: 0;
-          font-weight: 400;
-          padding-right: 1.5em;
-        }
+    .tag-tree-group_container {
+      max-height: 10em;
+      overflow-y: auto;
 
-        .tag-tree_children {
-          display: flex;
-          flex-direction: row;
-          justify-content: flex-start;
-          flex-wrap: wrap;
+      .tag-tree-group {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        flex-wrap: wrap;
+
+        .tag-tree:nth-child(n + 2) {
+          margin-top: 0.3em;
         }
       }
     }

@@ -29,3 +29,4 @@ export {
     initMenuConfig,
 } from './dyn-nav';
 export { dynContextMenu } from './dyn-nav';
+export { dynScroll } from './dyn-container';
