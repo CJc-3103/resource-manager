@@ -5,11 +5,15 @@ export default createStore({
     state() {
         return {
             currentNav: '', // 顶部导航
+            currentLang: '',
         }
     },
     mutations: {
         setCurrentNav(state, navItem) {
             state.currentNav = navItem;
+        },
+        setCurrentLang(state, lang) {
+            state.currentLang = lang;
         },
     },
     actions: {

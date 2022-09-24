@@ -8,6 +8,9 @@ const navbar = {
     settings: {
         title: "设置"
     },
+    dropdown: {
+        title: "语言"
+    }
 }
 const topicMenu = {
     placeholder: "输入主题名",

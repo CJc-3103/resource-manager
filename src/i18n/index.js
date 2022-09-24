@@ -5,8 +5,10 @@ import el_en from 'element-plus/lib/locale/lang/en'
 import localStore from '@/storage'
 
 let { lang } = localStore;
-const defaultLang = 'zhCN';
-Promise.resolve().then(() => (lang = defaultLang));
+const defaultLang = 'zh-CN';
+Promise.resolve().then(() => {
+    if (!lang) lang = defaultLang;
+});
 
 let locale = lang ?? defaultLang; // 默认中文
 

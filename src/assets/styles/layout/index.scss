@@ -24,6 +24,21 @@ body,
     justify-content: center;
     position: relative;
     top: var(--el-border-width);
+
+    // .nav-bar_wrapper {
+    //   display: block;
+    //   position: relative;
+    //   bottom: var(--el-border-width);
+    // }
+    .nav-menu_wrapper {
+      display: block;
+    }
+
+    .lang-menu {
+      .el-dropdown-menu_item.active {
+        color: var(--el-menu-hover-text-color);
+      }
+    }
   }
 }
 

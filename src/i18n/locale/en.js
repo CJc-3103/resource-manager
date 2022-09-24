@@ -8,6 +8,9 @@ const navbar = {
     settings: {
         title: "Settings"
     },
+    dropdown: {
+        title: "Language"
+    }
 }
 const topicMenu = {
     placeholder: "Input topic name",
