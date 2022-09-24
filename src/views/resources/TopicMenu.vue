@@ -1,6 +1,10 @@
 <template>
   <!-- 搜索 -->
-  <el-input size="small" :placeholder="$t('')" v-model="topicKeywords">
+  <el-input
+    size="small"
+    :placeholder="$t('topicMenu.placeholder')"
+    v-model="topicKeywords"
+  >
     <template #append>
       <el-button :icon="Search" @click="searchTopics(topicKeywords)" />
     </template>
