@@ -7,7 +7,7 @@ const navbar = {
     },
     settings: {
         title: "Settings"
-    }
+    },
 }
 const topicMenu = {
     placeholder: "Input topic name",

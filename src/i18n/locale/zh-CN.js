@@ -7,7 +7,7 @@ const navbar = {
     },
     settings: {
         title: "设置"
-    }
+    },
 }
 const topicMenu = {
     placeholder: "输入主题名",
