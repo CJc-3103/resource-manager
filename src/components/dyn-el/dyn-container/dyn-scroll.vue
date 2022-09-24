@@ -22,8 +22,8 @@ export default {
   computed: {
     classObject() {
       return {
-        'scroll-x': scrollX,
-        'scroll-y': scrollY,
+        'scroll-x': this.scrollX,
+        'scroll-y': this.scrollY,
       };
     },
   },

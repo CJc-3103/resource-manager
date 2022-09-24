@@ -46,7 +46,7 @@
       </div>
       <!-- </el-col> -->
 
-      <dynScroll class="tag-tree-group_container">
+      <dynScroll class="tag-tree-group_container" scroll-y>
         <div class="tag-tree-group">
           <div
             class="tag-tree"
@@ -79,7 +79,7 @@
 import { ref, reactive, computed, onMounted } from 'vue';
 import { useStore } from 'vuex';
 import { Search } from '@element-plus/icons-vue';
-import { dynGridLayout, dynScroll } from '@/components/dyn-el';
+import { dynScroll } from '@/components/dyn-el';
 
 const store = useStore();
 //#endregion
@@ -158,6 +158,24 @@ const tags = [
   {
     title: '关注点',
     children: [
+      {
+        title: '体系梳理',
+      },
+      {
+        title: '概念阐释',
+      },
+      {
+        title: '对比分析',
+      },
+      {
+        title: '思维提升',
+      },
+      {
+        title: '问题处理',
+      },
+      {
+        title: '技巧',
+      },
       {
         title: '体系梳理',
       },
