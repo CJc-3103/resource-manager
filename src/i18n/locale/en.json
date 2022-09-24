@@ -1,0 +1,23 @@
+{
+    "navbar": [
+        {
+            "title": "Resources"
+        },
+        {
+            "title": "Tags"
+        },
+        {
+            "title": "Settings"
+        }
+    ],
+    "topicMenu": {
+        "placeholder": "Input topic name",
+        "title": "Select topic",
+        "all": "All",
+        "noTopic": "No Topic"
+    },
+    "tagPicker": {
+        "placeholder": "Input tag name",
+        "pickedTitle": "Picked tags"
+    }
+}

@@ -1,6 +1,6 @@
 <template>
   <!-- 搜索 -->
-  <el-input size="small" placeholder="输入主题名" v-model="topicKeywords">
+  <el-input size="small" :placeholder="$t('')" v-model="topicKeywords">
     <template #append>
       <el-button :icon="Search" @click="searchTopics(topicKeywords)" />
     </template>
@@ -10,7 +10,7 @@
   <!-- 多选 -->
 
   <!-- 主题区域 -->
-  <div class="aside-title">选择主题</div>
+  <div class="aside-title">{{ $t('topicMenu.title') }}</div>
   <span class="action-group"> </span>
   <!-- 默认主题 -->
   <el-menu
@@ -21,10 +21,10 @@
     <el-menu-item
       class="topic-item"
       :index="index"
-      v-for="({ title, index }, i) in defaultTopics"
+      v-for="({ name, index }, i) in defaultTopics"
       :key="i"
     >
-      <span class="topic-txt">{{ title }}</span>
+      <span class="topic-txt">{{ $t(`topicMenu.${name}`) }}</span>
     </el-menu-item>
     <!-- 自定义主题 -->
     <el-tooltip
@@ -54,11 +54,11 @@ const store = useStore();
 //#region 视图构建
 const defaultTopics = [
   {
-    title: '全部',
+    name: 'all',
     index: 'All',
   },
   {
-    title: '未分组',
+    name: 'noTopic',
     index: 'NoTopic',
   },
 ];

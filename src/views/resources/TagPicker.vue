@@ -18,7 +18,10 @@
           </div>
         </el-col> -->
         <el-col :xs="24" :sm="12" :md="8" :lg="6" class="tag-picker_action">
-          <el-input placeholder="输入标签名" v-model="tagKeywords">
+          <el-input
+            :placeholder="$t('tagPicker.placeholder')"
+            v-model="tagKeywords"
+          >
             <template #append>
               <el-button :icon="Search" @click="searchTags(tagKeywords)" />
             </template>
@@ -30,7 +33,7 @@
     <div class="tag-tree-panel">
       <!-- <el-col :xs="24" :sm="12" :md="6" :lg="6" class="tag-picker_title"> -->
       <div class="tag-tree tags--picked">
-        <div class="tag-tree_title">已选标签</div>
+        <div class="tag-tree_title">{{ $t('tagPicker.pickedTitle') }}</div>
         <div class="tag-tree_children">
           <template v-for="(tag, i) in currentTags" :key="i">
             <el-tag
