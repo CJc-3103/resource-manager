@@ -5,12 +5,9 @@ import el_en from 'element-plus/lib/locale/lang/en'
 import localStore from '@/storage'
 
 let { lang } = localStore;
-const defaultLang = 'zh-CN';
-Promise.resolve().then(() => {
-    if (!lang) lang = defaultLang;
-});
-
-let locale = lang ?? defaultLang; // 默认中文
+const defaultLang = 'zhCN'; // zhCN 必须与 messages 对象的属性同名
+lang = lang ?? defaultLang; // 这里必须同步，不能异步
+let locale = lang;
 
 const messages = {
     zhCN: {
