@@ -1,7 +1,7 @@
 <template>
   <div class="nav-bar">
     <div class="logo-container">LOGO</div>
-    <div class="content">
+    <div class="nav-content">
       <el-menu
         mode="horizontal"
         :default-active="currentNav"
@@ -29,7 +29,7 @@
               :class="{ active: lang === currentLang }"
               v-for="({ lang, title }, i) in langs"
               :key="i"
-              @click="handleLangShift(lang)"
+              @click="handleSelectLang(lang)"
               >{{ title }}</el-dropdown-item
             >
           </el-dropdown-menu>
@@ -40,11 +40,8 @@
 </template>
 
 <script setup>
-// import { dynMenuItemList } from '@/components/dyn-el';
-// import { arrowDown } from 'element-plus/icons';
 import { ref, computed, onMounted } from 'vue';
 import { useStore } from 'vuex';
-import langs from '@/i18n/langs';
 
 const store = useStore();
 
@@ -65,7 +62,7 @@ const menuList = ref([
     index: '/settings',
   },
 ]);
-const menuConfigList = computed(() => {});
+// const menuConfigList = computed(() => {});
 
 const currentNav = computed(() => store.state.currentNav);
 const updateCurrentNav = (navItem) =>
@@ -81,8 +78,20 @@ function handleSelectNav(navItem) {
 
 // 切换语言
 const currentLang = computed(() => store.state.currentLang);
-function handleLangShift(lang) {
+const updateCurrentLang = (lang) => store.dispatch('updateCurrentLang', lang);
+
+// function initLang(lang) {
+//   updateCurrentLang(lang);
+// }
+
+function handleSelectLang(lang) {
   console.log('lang', lang);
+  if (currentLang) {
+    store.commit('setCurrentLang', lang);
+  } else {
+    store.dispatch('updateCurrentLang', lang);
+    // updateCurrentLang(lang);
+  }
 }
 
 onMounted(() => {

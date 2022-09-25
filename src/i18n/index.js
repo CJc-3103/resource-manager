@@ -3,11 +3,12 @@ import { zhCN, en } from './locale'
 import el_zhCN from 'element-plus/lib/locale/lang/zh-cn'
 import el_en from 'element-plus/lib/locale/lang/en'
 import localStore from '@/storage'
+import store from '@/store'
 
-let { lang } = localStore;
 const defaultLang = 'zhCN'; // zhCN 必须与 messages 对象的属性同名
-lang = lang ?? defaultLang; // 这里必须同步，不能异步
-let locale = lang;
+let { currentLang } = localStore;
+if (!currentLang) store.dispatch('updateCurrentLang', defaultLang);
+let locale = currentLang ?? defaultLang;
 
 const messages = {
     zhCN: {

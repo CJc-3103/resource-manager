@@ -28,7 +28,7 @@ body,
       justify-content: center;
     }
 
-    .content {
+    .nav-content {
       width: 100%;
       display: flex;
       justify-content: flex-end;
@@ -42,9 +42,10 @@ body,
 
       .lang-menu {
         .el-dropdown-link {
-          // vertical-align: middle;
-          // line-height: calc($header-height - var(--el-border-width));
+          display: flex;
+          align-items: center;
         }
+
         .el-dropdown-menu_item {
           &.active {
             color: var(--el-menu-hover-text-color);

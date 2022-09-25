@@ -6,11 +6,11 @@ const currentNavKey = 'currentNav';
 const currentTopicKey = 'currentTopic';
 const currentTagsKey = 'currentTags';
 
-let lang = {
-    get lang() {
+let currentLang = {
+    get currentLang() {
         return getItem(langKey);
     },
-    set lang(value) {
+    set currentLang(value) {
         setItem(langKey, value);
     },
 }
@@ -41,7 +41,7 @@ let currentTags = {
 }
 
 const localStore = {
-    ...lang,
+    ...currentLang,
     ...currentNav,
     ...currentTopic,
     ...currentTags,

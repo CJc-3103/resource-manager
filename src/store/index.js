@@ -1,5 +1,8 @@
 import { createStore } from 'vuex'
 import modules from './modules'
+import localStore from '@/storage'
+
+let { currentNav, currentLang } = localStore;
 
 export default createStore({
     state() {
@@ -19,6 +22,11 @@ export default createStore({
     actions: {
         updateCurrentNav({ commit }, navItem) {
             commit('setCurrentNav', navItem);
+            currentNav = navItem;
+        },
+        updateCurrentLang({ commit }, lang) {
+            commit('setCurrentLang', lang);
+            currentLang = lang;
         },
     },
     modules: modules,

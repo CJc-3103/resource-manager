@@ -9,9 +9,10 @@ const navbar = {
         title: "设置"
     },
     dropdown: {
-        title: "语言"
-    }
-}
+        title: "语言",
+        items: ['简体中文', '英文'],
+    },
+};
 const topicMenu = {
     placeholder: "输入主题名",
     title: "选择主题",

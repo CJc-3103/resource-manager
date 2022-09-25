@@ -9,8 +9,9 @@ const navbar = {
         title: "Settings"
     },
     dropdown: {
-        title: "Language"
-    }
+        title: "Language",
+        items: ['Chinese', 'English'],
+    },
 }
 const topicMenu = {
     placeholder: "Input topic name",
