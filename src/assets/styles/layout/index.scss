@@ -40,17 +40,21 @@ body,
         justify-content: flex-end;
       }
 
-      .lang-menu {
+      .lang-dropdown {
         .el-dropdown-link {
           display: flex;
           align-items: center;
         }
+      }
+    }
+  }
+}
 
-        .el-dropdown-menu_item {
-          &.active {
-            color: var(--el-menu-hover-text-color);
-          }
-        }
+.lang-menu-popper {
+  .lang-menu {
+    .lang-menu-item {
+      &.active {
+        color: var(--el-menu-active-color);
       }
     }
   }

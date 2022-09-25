@@ -16,7 +16,11 @@
         >
       </el-menu>
 
-      <el-dropdown class="lang-menu">
+      <el-dropdown
+        class="lang-dropdown"
+        hide-on-click
+        popper-class="lang-menu-popper"
+      >
         <span class="el-dropdown-link">
           {{ $t(`navbar.dropdown.title`) }}
           <el-icon class="el-icon--right">
@@ -24,13 +28,15 @@
           </el-icon>
         </span>
         <template #dropdown>
-          <el-dropdown-menu>
+          <el-dropdown-menu class="lang-menu">
             <el-dropdown-item
+              class="lang-menu-item"
               :class="{ active: lang === currentLang }"
               v-for="(lang, i) in langList"
               :key="i"
               @click="handleSelectLang(lang)"
-              >{{ $t(`navbar.dropdown.langs.${lang}`) }}</el-dropdown-item
+            >
+              {{ $t(`navbar.dropdown.langs.${lang}`) }}</el-dropdown-item
             >
           </el-dropdown-menu>
         </template>
