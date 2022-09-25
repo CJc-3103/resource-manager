@@ -23,12 +23,9 @@ import { useI18n } from 'vue-i18n';
 const store = useStore();
 const i18n = useI18n();
 const currentLang = computed(() => store.state.currentLang);
-watch(
-  () => currentLang.value,
-  () => {
-    i18n.locale.value = currentLang;
-  }
-);
+watch(currentLang, (newLang) => {
+  i18n.locale.value = newLang;
+});
 
 // 刷新前备份
 window.addEventListener('beforeunload', () => backup2Local());
