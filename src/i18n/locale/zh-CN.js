@@ -10,7 +10,10 @@ const navbar = {
     },
     dropdown: {
         title: "语言",
-        items: ['简体中文', '英文'],
+        langs: {
+            zhCN: '简体中文',
+            en: '英文',
+        }
     },
 };
 const topicMenu = {

@@ -10,7 +10,10 @@ const navbar = {
     },
     dropdown: {
         title: "Language",
-        items: ['Chinese', 'English'],
+        langs: {
+            zhCN: 'Chinese',
+            en: 'English',
+        }
     },
 }
 const topicMenu = {
