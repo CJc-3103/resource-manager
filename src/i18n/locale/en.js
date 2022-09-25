@@ -20,7 +20,7 @@ const topicMenu = {
 };
 const tagPicker = {
     placeholder: "Input tag name",
-    pickedTitle: "Picked tags"
+    pickedTitle: "Picked"
 }
 
 export default {
