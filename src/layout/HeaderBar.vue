@@ -1,7 +1,7 @@
 <template>
   <div class="nav-bar">
-    <div>LOGO</div>
-    <div class="nav-menu_wrapper">
+    <div class="logo-container">LOGO</div>
+    <div class="content">
       <el-menu
         mode="horizontal"
         :default-active="currentNav"
@@ -15,28 +15,27 @@
           >{{ $t(`navbar.${name}.title`) }}</el-menu-item
         >
       </el-menu>
-    </div>
 
-    <el-dropdown class="lang-menu">
-      <span class="el-dropdown-link">
-        {{ $t(`navbar.dropdown.title`) }}
-        <el-icon class="el-icon--right">
-          <arrow-down />
-        </el-icon>
-      </span>
-      <template #dropdown>
-        <el-dropdown-menu>
-          <el-dropdown-item
-            :class="{ active: lang === currentLang }"
-            v-for="({ lang, title }, j) in langs"
-            :key="j"
-            :index="j"
-            @click="handleLangShift(lang)"
-            >{{ title }}</el-dropdown-item
-          >
-        </el-dropdown-menu>
-      </template>
-    </el-dropdown>
+      <el-dropdown class="lang-menu">
+        <span class="el-dropdown-link">
+          {{ $t(`navbar.dropdown.title`) }}
+          <el-icon class="el-icon--right">
+            <arrow-down />
+          </el-icon>
+        </span>
+        <template #dropdown>
+          <el-dropdown-menu>
+            <el-dropdown-item
+              :class="{ active: lang === currentLang }"
+              v-for="({ lang, title }, i) in langs"
+              :key="i"
+              @click="handleLangShift(lang)"
+              >{{ title }}</el-dropdown-item
+            >
+          </el-dropdown-menu>
+        </template>
+      </el-dropdown>
+    </div>
   </div>
 </template>
 
@@ -66,6 +65,7 @@ const menuList = ref([
     index: '/settings',
   },
 ]);
+const menuConfigList = computed(() => {});
 
 const currentNav = computed(() => store.state.currentNav);
 const updateCurrentNav = (navItem) =>
