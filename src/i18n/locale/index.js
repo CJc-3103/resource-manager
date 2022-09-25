@@ -1,4 +1,4 @@
-import zhCN from './zh-CN'
+import zhCN from './zh-cn'
 import en from './en'
 
 export {
