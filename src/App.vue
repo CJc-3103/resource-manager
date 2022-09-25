@@ -15,21 +15,21 @@
 </style>
 
 <script setup>
+import { watch, computed, onBeforeMount } from 'vue';
+import { backup2Local } from '@/utils/storage/backup';
 import { useStore } from 'vuex';
-import { onBeforeMount } from 'vue';
+import { useI18n } from 'vue-i18n';
 
 const store = useStore();
-const backupKey = 'backupState';
-// 第一次加载或刷新后，根据本地存储备份情况初始化全局状态
-onBeforeMount(() => {
-  let backup = localStorage.getItem(backupKey);
-  if (!backup) {
-    store.replaceState(Object.assign(store.state, JSON.parse(backup)));
+const i18n = useI18n();
+const currentLang = computed(() => store.state.currentLang);
+watch(
+  () => currentLang.value,
+  () => {
+    i18n.locale.value = currentLang;
   }
-  localStorage.removeItem(backupKey);
-});
+);
+
 // 刷新前备份
-window.addEventListener('beforeunload', () => {
-  localStorage.setItem(backupKey, JSON.stringify(store.state));
-});
+window.addEventListener('beforeunload', () => backup2Local());
 </script>

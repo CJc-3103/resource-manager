@@ -72,6 +72,7 @@ const updateCurrentNav = (navItem) =>
   store.dispatch('updateCurrentNav', navItem);
 
 const initMenu = (currentNav) => {
+  console.log('currentNav', currentNav);
   if (!currentNav) updateCurrentNav(menuList.value[0].index);
 };
 
@@ -90,7 +91,7 @@ const langList = ref(langs);
 
 function handleSelectLang(lang) {
   store.commit('setCurrentLang', lang);
-  i18n.locale.value = lang;
+  //   i18n.locale.value = lang;
   //   if (currentLang) {
   //     store.commit('setCurrentLang', lang);
   //   } else {

@@ -1,5 +1,6 @@
 const getItem = (key) => localStorage.getItem(key);
 const setItem = (key, value) => localStorage.setItem(key, value);
+const removeItem = (key) => localStorage.removeItem(key);
 
 const langKey = 'lang';
 const currentNavKey = 'currentNav';
@@ -40,11 +41,39 @@ let currentTags = {
     },
 }
 
+// const localStore = {
+//     ...currentLang,
+//     ...currentNav,
+//     ...currentTopic,
+//     ...currentTags,
+// };
+
 const localStore = {
-    ...currentLang,
-    ...currentNav,
-    ...currentTopic,
-    ...currentTags,
+    get currentLang() {
+        return getItem(langKey);
+    },
+    set currentLang(value) {
+        setItem(langKey, value);
+    },
+    get currentNav() {
+        return getItem(currentNavKey);
+    },
+    set currentNav(value) {
+        setItem(currentNavKey, value);
+    },
+    get currentTopic() {
+        return getItem(currentTopicKey);
+    },
+    set currentTopic(value) {
+        setItem(currentTopicKey, value);
+    },
+    get currentTags() {
+        return getItem(currentTagsKey);
+    },
+    set currentTags(value) {
+        setItem(currentTagsKey, value);
+    },
 };
 
 export default localStore
+export { getItem, setItem, removeItem }

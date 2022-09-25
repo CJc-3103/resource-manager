@@ -6,10 +6,10 @@ import router from './router';
 import store from './store';
 import '@/assets/styles/normalize.scss';
 import '@/assets/styles/index.scss';
-import i18n from '@/i18n';
+import i18nLocal from '@/i18n';
 import * as ElementPlusIconsVue from '@element-plus/icons-vue';
 
-const app = createApp(App).use(ElementPlus).use(store).use(router).use(i18n);
+const app = createApp(App).use(ElementPlus).use(store).use(router).use(i18nLocal);
 for (const [key, component] of Object.entries(ElementPlusIconsVue)) {
     app.component(key, component)
 }
