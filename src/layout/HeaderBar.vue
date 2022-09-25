@@ -27,10 +27,10 @@
           <el-dropdown-menu>
             <el-dropdown-item
               :class="{ active: lang === currentLang }"
-              v-for="({ lang, title }, i) in langs"
+              v-for="(lang, i) in langList"
               :key="i"
               @click="handleSelectLang(lang)"
-              >{{ title }}</el-dropdown-item
+              >{{ $t(`navbar.dropdown.langs.${lang}`) }}</el-dropdown-item
             >
           </el-dropdown-menu>
         </template>
@@ -42,8 +42,11 @@
 <script setup>
 import { ref, computed, onMounted } from 'vue';
 import { useStore } from 'vuex';
+import { langs } from '@/i18n';
+import { useI18n } from 'vue-i18n';
 
 const store = useStore();
+const i18n = useI18n();
 
 const menuList = ref([
   {
@@ -78,20 +81,23 @@ function handleSelectNav(navItem) {
 
 // 切换语言
 const currentLang = computed(() => store.state.currentLang);
-const updateCurrentLang = (lang) => store.dispatch('updateCurrentLang', lang);
+const langList = ref(langs);
+// const updateCurrentLang = (lang) => store.dispatch('updateCurrentLang', lang);
 
 // function initLang(lang) {
 //   updateCurrentLang(lang);
 // }
 
 function handleSelectLang(lang) {
-  console.log('lang', lang);
-  if (currentLang) {
-    store.commit('setCurrentLang', lang);
-  } else {
-    store.dispatch('updateCurrentLang', lang);
-    // updateCurrentLang(lang);
-  }
+  store.commit('setCurrentLang', lang);
+  i18n.locale.value = lang;
+  //   if (currentLang) {
+  //     store.commit('setCurrentLang', lang);
+  //   } else {
+  //     store.dispatch('updateCurrentLang', lang);
+  //     i18n.locale.value = lang;
+  //     // updateCurrentLang(lang);
+  //   }
 }
 
 onMounted(() => {
