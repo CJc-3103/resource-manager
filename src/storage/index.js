@@ -16,10 +16,10 @@ let currentLang = {
 }
 let currentNav = {
     get currentNav() {
-        return localStorage.getItem(currentNavKey);
+        return getItem(currentNavKey);
     },
     set currentNav(value) {
-        localStorage.setItem(currentNavKey, value);
+        setItem(currentNavKey, value);
     },
 }
 
@@ -33,10 +33,10 @@ let currentTopic = {
 }
 let currentTags = {
     get currentTags() {
-        return getItem(currentTags);
+        return getItem(currentTagsKey);
     },
     set currentTags(value) {
-        setItem(currentTags, value);
+        setItem(currentTagsKey, value);
     },
 }
 
