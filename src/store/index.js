@@ -29,5 +29,5 @@ export default createStore({
             currentLang = lang;
         },
     },
-    modules: modules,
+    modules,
 })
