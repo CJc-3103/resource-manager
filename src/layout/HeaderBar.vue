@@ -71,14 +71,12 @@ const menuList = ref([
     index: '/settings',
   },
 ]);
-// const menuConfigList = computed(() => {});
 
 const currentNav = computed(() => store.state.currentNav);
 const updateCurrentNav = (navItem) =>
   store.dispatch('updateCurrentNav', navItem);
 
 const initMenu = (currentNav) => {
-  console.log('currentNav', currentNav);
   if (!currentNav) updateCurrentNav(menuList.value[0].index);
 };
 
@@ -89,22 +87,10 @@ function handleSelectNav(navItem) {
 // 切换语言
 const currentLang = computed(() => store.state.currentLang);
 const langList = ref(langs);
-// const updateCurrentLang = (lang) => store.dispatch('updateCurrentLang', lang);
-
-// function initLang(lang) {
-//   updateCurrentLang(lang);
-// }
 
 function handleSelectLang(lang) {
   store.commit('setCurrentLang', lang);
-  //   i18n.locale.value = lang;
-  //   if (currentLang) {
-  //     store.commit('setCurrentLang', lang);
-  //   } else {
-  //     store.dispatch('updateCurrentLang', lang);
-  //     i18n.locale.value = lang;
-  //     // updateCurrentLang(lang);
-  //   }
+  i18n.locale.value = lang;
 }
 
 onMounted(() => {
