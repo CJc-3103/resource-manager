@@ -9,6 +9,7 @@
 
     <template v-slot="{}"> </template>
   </dynCardList>
+  <el-table mb-1 :data="[]" />
 </template>
 
 <script setup>
