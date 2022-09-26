@@ -25,9 +25,6 @@ import { elLocalLangs } from '@/i18n';
 
 const store = useStore();
 const i18n = useI18n();
-// const elLangs = { elZhCn: elZhCn, elEn: elEn };
-// const elLangs = ref({ zhCn, en });
-// const locale = computed(() => elLangs[i18n.locale.value]);
 const locale = computed(() => elLocalLangs[i18n.locale.value]);
 const currentLang = computed(() => store.state.currentLang);
 watch(currentLang, (newLang) => {
