@@ -1,9 +1,9 @@
 <template>
-  <!-- <el-config-provider :locale="locale"> -->
   <div id="app">
-    <router-view />
+    <el-config-provider :locale="locale">
+      <router-view />
+    </el-config-provider>
   </div>
-  <!-- </el-config-provider> -->
 </template>
 
 <style lang="scss">
@@ -17,20 +17,22 @@
 </style>
 
 <script setup>
-import { watch, computed } from 'vue';
+import { ref, watch, computed } from 'vue';
 import { backup2Local } from '@/utils/storage/backup';
 import { useStore } from 'vuex';
 import { useI18n } from 'vue-i18n';
-import { elZhCn, elEn } from '@/i18n/elLangs';
+import { elLocalLangs } from '@/i18n';
 
 const store = useStore();
 const i18n = useI18n();
-const elLangs = { elZhCn, elEn };
-const locale = computed(() => elLangs[i18n.locale]);
-// const currentLang = computed(() => store.state.currentLang);
-// watch(currentLang, (newLang) => {
-//   i18n.locale.value = newLang;
-// });
+// const elLangs = { elZhCn: elZhCn, elEn: elEn };
+// const elLangs = ref({ zhCn, en });
+// const locale = computed(() => elLangs[i18n.locale.value]);
+const locale = computed(() => elLocalLangs[i18n.locale.value]);
+const currentLang = computed(() => store.state.currentLang);
+watch(currentLang, (newLang) => {
+  i18n.locale.value = newLang;
+});
 
 // 刷新前备份
 window.addEventListener('beforeunload', () => backup2Local());
