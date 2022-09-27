@@ -4,8 +4,8 @@
 
 $resource-item-size: 8em;
 $resource-item-description_panel-height: 3em;
-$resource-item-gap: 15px;
-$resource-item_tag-gap: 5px;
+$resource-item-gap: 10px;
+$--resource-item_tag-gap: 5px;
 
 .topic-menu {
   .topic-item {
@@ -93,57 +93,59 @@ $resource-item_tag-gap: 5px;
     width: $resource-item-size;
     height: $resource-item-size;
     background-color: var(--el-fill-color-light);
-    margin: $resource-item-gap;
+    margin: $resource-item-gap 0;
 
     .el-card__body {
       height: 100%;
       padding: 0;
       position: relative;
+    }
 
-      .resource-item-description_panel {
-        width: 100%;
-        height: $resource-item-description_panel-height;
-        position: absolute;
-        bottom: 0;
-        background-color: white;
-        border-radius: 0 0 var(--el-border-width) var(--el-border-width);
-        display: flex;
-        flex-direction: column;
-        justify-content: space-around;
+    .resource-item-description_panel {
+      width: 100%;
+      height: $resource-item-description_panel-height;
+      position: absolute;
+      bottom: 0;
+      background-color: white;
+      border-radius: 0 0 var(--el-border-width) var(--el-border-width);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-around;
 
-        .resource-item-description_title {
-          font-size: 0.8em;
-          font-weight: 600;
-        }
-
-        .resource-item_tag-list {
-          display: flex;
-          overflow-x: visible;
-          padding: 0 $resource-item_tag-gap;
-
-          .resource-item_tag {
-            margin-right: $resource-item_tag-gap;
-            display: inline-block;
-          }
-        }
+      .resource-item-description_title {
+        font-size: 0.8em;
+        font-weight: 600;
       }
 
-      .content-panel {
-        height: calc(
-          $resource-item-size - $resource-item-description_panel-height
-        );
+      .resource-item_tag-list {
+        display: flex;
+        //   overflow-x: visible;
+        padding: 0 $--resource-item_tag-gap;
 
-        &,
-        .resource-icon,
-        .empty-panel {
+        .resource-item_tag {
+          margin-right: $--resource-item_tag-gap;
           display: flex;
-          justify-content: center;
+          justify-content: space-between;
           align-items: center;
         }
+      }
+    }
 
-        .empty-panel {
-          font-size: 0.8em;
-        }
+    .content-panel {
+      height: calc(
+        $resource-item-size - $resource-item-description_panel-height
+      );
+
+      &,
+      .resource-icon,
+      .empty-panel {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+
+      .empty-panel {
+        font-size: 0.8em;
       }
     }
   }

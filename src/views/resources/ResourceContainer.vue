@@ -24,19 +24,23 @@
 
         <div class="resource-item-description_panel">
           <div class="resource-item-description_title">{{ title }}</div>
-          <el-scrollbar noresize height="1">
+          <el-scrollbar noresize>
             <div class="resource-item_tag-list">
-              <!-- <el-scrollbar noresize class="resource-item_tag-list"> -->
+              <!--  若能添加固定宽度，或许可以显示滚动条
+                 <div
+              class="resource-item_tag-list"
+              :class="{}"
+              :style="{ [`--resource-item_list-tag-count_${j}`]: tags.length }"
+            > -->
               <el-tag
-                v-for="(tag, i) in tags"
-                :key="i"
+                v-for="(tag, j) in tags"
+                :key="j"
                 class="tag resource-item_tag"
                 effect="light"
                 size="small"
                 closable
                 >{{ tag.title }}
               </el-tag>
-              <!-- </el-scrollbar> -->
             </div>
           </el-scrollbar>
         </div>
