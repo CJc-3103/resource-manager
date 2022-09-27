@@ -1,43 +1,168 @@
 <template>
-  <dynCardList :cards="[]" :cardGap="0">
-    <!-- <template v-slot:title="{ title }">
-      <div class="card-header">
-        <span>{{ title }}</span>
-        <el-button class="button" text>Operation button</el-button>
-      </div>
-    </template> -->
+  <el-card>
+    <div class="empty-panel" v-if="!resources.length">
+      <el-empty :description="$t('resourceContainer.emptyDescription')" />
+    </div>
+    <div v-else class="resource-container">
+      <el-card
+        class="resource-item"
+        :class="`resource-item--${type == 'online' ? 'online' : 'local'}`"
+        :style="{ [`--resource-icon_background-${i}`]: background ?? '' }"
+        v-for="({ path, type, title, background, tags }, i) in resources"
+        :key="i"
+      >
+        <div class="content-panel">
+          <a v-if="background" :href="path" class="resource-icon">
+            <el-button size="large" circle class="link-button">
+              <img :src="background" />
+            </el-button>
+          </a>
+          <div v-else class="empty-panel">
+            {{ $t('resourceContainer.resourceItem.emptyDescription') }}
+          </div>
+        </div>
 
-    <template v-slot="{}"> </template>
-  </dynCardList>
-  <el-table mb-1 :data="[]" />
+        <div class="resource-item-description_panel">
+          <div class="resource-item-description_title">{{ title }}</div>
+          <el-scrollbar noresize height="1">
+            <div class="resource-item_tag-list">
+              <!-- <el-scrollbar noresize class="resource-item_tag-list"> -->
+              <el-tag
+                v-for="(tag, i) in tags"
+                :key="i"
+                class="tag resource-item_tag"
+                effect="light"
+                size="small"
+                closable
+                >{{ tag.title }}
+              </el-tag>
+              <!-- </el-scrollbar> -->
+            </div>
+          </el-scrollbar>
+        </div>
+      </el-card>
+    </div>
+  </el-card>
 </template>
 
 <script setup>
-import { dynCardList } from '@/components/dyn-el';
 import { ref } from 'vue';
 
-// const cardList = ref([
-//   {
-//     cardTitle: '1',
-//     children: [
-//       {
-//         title: '1-1',
-//       },
-//       {
-//         title: '1-2',
-//       },
-//       {
-//         title: '1-3',
-//       },
-//     ],
-//   },
-//   {
-//     cardTitle: '2',
-//   },
-//   {
-//     cardTitle: '3',
-//   },
-// ]);
+// `${path}/favicon.ico`
 
-const resources = [];
+function getIconPath(sitePath) {
+  return `${path}/favicon.ico`;
+}
+
+const resources = ref([
+  {
+    path: 'https://sanjiaohanshu.wncx.cn',
+    type: 'online',
+    title: '三角函数计时器',
+    background:
+      'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAYAAACNiR0NAAAAAXNSR0IArs4c6QAAAQ1JREFUOE9jZFi5s4GBkamegRrg/79GRoZVu/9TwyyYGYPPwP+hLgyMq/fAPUmRC0GGhR2/zLD6yUvKDFTk5mS452WNYRjIVJJdCHLVxQ+fGQx2n2QwFuRjOPv+E0qcYjWwVUeZofrKXRSFkwzVGXJVZOHhtcJClyHixGWMBEKUC0GuSj5zjWHe/WcEUxheAycYqDHkq8qhxCIhEzEMTFKUArsE5Krii7cY+m49ImQG/jAsVJNjCJURBwd27vmbJBmGNZYdxQQZuvRUGUz3nCLZMKwGoqd8Uk1FCcPddkYM7TceMOx79Y5Uc7DnFEpdh+Hlpz62DNJbDpPtOrKyHiHbiMophAxBlmekdhUAAMWSf+FveLSrAAAAAElFTkSuQmCC',
+    tags: [
+      {
+        title: '工具',
+      },
+      {
+        title: '在线',
+      },
+      {
+        title: '数学',
+      },
+    ],
+  },
+  {
+    path: 'https://cn.vuejs.org/guide/introduction.html',
+    type: 'online',
+    title: 'Vue官网',
+    background: 'https://cn.vuejs.org/logo.svg',
+    tags: [
+      {
+        title: '工具',
+      },
+      {
+        title: '在线',
+      },
+      {
+        title: '软件开发',
+      },
+      {
+        title: '前端',
+      },
+      {
+        title: '视图构建',
+      },
+    ],
+  },
+  {
+    path: 'https://sanjiaohanshu.wncx.cn',
+    type: 'online',
+    title: '三角函数计时器',
+    tags: [
+      {
+        title: '工具',
+      },
+      {
+        title: '在线',
+      },
+      {
+        title: '数学',
+      },
+    ],
+  },
+  {
+    path: 'https://sanjiaohanshu.wncx.cn',
+    type: 'online',
+    title: '三角函数计时器',
+    tags: [
+      {
+        title: '工具',
+      },
+      {
+        title: '在线',
+      },
+      {
+        title: '数学',
+      },
+    ],
+  },
+  {
+    path: 'https://sanjiaohanshu.wncx.cn',
+    type: 'online',
+    title: '三角函数计时器',
+    tags: [
+      {
+        title: '工具',
+      },
+      {
+        title: '在线',
+      },
+      {
+        title: '数学',
+      },
+    ],
+  },
+  {
+    path: 'https://sanjiaohanshu.wncx.cn',
+    type: 'online',
+    title: '三角函数计时器',
+    tags: [
+      {
+        title: '工具',
+      },
+      {
+        title: '在线',
+      },
+      {
+        title: '数学',
+      },
+    ],
+  },
+]);
+
+const scrollRefs = ref(Array(resources.length).fill(''));
+
+const resources1 = ref([]);
 </script>

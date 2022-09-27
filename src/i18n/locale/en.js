@@ -1,15 +1,15 @@
 const navbar = {
     resources: {
-        title: "Resources"
+        title: 'Resources'
     },
     tags: {
-        title: "Tags"
+        title: 'Tags'
     },
     settings: {
-        title: "Settings"
+        title: 'Settings'
     },
     dropdown: {
-        title: "Language",
+        title: 'Language',
         langs: {
             zhCN: 'Chinese',
             en: 'English',
@@ -17,18 +17,25 @@ const navbar = {
     },
 }
 const topicMenu = {
-    placeholder: "Input topic name",
-    title: "Select topic",
-    all: "All",
-    noTopic: "No Topic"
+    placeholder: 'Input topic name',
+    title: 'Select topic',
+    all: 'All',
+    noTopic: 'No Topic'
 };
 const tagPicker = {
-    placeholder: "Input tag name",
-    pickedTitle: "Picked"
+    placeholder: 'Input tag name',
+    pickedTitle: 'Picked'
+}
+const resourceContainer = {
+    emptyDescription: 'No resources',
+    resourceItem: {
+        emptyDescription: 'No picture or icon',
+    },
 }
 
 export default {
     navbar,
     topicMenu,
     tagPicker,
+    resourceContainer,
 }

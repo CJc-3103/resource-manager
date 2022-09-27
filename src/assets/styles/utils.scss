@@ -2,3 +2,29 @@
   height: var($height);
   line-height: var($height);
 }
+
+@mixin clear-float {
+  &::after {
+    content: '';
+    display: block;
+    clear: both;
+  }
+}
+
+// @mixin li-v-gap($gap) {
+//   &:nth-child(n + 2) {
+//     margin-top: $gap; // 设置除第一个卡片外其他卡片的上间距
+//   }
+// }
+
+@mixin calc($property, $expression) {
+  #{$property}: -moz-calc(#{$expression});
+  #{$property}: -webkit-calc(#{$expression});
+  #{$property}: calc(#{$expression});
+}
+
+@mixin minus($property, $expression) {
+  #{$property}: -moz-calc(-1 * var(#{$expression}));
+  #{$property}: -webkit-calc(-1 * var(#{$expression}));
+  #{$property}: calc(-1 * var(#{$expression}));
+}

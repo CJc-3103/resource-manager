@@ -1,15 +1,15 @@
 const navbar = {
     resources: {
-        title: "资源"
+        title: '资源'
     },
     tags: {
-        title: "标签"
+        title: '标签'
     },
     settings: {
-        title: "设置"
+        title: '设置'
     },
     dropdown: {
-        title: "语言",
+        title: '语言',
         langs: {
             zhCN: '简体中文',
             en: '英文',
@@ -17,18 +17,25 @@ const navbar = {
     },
 };
 const topicMenu = {
-    placeholder: "输入主题名",
-    title: "选择主题",
-    all: "全部",
-    noTopic: "未分类"
+    placeholder: '输入主题名',
+    title: '选择主题',
+    all: '全部',
+    noTopic: '未分类'
 };
 const tagPicker = {
-    placeholder: "输入标签名",
-    pickedTitle: "已选标签"
+    placeholder: '输入标签名',
+    pickedTitle: '已选标签'
+}
+const resourceContainer = {
+    emptyDescription: '无资源',
+    resourceItem: {
+        emptyDescription: '无预览图或图标',
+    },
 }
 
 export default {
     navbar,
     topicMenu,
     tagPicker,
+    resourceContainer,
 }

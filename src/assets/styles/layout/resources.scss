@@ -2,6 +2,11 @@
 @use '../utils.scss' as *;
 @use '../vars.scss' as *;
 
+$resource-item-size: 8em;
+$resource-item-description_panel-height: 3em;
+$resource-item-gap: 15px;
+$resource-item_tag-gap: 5px;
+
 .topic-menu {
   .topic-item {
     .topic-txt {
@@ -32,7 +37,6 @@
       display: flex;
       flex-direction: row;
       justify-content: flex-start;
-      //   width: 45%;
 
       .tag-tree_title {
         width: 4em;
@@ -61,11 +65,90 @@
         flex-direction: row;
         justify-content: space-between;
         flex-wrap: wrap;
+        margin-top: -0.3em;
 
-        .tag-tree:nth-child(n + 2) {
+        .tag-tree {
           margin-top: 0.3em;
         }
       }
     }
   }
+}
+
+.empty-panel {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+
+.resource-container {
+  width: 100%;
+  display: flex;
+  justify-content: space-evenly;
+  flex-wrap: wrap;
+  margin-top: -$resource-item-gap 0; // 抵消首/尾行的 margin-top
+
+  .resource-item {
+    width: $resource-item-size;
+    height: $resource-item-size;
+    background-color: var(--el-fill-color-light);
+    margin: $resource-item-gap;
+
+    .el-card__body {
+      height: 100%;
+      padding: 0;
+      position: relative;
+
+      .resource-item-description_panel {
+        width: 100%;
+        height: $resource-item-description_panel-height;
+        position: absolute;
+        bottom: 0;
+        background-color: white;
+        border-radius: 0 0 var(--el-border-width) var(--el-border-width);
+        display: flex;
+        flex-direction: column;
+        justify-content: space-around;
+
+        .resource-item-description_title {
+          font-size: 0.8em;
+          font-weight: 600;
+        }
+
+        .resource-item_tag-list {
+          display: flex;
+          overflow-x: visible;
+          padding: 0 $resource-item_tag-gap;
+
+          .resource-item_tag {
+            margin-right: $resource-item_tag-gap;
+            display: inline-block;
+          }
+        }
+      }
+
+      .content-panel {
+        height: calc(
+          $resource-item-size - $resource-item-description_panel-height
+        );
+
+        &,
+        .resource-icon,
+        .empty-panel {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+        }
+
+        .empty-panel {
+          font-size: 0.8em;
+        }
+      }
+    }
+  }
+}
+
+.el-scrollbar.scroll-x {
+  overflow-x: visible;
 }
