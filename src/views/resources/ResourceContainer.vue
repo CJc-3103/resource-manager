@@ -1,6 +1,6 @@
 <template>
   <el-card>
-    <div class="empty-panel" v-if="!resources.length">
+    <div class="resource-empty-panel" v-if="!resources.length">
       <el-empty :description="$t('resourceContainer.emptyDescription')" />
     </div>
     <div v-else class="resource-container">

@@ -2,6 +2,8 @@
 @use '../utils.scss' as *;
 @use '../vars.scss' as *;
 
+$gap-between-bottom-line: 0.5em;
+
 $resource-item-size: 8em;
 $resource-item-description_panel-height: 3em;
 $resource-item-gap: 10px;
@@ -21,6 +23,10 @@ $--resource-item_tag-gap: 5px;
 }
 
 .tag-picker {
+  .el-card__body {
+    padding-top: 10px;
+  }
+
   .tag-picker_header {
     line-height: var(--el-component-size);
   }
@@ -28,7 +34,6 @@ $--resource-item_tag-gap: 5px;
   .tag-tree-panel {
     .tag-tree {
       &.tags--picked {
-        $gap-between-bottom-line: 0.5em;
         border-bottom: var(--el-border-width) solid var(--el-border-color-light);
         margin-bottom: $gap-between-bottom-line;
         padding-bottom: $gap-between-bottom-line;
@@ -75,7 +80,7 @@ $--resource-item_tag-gap: 5px;
   }
 }
 
-.empty-panel {
+.resource-empty-panel {
   display: flex;
   flex-direction: row;
   justify-content: center;
