@@ -24,7 +24,7 @@
 
         <div class="resource-item-description_panel">
           <div class="resource-item-description_title">{{ title }}</div>
-          <el-scrollbar noresize>
+          <el-scrollbar>
             <div class="resource-item_tag-list">
               <!--  若能添加固定宽度，或许可以显示滚动条
                  <div
