@@ -1,4 +1,6 @@
+@use '../../vars.scss' as *;
 @use '../../utils.scss' as *;
+@use '.././common/index.scss' as *;
 
 $gap-of-bottom-line: 0.5em;
 
@@ -53,7 +55,7 @@ $gap-of-bottom-line: 0.5em;
           .tag-list {
             .tag {
               .el-radio-button__inner {
-                border-left: var(--base-border);
+                border-left: var(--border-base);
                 border-radius: var(--el-border-radius-base);
               }
               &.is-active .el-radio-button__inner {
