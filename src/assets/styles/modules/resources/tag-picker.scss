@@ -1,0 +1,68 @@
+@use '../../utils.scss' as *;
+
+$gap-of-bottom-line: 0.5em;
+
+.tag-picker {
+  .el-card__body {
+    padding-top: 10px;
+  }
+
+  .tag-picker_header {
+    line-height: var(--el-component-size);
+  }
+
+  .tag-tree-panel {
+    .tag-tree {
+      &.tags--picked {
+        border-bottom: var(--el-border-width) solid var(--el-border-color-light);
+        margin-bottom: $gap-of-bottom-line;
+        padding-bottom: $gap-of-bottom-line;
+      }
+
+      display: flex;
+      flex-direction: row;
+      justify-content: flex-start;
+
+      .tag-tree_title {
+        width: 4em;
+        flex-shrink: 0;
+        font-size: 0.8em;
+        font-weight: 600;
+        padding-right: 1em;
+        @include txt-v-center(--el-tag-height);
+      }
+
+      .tag-list {
+        justify-content: flex-start;
+        flex-wrap: wrap;
+      }
+    }
+
+    .tag-tree-group_container {
+      max-height: 6em;
+
+      .tag-tree-group {
+        display: flex;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        margin-top: -0.3em;
+
+        .tag-tree {
+          margin-top: 0.3em;
+
+          .tag-list {
+            .tag {
+              .el-radio-button__inner {
+                border-left: var(--base-border);
+                border-radius: var(--el-border-radius-base);
+              }
+              &.is-active .el-radio-button__inner {
+                border-left: 0;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

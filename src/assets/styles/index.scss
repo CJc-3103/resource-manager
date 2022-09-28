@@ -1,22 +1,48 @@
-:root {
+@use './vars' as *;
+
+$header-height: 60px;
+$body-height: calc(100vh - $header-height);
+$left-aside-max-width: 15em;
+$right-aside-max-width: 15em;
+
+html,
+body,
+#app {
+  min-width: 700px;
 }
 
-// .has-scrollbar {
-//   &::-webkit-scrollbar {
-//     /*滚动条整体样式*/
-//     width: 4px; /*高宽分别对应横竖滚动条的尺寸*/
-//     height: 1px;
-//   }
-//   &::-webkit-scrollbar-thumb {
-//     /*滚动条里面小方块*/
-//     border-radius: 10px;
-//     box-shadow: inset 0 0 5px rgba(97, 184, 179, 0.1);
-//     background: #78b4b4;
-//   }
-//   &::-webkit-scrollbar-track {
-//     /*滚动条里面轨道*/
-//     box-shadow: inset 0 0 5px rgba(87, 175, 187, 0.1);
-//     border-radius: 10px;
-//     background: #ededed;
-//   }
-// }
+// 头部
+.el-header {
+  border-bottom: var(--border-base);
+  height: $header-height;
+  line-height: $header-height;
+  z-index: 1; // 避免底部边框在主体滚动时被遮挡
+  position: relative;
+}
+
+// 左侧边栏
+.el-aside--left {
+  border-right: var(--border-base);
+  padding: 1.5em 0;
+
+  .el-menu {
+    border: none;
+  }
+}
+
+// 右侧边栏
+.el-aside--right {
+  //   max-width: $right-aside-max-width;
+}
+
+// 主体
+.el-main {
+  width: 100%;
+  overflow-y: auto; // 主体可滚动，头部固定
+}
+
+// 通用
+.el-aside,
+.el-main {
+  height: $body-height;
+}

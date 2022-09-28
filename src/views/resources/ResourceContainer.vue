@@ -1,61 +1,51 @@
 <template>
-  <el-card>
-    <div class="resource-empty-panel" v-if="!resources.length">
-      <el-empty :description="$t('resourceContainer.emptyDescription')" />
-    </div>
-    <div v-else class="resource-container">
-      <el-card
-        class="resource-item"
-        v-for="({ path, type, title, background, tags }, i) in resources"
-        :key="i"
-      >
-        <!-- <el-card
-        class="resource-item"
-        :class="`resource-item--${type == 'online' ? 'online' : 'local'}`"
-        :style="{ [`--resource-icon_background-${i}`]: background ?? '' }"
-        v-for="({ path, type, title, background, tags }, i) in resources"
-        :key="i"
-      > -->
-        <div class="content-panel">
-          <a v-if="type == 'online'" :href="path" class="resource-icon">
-            <el-button size="large" circle class="link-button">
-              <!-- alt=" " 才能显示“破损的图片”图标 -->
-              <img :src="background" alt=" " />
-            </el-button>
-          </a>
-          <div v-else class="resource-pic">
-            <img
-              :src="background"
-              :alt="$t('resourceContainer.resourceItem.noPicture')"
-            />
-          </div>
-        </div>
-
-        <div class="resource-item-description_panel">
-          <div class="resource-item-description_title">{{ title }}</div>
-          <el-scrollbar>
-            <div class="resource-item_tag-list">
-              <!--  若能添加固定宽度，或许可以显示滚动条
-                 <div
-              class="resource-item_tag-list"
-              :class="{}"
-              :style="{ [`--resource-item_list-tag-count_${j}`]: tags.length }"
-            > -->
-              <el-tag
-                v-for="(tag, j) in tags"
-                :key="j"
-                class="tag resource-item_tag"
-                effect="light"
-                size="small"
-                closable
-                @close="handleTagClose(tag.title, i, resources)"
-                >{{ tag.title }}
-              </el-tag>
+  <el-card class="resource-container">
+    <template #header> </template>
+    <el-scrollbar>
+      <div class="resource-empty-panel" v-if="!resources.length">
+        <el-empty :description="$t('resourceContainer.emptyDescription')" />
+      </div>
+      <div v-else class="resource-container">
+        <el-card
+          class="resource-item"
+          v-for="({ path, type, title, background, tags }, i) in resources"
+          :key="i"
+        >
+          <div class="content-panel">
+            <a v-if="type == 'online'" :href="path" class="resource-icon">
+              <el-button size="large" circle class="link-button">
+                <!-- alt=" " 才能显示“破损的图片”图标 -->
+                <img :src="background" alt=" " />
+              </el-button>
+            </a>
+            <div v-else class="resource-pic">
+              <img
+                :src="background"
+                :alt="$t('resourceContainer.resourceItem.noPicture')"
+              />
             </div>
-          </el-scrollbar>
-        </div>
-      </el-card>
-    </div>
+          </div>
+
+          <div class="resource-item-description_panel">
+            <div class="resource-item-description_title">{{ title }}</div>
+            <el-scrollbar>
+              <div class="tag-list">
+                <el-tag
+                  v-for="(tag, j) in tags"
+                  :key="j"
+                  class="tag"
+                  effect="light"
+                  size="small"
+                  closable
+                  @close="handleTagClose(tag.title, i, resources)"
+                  >{{ tag.title }}
+                </el-tag>
+              </div>
+            </el-scrollbar>
+          </div>
+        </el-card>
+      </div>
+    </el-scrollbar>
   </el-card>
 </template>
 

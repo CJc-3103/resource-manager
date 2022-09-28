@@ -1,0 +1,80 @@
+@use '../vars' as *;
+
+$header-height: 60px;
+$body-height: calc(100vh - $header-height);
+$left-aside-max-width: 15em;
+$right-aside-max-width: 15em;
+
+// 导航条
+.nav-bar {
+  display: flex;
+  justify-content: space-between;
+
+  .logo-container {
+    display: flex;
+    justify-content: center;
+  }
+
+  .nav-content {
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+    position: relative;
+    top: var(--el-border-width);
+
+    .el-menu {
+      width: 100%;
+      justify-content: flex-end;
+    }
+
+    .lang-dropdown {
+      .el-dropdown-link {
+        display: flex;
+        align-items: center;
+      }
+    }
+  }
+
+  .lang-menu-popper {
+    .lang-menu {
+      .lang-menu-item {
+        &.active {
+          color: var(--el-menu-active-color);
+        }
+      }
+    }
+  }
+}
+
+// 左侧边栏
+.el-aside--left {
+  border-right: var(--border-base);
+  padding: 1.5em 0;
+
+  .aside-title {
+    font-size: 1em;
+    font-weight: bold;
+    margin: 1em 0;
+  }
+
+  .el-menu {
+    border: none;
+  }
+}
+
+// 右侧边栏
+.el-aside--right {
+  //   max-width: $right-aside-max-width;
+}
+
+// 主体
+.el-main {
+  width: 100%;
+  overflow-y: hidden;
+}
+
+// 部分通用
+.el-aside,
+.el-main {
+  height: $body-height;
+}

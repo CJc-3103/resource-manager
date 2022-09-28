@@ -2,21 +2,6 @@
   <el-card class="tag-picker">
     <template #header>
       <el-row class="tag-picker_header" :gutter="10" justify="space-between">
-        <!-- <el-col :xs="24" :sm="12" :md="6" :lg="6" class="tag-picker_title">
-          <div class="tag-tree_title">选择标签</div>
-          <div class="tag-tree_children">
-            <template v-for="(tag, i) in currentTags" :key="i">
-              <el-tag
-                v-show="tag"
-                class="tag-tree_child"
-                closable
-                @close="handleClose(i)"
-              >
-                {{ tag }}
-              </el-tag></template
-            >
-          </div>
-        </el-col> -->
         <el-col :xs="24" :sm="12" :md="8" :lg="6" class="tag-picker_action">
           <el-input
             :placeholder="$t('tagPicker.placeholder')"
@@ -34,11 +19,11 @@
       <!-- <el-col :xs="24" :sm="12" :md="6" :lg="6" class="tag-picker_title"> -->
       <div class="tag-tree tags--picked">
         <div class="tag-tree_title">{{ $t('tagPicker.pickedTitle') }}</div>
-        <div class="tag-tree_children">
+        <div class="tag-tree_tag-list tag-list">
           <template v-for="(tag, i) in currentTags" :key="i">
             <el-tag
               v-show="tag"
-              class="tag-tree_child"
+              class="tag-tree_tag tag"
               closable
               @close="handleClose(i)"
             >
@@ -59,13 +44,13 @@
             <div class="tag-tree_title">{{ title }}</div>
             <el-radio-group
               v-model="currentTags[i]"
-              class="tag-tree_children"
+              class="tag-list"
               @change="handleTagSelect"
             >
               <el-radio-button
                 :label="title"
                 size="small"
-                class="tag-tree_child"
+                class="tag"
                 v-for="({ title }, j) in children"
                 :key="j"
               />
@@ -89,6 +74,231 @@ const store = useStore();
 
 //#region 视图构建
 const tags = [
+  {
+    title: '用途',
+    children: [
+      {
+        title: '工具',
+      },
+      {
+        title: '教程',
+      },
+      {
+        title: '规范',
+      },
+      {
+        title: '文档',
+      },
+      {
+        title: '文章',
+      },
+      {
+        title: '资讯',
+      },
+    ],
+  },
+  {
+    title: '关注点',
+    children: [
+      {
+        title: '体系梳理',
+      },
+      {
+        title: '概念阐释',
+      },
+      {
+        title: '对比分析',
+      },
+      {
+        title: '思维提升',
+      },
+      {
+        title: '问题处理',
+      },
+      {
+        title: '技巧',
+      },
+    ],
+  },
+  {
+    title: '领域',
+    children: [
+      {
+        title: 'IT',
+      },
+      {
+        title: '设计',
+      },
+      {
+        title: '管理',
+      },
+      {
+        title: '娱乐',
+      },
+      {
+        title: '数学',
+      },
+      {
+        title: '语言',
+      },
+    ],
+  },
+  {
+    title: '关注点',
+    children: [
+      {
+        title: '体系梳理',
+      },
+      {
+        title: '概念阐释',
+      },
+      {
+        title: '对比分析',
+      },
+      {
+        title: '思维提升',
+      },
+      {
+        title: '问题处理',
+      },
+      {
+        title: '技巧',
+      },
+      {
+        title: '体系梳理',
+      },
+      {
+        title: '概念阐释',
+      },
+      {
+        title: '对比分析',
+      },
+      {
+        title: '思维提升',
+      },
+      {
+        title: '问题处理',
+      },
+      {
+        title: '技巧',
+      },
+    ],
+  },
+  {
+    title: '关注点',
+    children: [
+      {
+        title: '体系梳理',
+      },
+      {
+        title: '概念阐释',
+      },
+      {
+        title: '对比分析',
+      },
+      {
+        title: '思维提升',
+      },
+      {
+        title: '问题处理',
+      },
+      {
+        title: '技巧',
+      },
+    ],
+  },
+  {
+    title: '关注点',
+    children: [
+      {
+        title: '体系梳理',
+      },
+      {
+        title: '概念阐释',
+      },
+      {
+        title: '对比分析',
+      },
+      {
+        title: '思维提升',
+      },
+      {
+        title: '问题处理',
+      },
+      {
+        title: '技巧',
+      },
+    ],
+  },
+  {
+    title: '关注点',
+    children: [
+      {
+        title: '体系梳理',
+      },
+      {
+        title: '概念阐释',
+      },
+      {
+        title: '对比分析',
+      },
+      {
+        title: '思维提升',
+      },
+      {
+        title: '问题处理',
+      },
+      {
+        title: '技巧',
+      },
+    ],
+  },
+  {
+    title: '关注点',
+    children: [
+      {
+        title: '体系梳理',
+      },
+      {
+        title: '概念阐释',
+      },
+      {
+        title: '对比分析',
+      },
+      {
+        title: '思维提升',
+      },
+      {
+        title: '问题处理',
+      },
+      {
+        title: '技巧',
+      },
+    ],
+  },
+  {
+    title: '关注点',
+    children: [
+      {
+        title: '体系梳理',
+      },
+      {
+        title: '概念阐释',
+      },
+      {
+        title: '对比分析',
+      },
+      {
+        title: '思维提升',
+      },
+      {
+        title: '问题处理',
+      },
+      {
+        title: '技巧',
+      },
+    ],
+  },
   {
     title: '用途',
     children: [

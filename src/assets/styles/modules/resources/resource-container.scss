@@ -1,0 +1,87 @@
+$resource-item-width: 8em;
+$resource-item-height: 10em;
+$resource-item-description_panel-height: 3em;
+$resource-item-gap: 10px;
+$tag-gap: 5px;
+
+.resource-container {
+  .resource-empty-panel {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .resource-container {
+    width: 100%;
+    display: flex;
+    justify-content: space-evenly;
+    flex-wrap: wrap;
+    margin-top: -$resource-item-gap 0; // 抵消首/尾行的 margin-top
+
+    .resource-item {
+      width: $resource-item-width;
+      height: $resource-item-height;
+      background-color: var(--el-fill-color-light);
+      margin: $resource-item-gap 0;
+
+      .el-card__body {
+        height: 100%; // 避免描述区域在绝对定位后，因脱离文档流导致高度坍塌而无法定位到底部
+        padding: 0;
+        position: relative;
+      }
+
+      // 资源内容
+      .content-panel {
+        width: 100%;
+        height: calc(
+          $resource-item-height - $resource-item-description_panel-height
+        );
+
+        &,
+        .resource-icon {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+        }
+
+        .resource-pic {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          font-size: 0.8em;
+          width: 100%;
+          height: 100%;
+          border-radius: var(--el-tag-border-radius) var(--el-tag-border-radius)
+            0 0;
+
+          img {
+            max-width: 100%;
+          }
+        }
+      }
+
+      // 描述
+      .resource-item-description_panel {
+        width: 100%;
+        height: $resource-item-description_panel-height;
+        position: absolute;
+        bottom: 0;
+        background-color: white;
+        border-radius: 0 0 var(--el-border-width) var(--el-border-width);
+        display: flex;
+        flex-direction: column;
+        justify-content: space-around;
+
+        .resource-item-description_title {
+          font-size: 0.8em;
+          font-weight: 600;
+        }
+
+        .tag-list {
+          padding: 0 $tag-gap;
+        }
+      }
+    }
+  }
+}

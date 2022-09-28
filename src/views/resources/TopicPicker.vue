@@ -1,47 +1,49 @@
 <template>
-  <!-- 搜索 -->
-  <el-input
-    size="small"
-    :placeholder="$t('topicMenu.placeholder')"
-    v-model="topicKeywords"
-  >
-    <template #append>
-      <el-button :icon="Search" @click="searchTopics(topicKeywords)" />
-    </template>
-  </el-input>
-  <!-- 排序 -->
-  <!-- 新增 -->
-  <!-- 多选 -->
+  <div class="topic-picker">
+    <!-- 搜索 -->
+    <el-input
+      size="small"
+      :placeholder="$t('topicMenu.placeholder')"
+      v-model="topicKeywords"
+    >
+      <template #append>
+        <el-button :icon="Search" @click="searchTopics(topicKeywords)" />
+      </template>
+    </el-input>
+    <!-- 排序 -->
+    <!-- 新增 -->
+    <!-- 多选 -->
 
-  <!-- 主题区域 -->
-  <div class="aside-title">{{ $t('topicMenu.title') }}</div>
-  <span class="action-group"> </span>
-  <!-- 默认主题 -->
-  <el-menu
-    class="topic-menu"
-    :default-active="currentTopic"
-    @select="handleSelectTopic"
-  >
-    <el-menu-item
-      class="topic-item"
-      :index="index"
-      v-for="({ name, index }, i) in defaultTopics"
-      :key="i"
+    <!-- 主题区域 -->
+    <div class="aside-title">{{ $t('topicMenu.title') }}</div>
+    <span class="action-group"> </span>
+    <!-- 默认主题 -->
+    <el-menu
+      class="topic-menu"
+      :default-active="currentTopic"
+      @select="handleSelectTopic"
     >
-      <span class="topic-txt">{{ $t(`topicMenu.${name}`) }}</span>
-    </el-menu-item>
-    <!-- 自定义主题 -->
-    <el-tooltip
-      :content="title"
-      placement="right"
-      v-for="({ title }, i) in filteredTopics"
-      :key="i"
-    >
-      <el-menu-item class="topic-item" :index="i + ''">
-        <span class="topic-txt">{{ title }}</span>
+      <el-menu-item
+        class="topic-item"
+        :index="index"
+        v-for="({ name, index }, i) in defaultTopics"
+        :key="i"
+      >
+        <span class="topic-txt">{{ $t(`topicMenu.${name}`) }}</span>
       </el-menu-item>
-    </el-tooltip>
-  </el-menu>
+      <!-- 自定义主题 -->
+      <el-tooltip
+        :content="title"
+        placement="right"
+        v-for="({ title }, i) in filteredTopics"
+        :key="i"
+      >
+        <el-menu-item class="topic-item" :index="i + ''">
+          <span class="topic-txt">{{ title }}</span>
+        </el-menu-item>
+      </el-tooltip>
+    </el-menu>
+  </div>
 </template>
 
 <script setup>
