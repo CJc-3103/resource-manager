@@ -2,7 +2,7 @@
   <el-card class="resource-container">
     <template #header> </template>
     <el-scrollbar>
-      <div class="resource-empty-panel" v-if="!resources.length">
+      <div class="empty-panel" v-if="!resources.length">
         <el-empty :description="$t('resourceContainer.emptyDescription')" />
       </div>
       <div v-else class="resource-container">
@@ -26,10 +26,10 @@
             </div>
           </div>
 
-          <div class="resource-item-description_panel">
-            <div class="resource-item-description_title">{{ title }}</div>
+          <div class="description">
+            <div class="description_title">{{ title }}</div>
             <el-scrollbar>
-              <div class="tag-list">
+              <div class="tag-group">
                 <el-tag
                   v-for="(tag, j) in tags"
                   :key="j"

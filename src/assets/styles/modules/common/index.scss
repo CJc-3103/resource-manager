@@ -4,7 +4,7 @@ $tag-gap: 5px;
   flex-wrap: wrap;
 }
 
-.tag-list {
+.tag-group {
   display: flex;
   flex-wrap: nowrap;
   .tag {
@@ -16,7 +16,7 @@ $tag-gap: 5px;
 }
 
 .tag-tree {
-  .tag-list {
+  .tag-group {
     .tag {
       border-radius: var(--el-tag-border-radius);
     }

@@ -34,7 +34,7 @@ $gap-of-bottom-line: 0.5em;
         @include txt-v-center(--el-component-size-small);
       }
 
-      .tag-list {
+      .tag-group {
         justify-content: flex-start;
         flex-wrap: wrap;
       }
@@ -52,7 +52,7 @@ $gap-of-bottom-line: 0.5em;
         .tag-tree {
           margin-top: 0.3em;
 
-          .tag-list {
+          .tag-group {
             .tag {
               .el-radio-button__inner {
                 border-left: var(--border-base);
