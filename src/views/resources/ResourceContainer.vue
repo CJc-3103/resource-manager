@@ -6,19 +6,28 @@
     <div v-else class="resource-container">
       <el-card
         class="resource-item"
+        v-for="({ path, type, title, background, tags }, i) in resources"
+        :key="i"
+      >
+        <!-- <el-card
+        class="resource-item"
         :class="`resource-item--${type == 'online' ? 'online' : 'local'}`"
         :style="{ [`--resource-icon_background-${i}`]: background ?? '' }"
         v-for="({ path, type, title, background, tags }, i) in resources"
         :key="i"
-      >
+      > -->
         <div class="content-panel">
-          <a v-if="background" :href="path" class="resource-icon">
+          <a v-if="type == 'online'" :href="path" class="resource-icon">
             <el-button size="large" circle class="link-button">
-              <img :src="background" />
+              <!-- alt=" " 才能显示“破损的图片”图标 -->
+              <img :src="background" alt=" " />
             </el-button>
           </a>
-          <div v-else class="empty-panel">
-            {{ $t('resourceContainer.resourceItem.emptyDescription') }}
+          <div v-else class="resource-pic">
+            <img
+              :src="background"
+              :alt="$t('resourceContainer.resourceItem.noPicture')"
+            />
           </div>
         </div>
 
@@ -50,13 +59,7 @@
 </template>
 
 <script setup>
-import { ref } from 'vue';
-
-// `${path}/favicon.ico`
-
-function getIconPath(sitePath) {
-  return `${path}/favicon.ico`;
-}
+import { ref, nextTick, getCurrentInstance } from 'vue';
 
 const resources = ref([
   {
@@ -101,18 +104,16 @@ const resources = ref([
     ],
   },
   {
-    path: 'https://sanjiaohanshu.wncx.cn',
-    type: 'online',
-    title: '三角函数计时器',
+    path: 'fubuki.png',
+    type: 'local',
+    title: '白上吹雪',
+    background: require('../../assets/imgs/fubuki.png'),
     tags: [
       {
-        title: '工具',
+        title: '狐狸',
       },
       {
-        title: '在线',
-      },
-      {
-        title: '数学',
+        title: '白猫',
       },
     ],
   },
@@ -168,5 +169,9 @@ const resources = ref([
 
 const scrollRefs = ref(Array(resources.length).fill(''));
 
-const resources1 = ref([]);
+const { ctx } = getCurrentInstance();
+
+nextTick(() => {
+  ctx.$forceUpdate();
+});
 </script>

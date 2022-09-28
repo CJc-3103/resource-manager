@@ -29,7 +29,8 @@ const tagPicker = {
 const resourceContainer = {
     emptyDescription: 'No resources',
     resourceItem: {
-        emptyDescription: 'No picture or icon',
+        noPicture: 'No picture',
+        noIcon: 'No icon'
     },
 }
 

@@ -96,11 +96,41 @@ $--resource-item_tag-gap: 5px;
     margin: $resource-item-gap 0;
 
     .el-card__body {
-      height: 100%;
+      height: 100%; // 避免描述区域在绝对定位后，因脱离文档流导致高度坍塌而无法定位到底部
       padding: 0;
       position: relative;
     }
 
+    // 资源内容
+    .content-panel {
+      height: calc(
+        $resource-item-size - $resource-item-description_panel-height
+      );
+
+      &,
+      .resource-icon {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+
+      .resource-pic {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 0.8em;
+        width: 100%;
+        height: 100%;
+        border-radius: 4px 4px 0 0;
+
+        img {
+          width: $resource-item-size;
+          height: $resource-item-size;
+        }
+      }
+    }
+
+    // 描述
     .resource-item-description_panel {
       width: 100%;
       height: $resource-item-description_panel-height;
@@ -128,24 +158,6 @@ $--resource-item_tag-gap: 5px;
           justify-content: space-between;
           align-items: center;
         }
-      }
-    }
-
-    .content-panel {
-      height: calc(
-        $resource-item-size - $resource-item-description_panel-height
-      );
-
-      &,
-      .resource-icon,
-      .empty-panel {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-      }
-
-      .empty-panel {
-        font-size: 0.8em;
       }
     }
   }

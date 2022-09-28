@@ -29,7 +29,8 @@ const tagPicker = {
 const resourceContainer = {
     emptyDescription: '无资源',
     resourceItem: {
-        emptyDescription: '无预览图或图标',
+        noPicture: '无预览图',
+        noIcon: '无图标'
     },
 }
 
