@@ -19,14 +19,9 @@
       <!-- <el-col :xs="24" :sm="12" :md="6" :lg="6" class="tag-picker_title"> -->
       <div class="tag-tree tags--picked">
         <div class="tag-tree_title">{{ $t('tagPicker.pickedTitle') }}</div>
-        <div class="tag-tree_tag-list tag-list">
+        <div class="tag-list">
           <template v-for="(tag, i) in currentTags" :key="i">
-            <el-tag
-              v-show="tag"
-              class="tag-tree_tag tag"
-              closable
-              @close="handleClose(i)"
-            >
+            <el-tag v-show="tag" class="tag" closable @close="handleClose(i)">
               {{ tag }}
             </el-tag></template
           >
