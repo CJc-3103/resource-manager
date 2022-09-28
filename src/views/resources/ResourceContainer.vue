@@ -48,6 +48,7 @@
                 effect="light"
                 size="small"
                 closable
+                @close="handleTagClose(tag.title, i, resources)"
                 >{{ tag.title }}
               </el-tag>
             </div>
@@ -59,9 +60,9 @@
 </template>
 
 <script setup>
-import { ref, nextTick, getCurrentInstance } from 'vue';
+import { ref, nextTick, getCurrentInstance, reactive } from 'vue';
 
-const resources = ref([
+const resources = reactive([
   {
     path: 'https://sanjiaohanshu.wncx.cn',
     type: 'online',
@@ -167,11 +168,20 @@ const resources = ref([
   },
 ]);
 
-const scrollRefs = ref(Array(resources.length).fill(''));
+// const scrollRefs = ref(Array(resources.length).fill(''));
 
-const { ctx } = getCurrentInstance();
+// 关闭标签
+function handleTagClose(tagTitle, resourceIdx, resources) {
+  let tags = resources[resourceIdx].tags;
+  const idx = resources[resourceIdx].tags.findIndex(
+    (tag) => tag.title === tagTitle
+  );
+  tags.splice(idx, 1);
+}
 
-nextTick(() => {
-  ctx.$forceUpdate();
-});
+// const { ctx } = getCurrentInstance();
+
+// nextTick(() => {
+//   ctx.$forceUpdate();
+// });
 </script>
