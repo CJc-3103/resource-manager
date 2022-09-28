@@ -10,7 +10,8 @@ $gap-of-bottom-line: 0.5em;
   }
 
   .tag-picker_header {
-    line-height: var(--el-component-size);
+    display: flex;
+    align-items: center;
   }
 
   .tag-tree-panel {
@@ -22,7 +23,6 @@ $gap-of-bottom-line: 0.5em;
       }
 
       display: flex;
-      flex-direction: row;
       justify-content: flex-start;
 
       .tag-tree_title {
@@ -31,7 +31,7 @@ $gap-of-bottom-line: 0.5em;
         font-size: 0.8em;
         font-weight: 600;
         padding-right: 1em;
-        @include txt-v-center(--el-tag-height);
+        @include txt-v-center(--el-component-size-small);
       }
 
       .tag-list {
