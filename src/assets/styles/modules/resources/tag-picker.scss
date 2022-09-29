@@ -6,8 +6,13 @@ $gap-of-bottom-line: 0.5em;
 $tag-tree-margin-top: 0.3em;
 
 .tag-picker {
+  //   --card-padding-small: calc(
+  //     var(--el-card-padding) / 2
+  //   ); // 外部变量无法导入，浏览器显示未定义，原因未知
+  .el-card__header,
   .el-card__body {
-    padding-top: 10px;
+    padding: $card-padding-small;
+    // padding: var($--card-padding-small);
   }
 
   .tag-picker_header {
