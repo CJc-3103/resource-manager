@@ -95,7 +95,7 @@ const searchTopics = (topicKeywords) => {
 };
 
 // 选择主题
-const currentTopic = computed(() => store.state.currentTopic);
+const currentTopic = computed(() => store.state.resources.currentTopic);
 const updateCurrentTopic = (topic) =>
   store.dispatch('resources/updateCurrentTopic', topic);
 
