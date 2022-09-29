@@ -4,8 +4,10 @@
       <TopicPicker />
     </el-aside>
     <el-main>
-      <TagPicker />
-      <ResourceContainer />
+      <div class="main-content">
+        <TagPicker />
+        <ResourceContainer />
+      </div>
     </el-main>
     <el-aside class="el-aside--right" width="200px">AsideRight</el-aside>
   </el-container>
