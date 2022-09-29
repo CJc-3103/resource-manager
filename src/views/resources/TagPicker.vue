@@ -29,7 +29,10 @@
       </div>
       <!-- </el-col> -->
 
-      <dynScroll class="tag-tree-group_container" scroll-y>
+      <!-- <dynScroll class="tag-tree-group_container" scroll-y> -->
+      <!-- <div class="tag-tree-group_wrap"> -->
+      <!-- <el-scrollbar height="200px"> -->
+      <el-scrollbar>
         <div class="tag-tree-group">
           <div
             class="tag-tree"
@@ -50,9 +53,10 @@
                 :key="j"
               />
             </el-radio-group>
-          </div>
-        </div>
-      </dynScroll>
+          </div></div
+      ></el-scrollbar>
+      <!-- </div> -->
+      <!-- </dynScroll> -->
     </div>
   </el-card>
 </template>

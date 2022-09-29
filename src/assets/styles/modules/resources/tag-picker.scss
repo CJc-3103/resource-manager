@@ -3,6 +3,7 @@
 @use '.././common/index.scss' as *;
 
 $gap-of-bottom-line: 0.5em;
+$tag-tree-margin-top: 0.3em;
 
 .tag-picker {
   .el-card__body {
@@ -40,27 +41,28 @@ $gap-of-bottom-line: 0.5em;
       }
     }
 
-    .tag-tree-group_container {
-      max-height: 6em;
+    .el-scrollbar {
+      height: calc((var(--el-component-size-small) + $tag-tree-margin-top) * 3);
+    }
 
-      .tag-tree-group {
-        display: flex;
-        justify-content: space-between;
-        flex-wrap: wrap;
-        margin-top: -0.3em;
+    .tag-tree-group {
+      max-height: max-content;
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      margin-top: -$tag-tree-margin-top;
 
-        .tag-tree {
-          margin-top: 0.3em;
+      .tag-tree {
+        margin-top: $tag-tree-margin-top;
 
-          .tag-group {
-            .tag {
-              .el-radio-button__inner {
-                border-left: var(--border-base);
-                border-radius: var(--el-border-radius-base);
-              }
-              &.is-active .el-radio-button__inner {
-                border-left: 0;
-              }
+        .tag-group {
+          .tag {
+            .el-radio-button__inner {
+              border-left: var(--border-base);
+              border-radius: var(--el-border-radius-base);
+            }
+            &.is-active .el-radio-button__inner {
+              border-left: 0;
             }
           }
         }
