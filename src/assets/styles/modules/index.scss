@@ -1,9 +1,5 @@
-@use '../vars' as *;
-
-$header-height: 60px;
-$body-height: calc(100vh - $header-height);
-$left-aside-max-width: 15em;
-$right-aside-max-width: 15em;
+@use './vars.scss' as *;
+// @use './vars.module.scss' as *;
 
 // 导航条
 .nav-bar {

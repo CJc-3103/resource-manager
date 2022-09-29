@@ -1,3 +1,9 @@
+@use '../vars.scss' as *;
+// 组件
 @use './topic-picker.scss' as *;
 @use './tag-picker.scss' as *;
 @use './resource-container.scss' as *;
+
+.main-content {
+  height: $body-height;
+}
