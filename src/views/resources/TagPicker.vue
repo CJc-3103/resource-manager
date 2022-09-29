@@ -4,6 +4,7 @@
       <el-row class="tag-picker_header" :gutter="10" justify="space-between">
         <el-col :xs="24" :sm="12" :md="8" :lg="6" class="tag-picker_action">
           <el-input
+            size="small"
             :placeholder="$t('tagPicker.placeholder')"
             v-model="tagKeywords"
           >
