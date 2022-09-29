@@ -1,12 +1,12 @@
 const navbar = {
     resources: {
-        title: 'Resources'
+        title: 'Resources',
     },
     tags: {
-        title: 'Tags'
+        title: 'Tags',
     },
     settings: {
-        title: 'Settings'
+        title: 'Settings',
     },
     dropdown: {
         title: 'Language',
@@ -20,17 +20,18 @@ const topicMenu = {
     placeholder: 'Input topic name',
     title: 'Select topic',
     all: 'All',
-    noTopic: 'No Topic'
+    noTopic: 'No Topic',
 };
 const tagPicker = {
     placeholder: 'Input tag name',
-    pickedTitle: 'Picked'
+    pickedTitle: 'Picked',
+    clearAll: 'Clear All',
 }
 const resourceContainer = {
     emptyDescription: 'No resources',
     resourceItem: {
         noPicture: 'No picture',
-        noIcon: 'No icon'
+        noIcon: 'No icon',
     },
 }
 

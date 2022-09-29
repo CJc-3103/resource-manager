@@ -9,7 +9,11 @@
             v-model="tagKeywords"
           >
             <template #append>
-              <el-button :icon="Search" @click="searchTags(tagKeywords)" />
+              <el-button
+                size="small"
+                :icon="Search"
+                @click="searchTags(tagKeywords)"
+              />
             </template>
           </el-input>
         </el-col>
@@ -18,11 +22,23 @@
 
     <div class="tag-tree-panel">
       <!-- <el-col :xs="24" :sm="12" :md="6" :lg="6" class="tag-picker_title"> -->
-      <div class="tag-tree tags--picked">
+      <div
+        class="tag-tree tags--picked"
+        v-if="isDisplayPicked"
+        v-show="pickedTagsCount"
+      >
         <div class="tag-tree_title">{{ $t('tagPicker.pickedTitle') }}</div>
+        <el-tag type="warning" class="tag" closable @close="handleCloseAll">
+          {{ $t('tagPicker.clearAll') }}
+        </el-tag>
         <div class="tag-group">
           <template v-for="(tag, i) in currentTags" :key="i">
-            <el-tag v-show="tag" class="tag" closable @close="handleClose(i)">
+            <el-tag
+              v-show="tag"
+              class="tag"
+              closable
+              @close="handleCloseTag(i, tag)"
+            >
               {{ tag }}
             </el-tag></template
           >
@@ -41,7 +57,7 @@
             <el-radio-group
               v-model="currentTags[i]"
               class="tag-group"
-              @change="handleTagSelect"
+              @change="handleTagPicked(i)"
             >
               <el-radio-button
                 :label="title"
@@ -524,7 +540,7 @@ const tags = [
 
 //#region 交互
 
-// 搜索主题
+//#region 搜索标签
 const tagKeywords = ref('');
 const filteredTags = reactive(tags);
 // console.log('filteredTags', filteredTags);
@@ -538,31 +554,69 @@ const searchTags = (tagKeywords) => {
     filteredTags.value = tags;
   }
 };
+//#endregion
 
-// 选择主题
-const currentTags = reactive(new Array(tags.length).fill(''));
-const updateCurrentTags = (topic) =>
-  store.dispatch('resources/updateCurrentTags', topic);
+//#region 选择标签
+// const storedPickedTags = computed(() => store.state.resources.currentTags);
+const currentTags = ref([]);
+// const currentTags = storedPickedTags.length
+//   ? storedPickedTags
+//   : ref(new Array(tags.length).fill(''));
+const setCurrentTags = (tags) => store.commit('resources/setCurrentTags', tags);
+const pickedTagsCount = computed(() => store.state.resources.pickedTagsCount);
+const isPickedList = ref([]);
+
+const isDisplayPicked = ref(!!pickedTagsCount);
+
 const initCurrentTags = () => {
-  for (let i = 0; i < tags.length; i++) {
-    currentTags[i] = '';
-  }
-  updateCurrentTags(currentTags);
+  currentTags.value = new Array(tags.length).fill('');
+  isPickedList.value = new Array(tags.length).fill(false);
+  if (!pickedTagsCount) setCurrentTags(currentTags);
 };
 
-function handleTagSelect() {
-  updateCurrentTags(currentTags);
+const logResult = () => {
+  console.log('currentTags', currentTags.value);
+  console.log('pickedTagsCount', pickedTagsCount.value);
+};
+
+function handleTagPicked(id) {
+  if (!isDisplayPicked.value) isDisplayPicked.value = true;
+  if (!isPickedList[id]) {
+    store.dispatch('resources/incrementPickedTags');
+    isPickedList[id] = true;
+  }
+  setCurrentTags(currentTags);
+
+  logResult();
 }
+//#endregion
 
-// 取消已选中标签
+//#region 取消已选中标签
 
-function handleClose(tagIdx) {
-  clearSelectedTag(currentTags, tagIdx);
-}
-
-function clearSelectedTag(currentTags, tagIdx) {
+function removeClosedTag(currentTags, tagIdx) {
   currentTags[tagIdx] = '';
 }
+
+function handleCloseTag(tagId) {
+  removeClosedTag(tagId);
+  setCurrentTags(currentTags);
+  store.dispatch('resources/decrementPickedTags');
+
+  logResult();
+}
+
+function closeAllTags() {
+  initCurrentTags();
+}
+
+function handleCloseAll() {
+  store.dispatch('resources/clearCurrentTags');
+  closeAllTags();
+  setCurrentTags(currentTags);
+
+  logResult();
+}
+//#endregion
 
 //#endregion
 
