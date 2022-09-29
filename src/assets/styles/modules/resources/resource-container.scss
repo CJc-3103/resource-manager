@@ -20,6 +20,7 @@ $tag-gap: 5px;
     justify-content: space-evenly;
     flex-wrap: wrap;
     margin: -$resource-item-gap 0; // 抵消首/尾行的 margin-top
+    height: max-content;
 
     .resource-item {
       width: $resource-item-width;
