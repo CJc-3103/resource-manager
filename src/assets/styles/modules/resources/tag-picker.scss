@@ -51,6 +51,7 @@ $tag-tree-margin-top: 0.3em;
       justify-content: space-between;
       flex-wrap: wrap;
       margin-top: -$tag-tree-margin-top;
+      padding-right: var(--el-card-padding);
 
       .tag-tree {
         margin-top: $tag-tree-margin-top;

@@ -29,9 +29,6 @@
       </div>
       <!-- </el-col> -->
 
-      <!-- <dynScroll class="tag-tree-group_container" scroll-y> -->
-      <!-- <div class="tag-tree-group_wrap"> -->
-      <!-- <el-scrollbar height="200px"> -->
       <el-scrollbar>
         <div class="tag-tree-group">
           <div
@@ -55,8 +52,6 @@
             </el-radio-group>
           </div></div
       ></el-scrollbar>
-      <!-- </div> -->
-      <!-- </dynScroll> -->
     </div>
   </el-card>
 </template>
@@ -66,7 +61,6 @@
 import { ref, reactive, computed, onMounted } from 'vue';
 import { useStore } from 'vuex';
 import { Search } from '@element-plus/icons-vue';
-import { dynScroll } from '@/components/dyn-el';
 
 const store = useStore();
 //#endregion
