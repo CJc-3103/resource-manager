@@ -1,5 +1,4 @@
 @use './vars.scss' as *;
-// @use './vars.module.scss' as *;
 
 // 导航条
 .nav-bar {
@@ -44,17 +43,10 @@
 
 // 左侧边栏
 .el-aside--left {
-  border-right: var(--border-base);
-  padding: 1.5em 0;
-
   .aside-title {
     font-size: 1em;
     font-weight: bold;
     margin: 1em 0;
-  }
-
-  .el-menu {
-    border: none;
   }
 }
 
@@ -65,12 +57,5 @@
 
 // 主体
 .el-main {
-  width: 100%;
   overflow-y: hidden;
-}
-
-// 部分通用
-.el-aside,
-.el-main {
-  height: $body-height;
 }
