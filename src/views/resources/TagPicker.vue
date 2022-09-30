@@ -73,9 +73,24 @@
 
 <script setup>
 //#region 依赖
-import { ref, reactive, computed, onMounted, watch } from 'vue';
+import {
+  ref,
+  reactive,
+  computed,
+  onMounted,
+  watch,
+  onBeforeUnmount,
+  toRaw,
+  onBeforeMount,
+  onUnmounted,
+} from 'vue';
 import { useStore } from 'vuex';
 import { Search } from '@element-plus/icons-vue';
+import {
+  recoverFromLocal,
+  backup2Local,
+  removeBackupInLocal,
+} from '@/utils/storage/backupState/backupResourceSelection';
 
 const store = useStore();
 //#endregion
@@ -561,7 +576,6 @@ const searchTags = (tagKeywords) => {
 
 //#region 选择标签
 const storedPickedTags = computed(() => store.state.resources.pickedTags);
-// const { pickedTags: storedPickedTags } = useStates(['pickedTags'], 'resources');
 
 const pickedTags = ref(new Array(tagCount));
 const setPickedTags = (tags) => store.commit('resources/setPickedTags', tags);
@@ -621,10 +635,33 @@ function handleCloseAll() {
 //#endregion
 
 //#region 生命周期
+
+const init = () => {
+  const backup = recoverFromLocal();
+  console.log('backup', backup);
+  if (backup && backup.pickedTagsCount) {
+    pickedTags.value = storedPickedTags.value;
+    pickedTagsCount.value = backup.pickedTagsCount;
+    isPickedList.value = backup.isPickedList;
+  } else resetPicked();
+  isDisplayPicked.value = !!pickedTagsCount.value; // 刷新后需要判定
+};
+const backupState = () =>
+  backup2Local({
+    pickedTagsCount: pickedTagsCount.value,
+    isPickedList: isPickedList.value,
+  });
+
 onMounted(() => {
-  isDisplayPicked.value = !!pickedTagsCount.value;
-  resetPicked();
+  console.log('onMounted');
+  init();
+  window.addEventListener('beforeunload', () => backupState());
 });
 
+onBeforeUnmount(() => {
+  console.log('onBeforeUnmount');
+  backupState();
+  window.removeEventListener('beforeunload', () => backupState());
+});
 //#endregion
 </script>
