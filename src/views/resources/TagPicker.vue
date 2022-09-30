@@ -32,12 +32,12 @@
           {{ $t('tagPicker.clearAll') }}
         </el-tag>
         <div class="tag-group">
-          <template v-for="(tag, i) in currentTags" :key="i">
+          <template v-for="(tag, i) in pickedTags" :key="i">
             <el-tag
               v-show="tag"
               class="tag"
               closable
-              @close="handleCloseTag(i, tag)"
+              @close="handleCloseTag(i)"
             >
               {{ tag }}
             </el-tag></template
@@ -55,7 +55,7 @@
           >
             <div class="tag-tree_title">{{ title }}</div>
             <el-radio-group
-              v-model="currentTags[i]"
+              v-model="pickedTags[i]"
               class="tag-group"
               @change="handleTagPicked(i)"
             >
@@ -75,14 +75,15 @@
 
 <script setup>
 //#region 依赖
-import { ref, reactive, computed, onMounted } from 'vue';
+import { ref, reactive, computed, onMounted, watch } from 'vue';
 import { useStore } from 'vuex';
 import { Search } from '@element-plus/icons-vue';
+import { useStates } from '@/utils/vueHooks/useStore';
 
 const store = useStore();
 //#endregion
 
-//#region 视图构建
+//#region 数据模型
 const tags = [
   {
     title: '用途',
@@ -557,62 +558,69 @@ const searchTags = (tagKeywords) => {
 //#endregion
 
 //#region 选择标签
-// const storedPickedTags = computed(() => store.state.resources.currentTags);
-const currentTags = ref([]);
-// const currentTags = storedPickedTags.length
+// const storedPickedTags = computed(() => store.state.resources.pickedTags);
+const { pickedTags: storedPickedTags } = useStates(['pickedTags'], 'resources');
+
+const pickedTags = ref(new Array(tags.length));
+// const pickedTags = storedPickedTags.length
 //   ? storedPickedTags
 //   : ref(new Array(tags.length).fill(''));
-const setCurrentTags = (tags) => store.commit('resources/setCurrentTags', tags);
+const setPickedTags = (tags) => store.commit('resources/setPickedTags', tags);
+// watch(pickedTags.value,(pickedTags)=>setPickedTags(pickedTags));
+
 const pickedTagsCount = computed(() => store.state.resources.pickedTagsCount);
-const isPickedList = ref([]);
 
-const isDisplayPicked = ref(!!pickedTagsCount);
+const isPickedList = ref(new Array(tags.length));
+const setIsPicked = (tagId, isPicked) => (isPickedList[tagId] = isPicked);
+const setPicked = (tagId) => setIsPicked(tagId, true);
+const setClosed = (tagId) => setIsPicked(tagId, false);
+const isDisplayPicked = ref(false);
 
-const initCurrentTags = () => {
-  currentTags.value = new Array(tags.length).fill('');
-  isPickedList.value = new Array(tags.length).fill(false);
-  if (!pickedTagsCount) setCurrentTags(currentTags);
+const initPickedTags = () => {
+  for (let i = 0; i < pickedTags.value.length; i++) {
+    pickedTags.value[i] = '';
+    isPickedList.value[i] = false;
+  }
+  //   if (!pickedTagsCount.value) setPickedTags(pickedTags.value);
 };
 
 const logResult = () => {
-  console.log('currentTags', currentTags.value);
-  console.log('pickedTagsCount', pickedTagsCount.value);
+  //   console.log('pickedTags', pickedTags.value);
+  //   console.log('pickedTagsCount', pickedTagsCount.value);
+  //   console.log('storedPickedTags', storedPickedTags.value);
 };
 
-function handleTagPicked(id) {
+function handleTagPicked(tagId) {
   if (!isDisplayPicked.value) isDisplayPicked.value = true;
-  if (!isPickedList[id]) {
+  if (!isPickedList.value[tagId]) {
     store.dispatch('resources/incrementPickedTags');
-    isPickedList[id] = true;
+    setPicked(tagId);
   }
-  setCurrentTags(currentTags);
+  setPickedTags(pickedTags.value);
 
   logResult();
 }
 //#endregion
 
-//#region 取消已选中标签
+//#region 取消选中标签
 
-function removeClosedTag(currentTags, tagIdx) {
-  currentTags[tagIdx] = '';
+function removeClosedTag(pickedTags, tagIdx) {
+  pickedTags[tagIdx] = '';
 }
 
 function handleCloseTag(tagId) {
-  removeClosedTag(tagId);
-  setCurrentTags(currentTags);
   store.dispatch('resources/decrementPickedTags');
+  setClosed(tagId);
+  removeClosedTag(pickedTags.value, tagId);
+  setPickedTags(pickedTags.value);
 
   logResult();
 }
 
-function closeAllTags() {
-  initCurrentTags();
-}
-
 function handleCloseAll() {
-  store.dispatch('resources/clearCurrentTags');
-  closeAllTags();
-  setCurrentTags(currentTags);
+  store.dispatch('resources/resetPickedTags');
+  initPickedTags();
+  setPickedTags(pickedTags.value);
 
   logResult();
 }
@@ -622,7 +630,8 @@ function handleCloseAll() {
 
 //#region 生命周期
 onMounted(() => {
-  initCurrentTags();
+  isDisplayPicked.value = !!pickedTagsCount.value;
+  initPickedTags();
 });
 
 //#endregion
