@@ -1,16 +1,16 @@
 import store from '@/store'
-import { getItem, setItem, removeItem } from './index'
+import { getItem, setItem, removeItem } from '../utils'
 
-const backupKey = 'backupState';
+const backupKey = 'backupGlobalState';
 const recoverFromLocal = () => {
-    let backup = getItem(backupKey);
+    const backup = getItem(backupKey);
     if (backup) {
         store.replaceState(Object.assign({}, store.state, JSON.parse(backup)));
     }
-    removeItem(backupKey);
 }
 const backup2Local = () => {
     setItem(backupKey, JSON.stringify(store.state));
 }
+const removeBackupInLocal = () => removeItem(backupKey);
 
-export { recoverFromLocal, backup2Local }
+export { recoverFromLocal, backup2Local, removeBackupInLocal }
