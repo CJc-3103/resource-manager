@@ -6,7 +6,7 @@
     <el-main>
       <div class="main-content">
         <TagPicker />
-        <ResourceContainer />
+        <ResourceGallery />
       </div>
     </el-main>
     <el-aside class="el-aside--right" width="200px">
@@ -18,7 +18,7 @@
 <script setup>
 import TopicPicker from './TopicPicker.vue';
 import TagPicker from './TagPicker.vue';
-import ResourceContainer from './ResourceContainer.vue';
+import ResourceGallery from './ResourceGallery.vue';
 import Bookmark from './Bookmark.vue';
 import '@/assets/styles/modules/resources/index.scss';
 </script>
