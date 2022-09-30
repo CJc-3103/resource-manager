@@ -571,7 +571,7 @@ const search = ref('');
 const filterType = ref('');
 const filteredTags = ref(tags);
 watch(search, (search) => {
-  if (!search) filteredTags.value = tags;
+  if (!search) searchTags(search);
 });
 const searchTags = (search) => {
   let filtered = [];
