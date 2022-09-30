@@ -4,10 +4,10 @@
     <el-input
       size="small"
       :placeholder="$t('topicMenu.placeholder')"
-      v-model="topicKeywords"
+      v-model="search"
     >
       <template #append>
-        <el-button :icon="Search" @click="searchTopics(topicKeywords)" />
+        <el-button :icon="Search" @click="handleSearchTopic(search)" />
       </template>
     </el-input>
     <!-- 排序 -->
@@ -48,7 +48,7 @@
 
 <script setup>
 //#region 依赖
-import { ref, computed, onBeforeMount } from 'vue';
+import { ref, computed, onBeforeMount, onMounted } from 'vue';
 import { useStore } from 'vuex';
 import { fetchTopic } from '@/api';
 import { Search } from '@element-plus/icons-vue';
@@ -81,38 +81,47 @@ const topics = [
 //#region 交互
 
 // 搜索主题
-const topicKeywords = ref('');
+const search = ref('');
 const filteredTopics = ref(topics);
-
-const searchTopics = (topicKeywords) => {
-  if (topicKeywords) {
-    filteredTopics.value = topics.filter(
-      (topic) => topic.title.indexOf(topicKeywords) > -1
-    );
+watch(search, (search) => {
+  if (!search) searchTopics(search);
+});
+const searchTopics = (search) => {
+  let filter = [];
+  if (search) {
+    filter = topics.filter((topic) => topic.title.indexOf(search) > -1);
   } else {
-    filteredTopics.value = topics;
+    filter = topics;
   }
+  filteredTopics.value = filter;
 };
+
+function handleSearchTopic(search) {
+  searchTopics(search);
+}
 
 // 选择主题
 const currentTopic = computed(() => store.state.resources.currentTopic);
-const updateCurrentTopic = (topic) =>
-  store.dispatch('resources/updateCurrentTopic', topic);
+const setCurrentTopic = (topic) =>
+  store.commit('resources/setCurrentTopic', topic);
 
-function initCurrentTopic(currentTopic) {
-  if (!currentTopic) updateCurrentTopic(defaultTopics[0].index);
+function initTopic(currentTopic) {
+  if (!currentTopic) setCurrentTopic(defaultTopics[0].index);
 }
 
 function handleSelectTopic(topic) {
-  updateCurrentTopic(topic);
+  setCurrentTopic(topic);
 }
 
 // 生命周期
 function init() {
-  initCurrentTopic(currentTopic.value);
-  searchTopics(topicKeywords.value); // 初始化主题列表
+  initTopic(currentTopic.value);
+  searchTopics(search.value); // 初始化主题列表
 }
-init();
+
+onMounted(() => {
+  init();
+});
 
 onBeforeMount(() => {
   //   init();

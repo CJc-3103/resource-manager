@@ -19,8 +19,5 @@ export default {
         },
     },
     actions: {
-        updateCurrentTopic({ commit }, topic) {
-            commit('setCurrentTopic', topic);
-        },
     },
 };

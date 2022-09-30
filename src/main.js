@@ -13,8 +13,8 @@ import '@/assets/styles/normalize.scss';
 import '@/assets/styles/index.scss';
 
 // 初始化
-import { recoverFromLocal } from '@/utils/storage/backupState/backupGlobalState';
-recoverFromLocal(); // 刷新后，先从本地备份恢复状态
+import { recoverGlobalStateLocal } from '@/utils/storage/backupState/backupGlobalState';
+recoverGlobalStateLocal(); // 刷新后，先从本地备份恢复状态
 const i18n = createI18n(setupI18nConfig());
 
 const app = createApp(App).use(ElementPlus, {

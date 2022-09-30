@@ -18,7 +18,7 @@
 
 <script setup>
 import { ref, watch, computed } from 'vue';
-import { backup2Local } from '@/utils/storage/backupState/backupGlobalState';
+import { setGlobalStateLocal } from '@/utils/storage/backupState/backupGlobalState';
 import { useStore } from 'vuex';
 import { useI18n } from 'vue-i18n';
 import { elLocalLangs } from '@/i18n';
@@ -32,5 +32,5 @@ watch(currentLang, (newLang) => {
 });
 
 // 刷新前备份
-window.addEventListener('beforeunload', () => backup2Local());
+window.addEventListener('beforeunload', () => setGlobalStateLocal());
 </script>

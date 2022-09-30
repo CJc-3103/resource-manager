@@ -96,9 +96,9 @@ import { ref, computed, onMounted, watch, onBeforeUnmount } from 'vue';
 import { useStore } from 'vuex';
 import { Search } from '@element-plus/icons-vue';
 import {
-  recoverFromLocal,
-  backup2Local,
-} from '@/utils/storage/backupState/backupTagPicker';
+  getBackupLocal,
+  setBackupLocal,
+} from '@/utils/storage/backupState/utils';
 
 const store = useStore();
 //#endregion --
@@ -657,9 +657,10 @@ function handleCloseAll() {
 //#endregion --
 
 //#region 生命周期--
+const backupKey = 'backupTagPicker';
 
 const init = () => {
-  const backup = recoverFromLocal();
+  const backup = getBackupLocal(backupKey);
   if (backup && backup.pickedTagsCount) {
     pickedTags.value = storedPickedTags.value;
     pickedTagsCount.value = backup.pickedTagsCount;
@@ -670,7 +671,7 @@ const init = () => {
   filterType.value = backup.filterType || '';
 };
 const backupState = () =>
-  backup2Local({
+  setBackupLocal(backupKey, {
     pickedTagsCount: pickedTagsCount.value,
     isPickedList: isPickedList.value,
     search: search.value,
