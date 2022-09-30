@@ -48,11 +48,15 @@
 
 <script setup>
 //#region 依赖
-import { ref, computed, onBeforeMount, onMounted } from 'vue';
+import { ref, computed, watch, onBeforeMount, onMounted } from 'vue';
 import { useStore } from 'vuex';
 import { fetchTopic } from '@/api';
 import { Search } from '@element-plus/icons-vue';
 import { cloneDeep } from 'lodash';
+import {
+  getBackupLocal,
+  setBackupLocal,
+} from '@/utils/storage/backupState/utils';
 
 const store = useStore();
 //#endregion
@@ -114,21 +118,27 @@ function handleSelectTopic(topic) {
 }
 
 // 生命周期
+const backupKey = 'backupTopicPicker';
+
 function init() {
+  const backup = getBackupLocal(backupKey);
+  search.value = backup?.search || '';
   initTopic(currentTopic.value);
-  searchTopics(search.value); // 初始化主题列表
+  // 若之前有筛选，切回来时保持
+  searchTopics(search.value);
 }
+const backupState = () =>
+  setBackupLocal(backupKey, {
+    search: search.value,
+  });
 
 onMounted(() => {
   init();
+  window.addEventListener('beforeunload', () => backupState());
 });
 
 onBeforeMount(() => {
-  //   init();
-  //   initCurrentTopic(currentTopic.value);
-  //   searchTopics(topicKeywords.value); // 初始化主题列表
-  //   console.log('currentTopic.value', currentTopic);
+  window.removeEventListener('beforeunload', () => backupState());
 });
-
 //#endregion
 </script>
