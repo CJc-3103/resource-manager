@@ -21,7 +21,6 @@
     </template>
 
     <div class="tag-tree-panel">
-      <!-- <el-col :xs="24" :sm="12" :md="6" :lg="6" class="tag-picker_title"> -->
       <div
         class="tag-tree tags--picked"
         v-if="isDisplayPicked"
@@ -44,7 +43,6 @@
           >
         </div>
       </div>
-      <!-- </el-col> -->
 
       <el-scrollbar>
         <div class="tag-tree-group">
@@ -79,8 +77,13 @@ import { ref, reactive, computed, onMounted, watch } from 'vue';
 import { useStore } from 'vuex';
 import { Search } from '@element-plus/icons-vue';
 import { useStates } from '@/utils/vueHooks/useStore';
+import { max } from 'lodash';
 
 const store = useStore();
+//#endregion
+
+//#region 视图构建
+const isDisplayPicked = ref(false); // 是否渲染已选标签列表
 //#endregion
 
 //#region 数据模型
@@ -536,6 +539,7 @@ const tags = [
     ],
   },
 ];
+const tagCount = tags.length;
 
 //#endregion
 
@@ -558,69 +562,59 @@ const searchTags = (tagKeywords) => {
 //#endregion
 
 //#region 选择标签
-// const storedPickedTags = computed(() => store.state.resources.pickedTags);
-const { pickedTags: storedPickedTags } = useStates(['pickedTags'], 'resources');
+const storedPickedTags = computed(() => store.state.resources.pickedTags);
+// const { pickedTags: storedPickedTags } = useStates(['pickedTags'], 'resources');
 
-const pickedTags = ref(new Array(tags.length));
-// const pickedTags = storedPickedTags.length
-//   ? storedPickedTags
-//   : ref(new Array(tags.length).fill(''));
+const pickedTags = ref(new Array(tagCount));
 const setPickedTags = (tags) => store.commit('resources/setPickedTags', tags);
-// watch(pickedTags.value,(pickedTags)=>setPickedTags(pickedTags));
+watch(pickedTags.value, (pickedTags) => setPickedTags(pickedTags));
 
-const pickedTagsCount = computed(() => store.state.resources.pickedTagsCount);
+const pickedTagsCount = ref(0);
+const isPickedList = ref(new Array(tagCount));
 
-const isPickedList = ref(new Array(tags.length));
-const setIsPicked = (tagId, isPicked) => (isPickedList[tagId] = isPicked);
-const setPicked = (tagId) => setIsPicked(tagId, true);
-const setClosed = (tagId) => setIsPicked(tagId, false);
-const isDisplayPicked = ref(false);
+const setIsPickedInList = (tagId, isPicked) =>
+  (isPickedList.value[tagId] = isPicked);
 
-const initPickedTags = () => {
+// 事件实际执行函数
+const pickTag = (tagGroupId) => {
+  if (!isPickedList.value[tagGroupId]) {
+    pickedTagsCount.value = Math.min(tagCount, pickedTagsCount.value + 1);
+    setIsPickedInList(tagGroupId, true);
+  }
+};
+const closeTag = (tagId) => {
+  pickedTagsCount.value = Math.max(0, pickedTagsCount.value - 1);
+  setIsPickedInList(tagId, false);
+  pickedTags.value[tagId] = '';
+};
+const resetPicked = () => {
+  pickedTagsCount.value = 0;
   for (let i = 0; i < pickedTags.value.length; i++) {
     pickedTags.value[i] = '';
     isPickedList.value[i] = false;
   }
-  //   if (!pickedTagsCount.value) setPickedTags(pickedTags.value);
 };
 
 const logResult = () => {
-  //   console.log('pickedTags', pickedTags.value);
-  //   console.log('pickedTagsCount', pickedTagsCount.value);
-  //   console.log('storedPickedTags', storedPickedTags.value);
+  console.log('pickedTagsCount', pickedTagsCount.value);
+  console.log('pickedTags', pickedTags.value);
+  console.log('storedPickedTags', storedPickedTags.value);
 };
 
+// 事件处理器
 function handleTagPicked(tagId) {
   if (!isDisplayPicked.value) isDisplayPicked.value = true;
-  if (!isPickedList.value[tagId]) {
-    store.dispatch('resources/incrementPickedTags');
-    setPicked(tagId);
-  }
-  setPickedTags(pickedTags.value);
+  pickTag(tagId);
 
   logResult();
 }
-//#endregion
-
-//#region 取消选中标签
-
-function removeClosedTag(pickedTags, tagIdx) {
-  pickedTags[tagIdx] = '';
-}
-
 function handleCloseTag(tagId) {
-  store.dispatch('resources/decrementPickedTags');
-  setClosed(tagId);
-  removeClosedTag(pickedTags.value, tagId);
-  setPickedTags(pickedTags.value);
+  closeTag(tagId);
 
   logResult();
 }
-
 function handleCloseAll() {
-  store.dispatch('resources/resetPickedTags');
-  initPickedTags();
-  setPickedTags(pickedTags.value);
+  resetPicked();
 
   logResult();
 }
@@ -631,7 +625,7 @@ function handleCloseAll() {
 //#region 生命周期
 onMounted(() => {
   isDisplayPicked.value = !!pickedTagsCount.value;
-  initPickedTags();
+  resetPicked();
 });
 
 //#endregion
