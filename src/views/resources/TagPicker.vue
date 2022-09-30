@@ -2,17 +2,36 @@
   <el-card class="tag-picker">
     <template #header>
       <el-row class="tag-picker_header" :gutter="10" justify="space-between">
-        <el-col :xs="24" :sm="12" :md="8" :lg="6" class="tag-picker_action">
+        <el-col :xs="24" :sm="16" :md="10" :lg="8" class="tag-picker_action">
           <el-input
             size="small"
             :placeholder="$t('tagPicker.placeholder')"
-            v-model="tagKeywords"
+            clearable
+            v-model="search"
           >
+            <template #prepend>
+              <el-select
+                class="filter-select"
+                size="small"
+                popper-class="filter-select_popper"
+                v-model="filterType"
+                :placeholder="$t('tagPicker.searchSelections.title')"
+              >
+                <el-option
+                  :label="$t('tagPicker.searchSelections.group')"
+                  value="group"
+                />
+                <el-option
+                  :label="$t('tagPicker.searchSelections.tag')"
+                  value="tag"
+                />
+              </el-select>
+            </template>
             <template #append>
               <el-button
                 size="small"
                 :icon="Search"
-                @click="searchTags(tagKeywords)"
+                @click="handleSearchTags(search)"
               />
             </template>
           </el-input>
@@ -48,7 +67,7 @@
         <div class="tag-tree-group">
           <div
             class="tag-tree"
-            v-for="({ title, children }, i) in tags"
+            v-for="({ title, children }, i) in filteredTags"
             :key="i"
           >
             <div class="tag-tree_title">{{ title }}</div>
@@ -72,15 +91,8 @@
 </template>
 
 <script setup>
-//#region 依赖
-import {
-  ref,
-  reactive,
-  computed,
-  onMounted,
-  watch,
-  onBeforeUnmount,
-} from 'vue';
+//#region 依赖--
+import { ref, computed, onMounted, watch, onBeforeUnmount } from 'vue';
 import { useStore } from 'vuex';
 import { Search } from '@element-plus/icons-vue';
 import {
@@ -89,13 +101,13 @@ import {
 } from '@/utils/storage/backupState/backupResourceSelection';
 
 const store = useStore();
-//#endregion
+//#endregion --
 
-//#region 视图构建
+//#region-- 视图构建
 const isDisplayPicked = ref(false); // 是否渲染已选标签列表
-//#endregion
+//#endregion--
 
-//#region 数据模型
+//#region 数据模型--
 const tags = [
   {
     title: '用途',
@@ -550,27 +562,41 @@ const tags = [
 ];
 const tagCount = tags.length;
 
-//#endregion
+//#endregion --
 
-//#region 交互
+//#region 交互-
 
-//#region 搜索标签
-const tagKeywords = ref('');
-const filteredTags = reactive(tags);
-// console.log('filteredTags', filteredTags);
-
-const searchTags = (tagKeywords) => {
-  if (tagKeywords) {
-    filteredTags.value = tags.filter(
-      (tag) => tag.title.indexOf(tagKeywords) > -1
-    );
+//#region 搜索标签----
+const search = ref('');
+const filterType = ref('');
+const filteredTags = ref(tags);
+watch(search, (search) => {
+  if (!search) filteredTags.value = tags;
+});
+const searchTags = (search) => {
+  let filtered = [];
+  if (search) {
+    if (filterType.value === 'group') {
+      filtered = tags.filter((group) => group.title.indexOf(search) > -1);
+    } else if (filterType.value === 'tag') {
+      filtered = tags.filter((group) =>
+        group.children.some((tag) => tag.title.indexOf(search) > -1)
+      );
+    } else {
+      console.error('Error: filterType is invalid');
+    }
   } else {
-    filteredTags.value = tags;
+    filtered = tags;
   }
+  filteredTags.value = filtered;
 };
-//#endregion
 
-//#region 选择标签
+const handleSearchTags = (search) => {
+  searchTags(search);
+};
+//#endregion ----
+
+//#region 选择标签----
 const storedPickedTags = computed(() => store.state.resources.pickedTags);
 
 const pickedTags = ref(new Array(tagCount));
@@ -626,38 +652,41 @@ function handleCloseAll() {
 
   logResult();
 }
-//#endregion
+//#endregion ----
 
-//#endregion
+//#endregion --
 
-//#region 生命周期
+//#region 生命周期--
 
 const init = () => {
   const backup = recoverFromLocal();
-  console.log('backup', backup);
   if (backup && backup.pickedTagsCount) {
     pickedTags.value = storedPickedTags.value;
     pickedTagsCount.value = backup.pickedTagsCount;
     isPickedList.value = backup.isPickedList;
   } else resetPicked();
   isDisplayPicked.value = !!pickedTagsCount.value; // 刷新后需要判定
+  search.value = backup.search || '';
+  filterType.value = backup.filterType || '';
 };
 const backupState = () =>
   backup2Local({
     pickedTagsCount: pickedTagsCount.value,
     isPickedList: isPickedList.value,
+    search: search.value,
+    filterType: filterType.value,
   });
 
 onMounted(() => {
-  console.log('onMounted');
   init();
+  searchTags(search.value);
   window.addEventListener('beforeunload', () => backupState());
 });
 
 onBeforeUnmount(() => {
-  console.log('onBeforeUnmount');
   backupState();
   window.removeEventListener('beforeunload', () => backupState());
 });
-//#endregion
+//#endregion --
 </script>
+hjk

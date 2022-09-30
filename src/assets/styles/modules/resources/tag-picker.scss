@@ -18,6 +18,17 @@ $tag-tree-margin-top: 0.3em;
   .tag-picker_header {
     display: flex;
     align-items: center;
+    .el-input {
+      .filter-select {
+        .el-input {
+          width: 80px;
+          //   width: max-content;
+        }
+      }
+      .el-select__caret {
+        margin-left: 0;
+      }
+    }
   }
 
   .tag-tree-panel {
@@ -74,5 +85,12 @@ $tag-tree-margin-top: 0.3em;
         }
       }
     }
+  }
+}
+
+.el-popper.filter-select_popper {
+  width: max-content;
+  .el-select-dropdown__item {
+    font-size: var(--el-font-size-extra-small);
   }
 }

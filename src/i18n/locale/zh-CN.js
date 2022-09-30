@@ -24,6 +24,11 @@ const topicMenu = {
 };
 const tagPicker = {
     placeholder: '输入标签名',
+    searchSelections: {
+        title: '筛选条件',
+        group: '标签组',
+        tag: '标签',
+    },
     pickedTitle: '已选标签',
     clearAll: '清除全部',
 }

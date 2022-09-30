@@ -24,6 +24,11 @@ const topicMenu = {
 };
 const tagPicker = {
     placeholder: 'Input tag name',
+    searchSelections: {
+        title: 'Select',
+        group: 'group',
+        tag: 'tag',
+    },
     pickedTitle: 'Picked',
     clearAll: 'Clear All',
 }
