@@ -98,7 +98,7 @@ import { Search } from '@element-plus/icons-vue';
 import {
   recoverFromLocal,
   backup2Local,
-} from '@/utils/storage/backupState/backupResourceSelection';
+} from '@/utils/storage/backupState/backupTagPicker';
 
 const store = useStore();
 //#endregion --

@@ -1,11 +1,11 @@
 import { getItem, setItem, removeItem } from '../utils'
 
-const backupKey = 'backupResourceSelection';
+const backupKey = 'backupTagPicker';
 const recoverFromLocal = () => {
     return JSON.parse(getItem(backupKey));
 }
-const backup2Local = (selectionData) => {
-    setItem(backupKey, JSON.stringify(selectionData));
+const backup2Local = (datas) => {
+    setItem(backupKey, JSON.stringify(datas));
 }
 const removeBackupInLocal = () => removeItem(backupKey);
 
