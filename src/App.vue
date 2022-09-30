@@ -18,7 +18,7 @@
 
 <script setup>
 import { ref, watch, computed } from 'vue';
-import { backup2Local } from '@/utils/storage/backup';
+import { backup2Local } from '@/utils/storage/backupState';
 import { useStore } from 'vuex';
 import { useI18n } from 'vue-i18n';
 import { elLocalLangs } from '@/i18n';
