@@ -80,16 +80,12 @@ import {
   onMounted,
   watch,
   onBeforeUnmount,
-  toRaw,
-  onBeforeMount,
-  onUnmounted,
 } from 'vue';
 import { useStore } from 'vuex';
 import { Search } from '@element-plus/icons-vue';
 import {
   recoverFromLocal,
   backup2Local,
-  removeBackupInLocal,
 } from '@/utils/storage/backupState/backupResourceSelection';
 
 const store = useStore();
