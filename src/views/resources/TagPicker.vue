@@ -667,8 +667,10 @@ const init = () => {
     isPickedList.value = backup.isPickedList;
   } else resetPicked();
   isDisplayPicked.value = !!pickedTagsCount.value; // 刷新后需要判定
-  search.value = backup.search || '';
-  filterType.value = backup.filterType || '';
+  search.value = backup?.search || '';
+  filterType.value = backup?.filterType || '';
+  // 若之前有筛选，切回来时保持
+  searchTags(search.value);
 };
 const backupState = () =>
   setBackupLocal(backupKey, {
@@ -680,7 +682,6 @@ const backupState = () =>
 
 onMounted(() => {
   init();
-  searchTags(search.value);
   window.addEventListener('beforeunload', () => backupState());
 });
 
