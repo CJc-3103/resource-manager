@@ -75,9 +75,6 @@
 //#region 依赖
 import { ref, reactive, computed, onMounted, watch } from 'vue';
 import { useStore } from 'vuex';
-import { Search } from '@element-plus/icons-vue';
-import { useStates } from '@/utils/vueHooks/useStore';
-import { max } from 'lodash';
 
 const store = useStore();
 //#endregion
@@ -596,9 +593,9 @@ const resetPicked = () => {
 };
 
 const logResult = () => {
-  console.log('pickedTagsCount', pickedTagsCount.value);
-  console.log('pickedTags', pickedTags.value);
-  console.log('storedPickedTags', storedPickedTags.value);
+  //   console.log('pickedTagsCount', pickedTagsCount.value);
+  //   console.log('pickedTags', pickedTags.value);
+  //   console.log('storedPickedTags', storedPickedTags.value);
 };
 
 // 事件处理器
