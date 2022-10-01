@@ -7,3 +7,27 @@
 .main-content {
   height: calc($body-height - var(--el-main-padding) * 2);
 }
+
+.aside-container {
+  .aside-title {
+    font-size: 1em;
+    font-weight: bold;
+    margin: 1em 0;
+  }
+
+  .action-group {
+  }
+
+  .aside-menu {
+    .aside-menu-item {
+      .aside-menu-item {
+        width: calc(
+          var(--el-aside-width) - var(--el-menu-level-padding) * 2 -
+            var(--el-border-width)
+        );
+        text-overflow: ellipsis;
+        overflow: hidden;
+      }
+    }
+  }
+}

@@ -41,16 +41,19 @@
   }
 }
 
+// 侧边栏
+.el-aside {
+  border-right: var(--border-base);
+  padding: 1.5em 0;
+
+  .el-menu {
+    border: none;
+  }
+}
 // 左侧边栏
 .el-aside--left {
-  .aside-title {
-    font-size: 1em;
-    font-weight: bold;
-    margin: 1em 0;
-  }
 }
 
 // 右侧边栏
 .el-aside--right {
-  //   max-width: $right-aside-max-width;
 }

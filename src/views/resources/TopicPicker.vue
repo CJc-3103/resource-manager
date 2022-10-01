@@ -1,5 +1,5 @@
 <template>
-  <div class="topic-picker">
+  <div class="aside-container topic-picker">
     <!-- 搜索 -->
     <el-input
       size="small"
@@ -19,18 +19,18 @@
     <div class="aside-title">{{ $t('topicMenu.title') }}</div>
     <span class="action-group"> </span>
     <el-menu
-      class="topic-menu"
+      class="aside-menu"
       :default-active="currentTopic"
       @select="handleSelectTopic"
     >
       <!-- 默认主题 -->
       <el-menu-item
-        class="topic-item"
+        class="aside-menu-item"
         :index="index"
         v-for="({ name, index }, i) in defaultTopics"
         :key="i"
       >
-        <span class="topic-txt">{{ $t(`topicMenu.${name}`) }}</span>
+        <span class="aside-menu-item_title">{{ $t(`topicMenu.${name}`) }}</span>
       </el-menu-item>
       <!-- 自定义主题 -->
       <el-tooltip
@@ -39,8 +39,8 @@
         v-for="({ title }, i) in filteredTopics"
         :key="i"
       >
-        <el-menu-item class="topic-item" :index="i + ''">
-          <span class="topic-txt">{{ title }}</span>
+        <el-menu-item class="aside-menu-item" :index="i + ''">
+          <span class="aside-menu-item_title">{{ title }}</span>
         </el-menu-item>
       </el-tooltip>
     </el-menu>

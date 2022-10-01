@@ -20,21 +20,6 @@ body,
   position: relative;
 }
 
-// 左侧边栏
-.el-aside--left {
-  border-right: var(--border-base);
-  padding: 1.5em 0;
-
-  .el-menu {
-    border: none;
-  }
-}
-
-// 右侧边栏
-.el-aside--right {
-  //   max-width: $right-aside-max-width;
-}
-
 // 主体
 .el-main {
   width: 100%;
