@@ -22,6 +22,10 @@ const topicMenu = {
     all: 'All',
     noTopic: 'No Topic',
 };
+const bookMark = {
+    placeholder: 'Input bookmark name',
+    title: 'Select bookmark',
+};
 const tagPicker = {
     placeholder: 'Input tag name',
     searchSelections: {
@@ -43,6 +47,7 @@ const resourceContainer = {
 export default {
     navbar,
     topicMenu,
+    bookMark,
     tagPicker,
     resourceContainer,
 }

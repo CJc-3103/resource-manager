@@ -1,74 +1,57 @@
 <template>
-  <div class="bookmark">
-    <!-- 搜索 -->
+  <h2>收藏夹</h2>
+  <!-- <div class="aside-container bookmark-picker">
+    <!== 搜索 ==>
     <el-input
       size="small"
-      :placeholder="$t('topicMenu.placeholder')"
-      v-model="topicKeywords"
+      clearable
+      :placeholder="$t('bookmark.placeholder')"
+      v-model="search"
     >
       <template #append>
-        <el-button :icon="Search" @click="searchTopics(topicKeywords)" />
+        <el-button :icon="Search" @click="handleSearchBookmark(search)" />
       </template>
     </el-input>
-    <!-- 排序 -->
-    <!-- 新增 -->
-    <!-- 多选 -->
+    <!== 排序 ==>
+    <!== 新增 ==>
+    <!== 多选 ==>
 
-    <!-- 主题区域 -->
-    <div class="aside-title">{{ $t('topicMenu.title') }}</div>
+    <!== 主题区域 ==>
+    <div class="aside-title">{{ $t('bookmark.title') }}</div>
     <span class="action-group"> </span>
-    <!-- 默认主题 -->
     <el-menu
-      class="topic-menu"
-      :default-active="currentTopic"
-      @select="handleSelectTopic"
+      class="aside-menu"
+      :default-active="currentBookmark"
+      @select="handleSelectBookmark"
     >
-      <el-menu-item
-        class="topic-item"
-        :index="index"
-        v-for="({ name, index }, i) in defaultTopics"
-        :key="i"
-      >
-        <span class="topic-txt">{{ $t(`topicMenu.${name}`) }}</span>
-      </el-menu-item>
-      <!-- 自定义主题 -->
       <el-tooltip
         :content="title"
-        placement="right"
-        v-for="({ title }, i) in filteredTopics"
+        placement="left"
+        v-for="({ title }, i) in filteredBookmarks"
         :key="i"
       >
-        <el-menu-item class="topic-item" :index="i + ''">
-          <span class="topic-txt">{{ title }}</span>
+        <el-menu-item class="aside-menu-item" :index="i + ''">
+          <span class="aside-menu-item_title">{{ title }}</span>
         </el-menu-item>
       </el-tooltip>
     </el-menu>
-  </div>
+  </div> -->
 </template>
 
 <script setup>
 //#region 依赖
-import { ref, computed, onBeforeMount } from 'vue';
+import { ref, computed, watch, onBeforeMount, onMounted } from 'vue';
 import { useStore } from 'vuex';
-import { fetchTopic } from '@/api';
-import { Search } from '@element-plus/icons-vue';
-import { cloneDeep } from 'lodash';
+import {
+  getBackupLocal,
+  setBackupLocal,
+} from '@/utils/storage/backupState/utils';
 
 const store = useStore();
 //#endregion
 
-//#region 视图构建
-const defaultTopics = [
-  {
-    name: 'all',
-    index: 'All',
-  },
-  {
-    name: 'noTopic',
-    index: 'NoTopic',
-  },
-];
-const topics = [
+//#region 数据模型
+const bookmarks = [
   {
     title: '网页收藏夹',
   },
@@ -78,48 +61,65 @@ const topics = [
 ];
 //#endregion
 
-//#region 交互
+// //#region 交互
 
-// 搜索主题
-const topicKeywords = ref('');
-const filteredTopics = ref(topics);
+// // 搜索主题
+// const search = ref('');
+// const filteredBookmarks = ref(bookmarks);
+// watch(search, (search) => {
+//   if (!search) searchBookmarks(search);
+// });
+// const searchBookmarks = (search) => {
+//   let filter = [];
+//   if (search) {
+//     filter = bookmarks.filter(
+//       (bookmark) => bookmark.title.indexOf(search) > -1
+//     );
+//   } else {
+//     filter = bookmarks;
+//   }
+//   filteredBookmarks.value = filter;
+// };
 
-const searchTopics = (topicKeywords) => {
-  if (topicKeywords) {
-    filteredTopics.value = topics.filter(
-      (topic) => topic.title.indexOf(topicKeywords) > -1
-    );
-  } else {
-    filteredTopics.value = topics;
-  }
-};
+// function handleSearchBookmark(search) {
+//   searchBookmarks(search);
+// }
 
-// 选择主题
-const currentTopic = computed(() => store.state.currentTopic);
-const updateCurrentTopic = (topic) =>
-  store.dispatch('resources/updateCurrentTopic', topic);
+// // 选择主题
+// const currentBookmark = computed(() => store.state.resources.currentBookmark);
+// const setCurrentBookmark = (bookmark) =>
+//   store.commit('resources/setCurrentBookmark', bookmark);
 
-function initCurrentTopic(currentTopic) {
-  if (!currentTopic) updateCurrentTopic(defaultTopics[0].index);
-}
+// function initBookmark(currentBookmark) {
+//   if (!currentBookmark) setCurrentBookmark(defaultBookmarks[0].index);
+// }
 
-function handleSelectTopic(topic) {
-  updateCurrentTopic(topic);
-}
+// function handleSelectBookmark(bookmark) {
+//   setCurrentBookmark(bookmark);
+// }
 
-// 生命周期
-function init() {
-  initCurrentTopic(currentTopic.value);
-  searchTopics(topicKeywords.value); // 初始化主题列表
-}
-init();
+// // 生命周期
+// const backupKey = 'backupBookmarkPicker';
 
-onBeforeMount(() => {
-  //   init();
-  //   initCurrentTopic(currentTopic.value);
-  //   searchTopics(topicKeywords.value); // 初始化主题列表
-  //   console.log('currentTopic.value', currentTopic);
-});
+// function init() {
+//   const backup = getBackupLocal(backupKey);
+//   search.value = backup?.search || '';
+//   initBookmark(currentBookmark.value);
+//   // 若之前有筛选，切回来时保持
+//   searchBookmarks(search.value);
+// }
+// const backupState = () =>
+//   setBackupLocal(backupKey, {
+//     search: search.value,
+//   });
 
+// onMounted(() => {
+//   init();
+//   window.addEventListener('beforeunload', () => backupState());
+// });
+
+// onBeforeMount(() => {
+//   window.removeEventListener('beforeunload', () => backupState());
+// });
 //#endregion
 </script>

@@ -22,6 +22,10 @@ const topicMenu = {
     all: '全部',
     noTopic: '未分类',
 };
+const bookMark = {
+    placeholder: '输入收藏夹名称',
+    title: '选择收藏夹',
+};
 const tagPicker = {
     placeholder: '输入标签名',
     searchSelections: {
@@ -43,6 +47,7 @@ const resourceContainer = {
 export default {
     navbar,
     topicMenu,
+    bookMark,
     tagPicker,
     resourceContainer,
 }
