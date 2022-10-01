@@ -18,12 +18,12 @@
     <!-- 主题区域 -->
     <div class="aside-title">{{ $t('topicMenu.title') }}</div>
     <span class="action-group"> </span>
-    <!-- 默认主题 -->
     <el-menu
       class="topic-menu"
       :default-active="currentTopic"
       @select="handleSelectTopic"
     >
+      <!-- 默认主题 -->
       <el-menu-item
         class="topic-item"
         :index="index"
