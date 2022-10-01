@@ -3,6 +3,7 @@
     <!-- 搜索 -->
     <el-input
       size="small"
+      clearable
       :placeholder="$t('topicMenu.placeholder')"
       v-model="search"
     >
