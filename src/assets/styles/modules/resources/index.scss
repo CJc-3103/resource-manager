@@ -1,8 +1,11 @@
+@use '../../vars.scss' as *;
 @use '../vars.scss' as *;
 // 组件
 @use './topic-picker.scss' as *;
 @use './tag-picker.scss' as *;
 @use './resource-container.scss' as *;
+
+$aside-title-size: 1em;
 
 .main-content {
   height: calc($body-height - var(--el-main-padding) * 2);
@@ -10,12 +13,20 @@
 
 .aside-container {
   .aside-title {
-    font-size: 1em;
+    font-size: $aside-title-size;
     font-weight: bold;
-    margin: 1em 0;
+    margin: $aside-title-size 0;
   }
 
   .action-group {
+  }
+
+  .el-scrollbar {
+    border-top: var(--border-base);
+    height: calc(
+      $body-height - $aside-padding-top * 2 - var(--el-component-size) -
+        $aside-title-size * (2 + $bold-font-times) - var(--el-border-width)
+    );
   }
 
   .aside-menu {

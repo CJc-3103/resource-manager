@@ -44,7 +44,7 @@
 // 侧边栏
 .el-aside {
   border-right: var(--border-base);
-  padding: 1.5em 0;
+  padding: $aside-padding-top 0;
 
   .el-menu {
     border: none;

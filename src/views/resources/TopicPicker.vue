@@ -2,7 +2,6 @@
   <div class="aside-container topic-picker">
     <!-- 搜索 -->
     <el-input
-      size="small"
       clearable
       :placeholder="$t('topicMenu.placeholder')"
       v-model="search"
@@ -18,32 +17,36 @@
     <!-- 主题区域 -->
     <div class="aside-title">{{ $t('topicMenu.title') }}</div>
     <span class="action-group"> </span>
-    <el-menu
-      class="aside-menu"
-      :default-active="currentTopic"
-      @select="handleSelectTopic"
-    >
-      <!-- 默认主题 -->
-      <el-menu-item
-        class="aside-menu-item"
-        :index="index"
-        v-for="({ name, index }, i) in defaultTopics"
-        :key="i"
+    <el-scrollbar>
+      <el-menu
+        class="aside-menu"
+        :default-active="currentTopic"
+        @select="handleSelectTopic"
       >
-        <span class="aside-menu-item_title">{{ $t(`topicMenu.${name}`) }}</span>
-      </el-menu-item>
-      <!-- 自定义主题 -->
-      <el-tooltip
-        :content="title"
-        placement="right"
-        v-for="({ title }, i) in filteredTopics"
-        :key="i"
-      >
-        <el-menu-item class="aside-menu-item" :index="i + ''">
-          <span class="aside-menu-item_title">{{ title }}</span>
+        <!-- 默认主题 -->
+        <el-menu-item
+          class="aside-menu-item"
+          :index="index"
+          v-for="({ name, index }, i) in defaultTopics"
+          :key="i"
+        >
+          <span class="aside-menu-item_title">{{
+            $t(`topicMenu.${name}`)
+          }}</span>
         </el-menu-item>
-      </el-tooltip>
-    </el-menu>
+        <!-- 自定义主题 -->
+        <el-tooltip
+          :content="title"
+          placement="right"
+          v-for="({ title }, i) in filteredTopics"
+          :key="i"
+        >
+          <el-menu-item class="aside-menu-item" :index="i + ''">
+            <span class="aside-menu-item_title">{{ title }}</span>
+          </el-menu-item>
+        </el-tooltip>
+      </el-menu>
+    </el-scrollbar>
   </div>
 </template>
 
@@ -72,6 +75,48 @@ const defaultTopics = [
   },
 ];
 const topics = [
+  {
+    title: '网页收藏夹',
+  },
+  {
+    title: '图片收集',
+  },
+  {
+    title: '网页收藏夹',
+  },
+  {
+    title: '图片收集',
+  },
+  {
+    title: '网页收藏夹',
+  },
+  {
+    title: '图片收集',
+  },
+  {
+    title: '网页收藏夹',
+  },
+  {
+    title: '图片收集',
+  },
+  {
+    title: '网页收藏夹',
+  },
+  {
+    title: '图片收集',
+  },
+  {
+    title: '网页收藏夹',
+  },
+  {
+    title: '图片收集',
+  },
+  {
+    title: '网页收藏夹',
+  },
+  {
+    title: '图片收集',
+  },
   {
     title: '网页收藏夹',
   },
