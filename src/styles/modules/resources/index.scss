@@ -1,9 +1,11 @@
-@use '../../vars.scss' as *;
+// 项目间通用
+@use '@/styles/vars.scss' as *;
+// 项目内通用
 @use '../vars.scss' as *;
 // 组件
 @use './topic-picker.scss' as *;
 @use './tag-picker.scss' as *;
-@use './resource-container.scss' as *;
+@use './resource-gallery.scss' as *;
 
 $aside-title-size: 1em;
 

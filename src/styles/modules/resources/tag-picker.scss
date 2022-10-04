@@ -1,9 +1,12 @@
-@use '../../vars.scss' as *;
-@use '../../utils.scss' as *;
+// 项目间通用
+@use '@/styles/vars.scss' as *;
+@use '@/styles/utils.scss' as *;
+// 项目内公共
 @use '.././common/index.scss' as *;
+// 页面公共
+@use './vars.scss' as *;
 
 $gap-of-bottom-line: 0.5em;
-$tag-tree-margin-top: 0.3em;
 
 .tag-picker {
   //   --card-padding-small: calc(
@@ -58,7 +61,7 @@ $tag-tree-margin-top: 0.3em;
     }
 
     .el-scrollbar {
-      height: calc((var(--el-component-size-small) + $tag-tree-margin-top) * 3);
+      height: $tag-tree-panel-height;
     }
 
     .tag-tree-group {

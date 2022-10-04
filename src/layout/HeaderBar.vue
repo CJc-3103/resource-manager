@@ -46,7 +46,6 @@
 </template>
 
 <script setup>
-import '@/assets/styles/modules/index.scss';
 import { ref, computed, onMounted } from 'vue';
 import { useStore } from 'vuex';
 import { langs } from '@/i18n';

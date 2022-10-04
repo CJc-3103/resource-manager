@@ -9,8 +9,7 @@ import { setupI18nConfig } from '@/i18n';
 import App from './App.vue';
 //  样式
 import 'element-plus/dist/index.css';
-import '@/assets/styles/normalize.scss';
-import '@/assets/styles/index.scss';
+import '@/styles/index.scss';
 
 // 初始化
 import { recoverGlobalStateLocal } from '@/utils/storage/backupState/backupGlobalState';

@@ -1,0 +1,4 @@
+$tag-tree-margin-top: 0.3em;
+$tag-tree-panel-height: calc(
+  (var(--el-component-size-small) + $tag-tree-margin-top) * 3
+);
