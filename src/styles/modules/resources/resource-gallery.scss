@@ -4,6 +4,8 @@
 
 $resource-gallery-margin-top: 15px;
 
+$resource-gallery-header-container-height: 37px;
+
 $resource-item-width: 8em;
 $resource-item-height: 10em;
 $resource-item-description_panel-height: 3em;
@@ -15,9 +17,10 @@ $tag-gap: 5px;
 
   .resource-gallery_scroll {
     height: calc(
-      $body-height - var(--el-main-padding) * 2 - var(--el-component-size-small) -
+      $main-content-height - var(--el-component-size-small) -
         $card-padding-small * 4 - $tag-tree-panel-height -
-        $resource-gallery-margin-top - var(--el-card-padding) * 2
+        $resource-gallery-margin-top - var(--el-card-padding) * 2 -
+        $resource-gallery-header-container-height
     );
   }
 

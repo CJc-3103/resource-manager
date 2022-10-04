@@ -3,6 +3,7 @@
 @use '@/styles/utils.scss' as *;
 // 项目内公共
 @use '.././common/index.scss' as *;
+@use '../vars.scss' as *;
 // 页面公共
 @use './vars.scss' as *;
 

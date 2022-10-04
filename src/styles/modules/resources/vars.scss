@@ -1,3 +1,7 @@
+@use '../vars.scss' as *;
+
+$main-content-height: calc($body-height - var(--el-main-padding) * 2);
+
 $tag-tree-margin-top: 0.3em;
 $tag-tree-panel-height: calc(
   (var(--el-component-size-small) + $tag-tree-margin-top) * 3
