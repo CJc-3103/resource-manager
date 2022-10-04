@@ -1,7 +1,13 @@
 <template>
-  <h1>{{ title }}</h1>
+  <el-container>
+    <el-aside class="el-aside--left" width="200px">
+      <testDB />
+    </el-aside>
+    <el-main> </el-main>
+    <el-aside class="el-aside--right" width="200px"> </el-aside>
+  </el-container>
 </template>
 
 <script setup>
-const title = 'settings';
+import testDB from './testDB.vue';
 </script>
