@@ -1,11 +1,11 @@
 <template>
-  <el-card class="resource-container">
+  <el-card class="resource-gallery">
     <template #header> </template>
-    <el-scrollbar>
+    <el-scrollbar class="resource-gallery_scroll">
       <div class="empty-panel" v-if="!resources.length">
         <el-empty :description="$t('resourceContainer.emptyDescription')" />
       </div>
-      <div v-else class="resource-container">
+      <div v-else class="resource-group">
         <el-card
           class="resource-item"
           v-for="({ path, type, title, background, tags }, i) in resources"

@@ -20,5 +20,5 @@ import TopicPicker from './TopicPicker.vue';
 import TagPicker from './TagPicker.vue';
 import ResourceGallery from './ResourceGallery.vue';
 import Bookmark from './Bookmark.vue';
-import '@/assets/styles/modules/resources/index.scss';
+import '@/styles/modules/resources/index.scss';
 </script>
