@@ -1,7 +1,7 @@
 // 项目间通用
-@use '@/styles/vars.scss' as *;
+@use '@/styles/common/vars' as *;
 // 项目内通用
-@use '../vars.scss' as *;
+@use '.././common/vars' as *;
 // 页面通用
 @use './vars.scss' as *;
 // 组件

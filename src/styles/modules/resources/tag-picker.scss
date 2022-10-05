@@ -1,11 +1,11 @@
 // 项目间通用
-@use '@/styles/vars.scss' as *;
-@use '@/styles/utils.scss' as *;
+@use '@/styles/common/vars' as *;
+@use '@/styles/common/utils' as *;
 // 项目内公共
-@use '.././common/index.scss' as *;
-@use '../vars.scss' as *;
+@use '../common/index' as *;
+@use '../common/vars' as *;
 // 页面公共
-@use './vars.scss' as *;
+@use './vars' as *;
 
 $gap-of-bottom-line: 0.5em;
 

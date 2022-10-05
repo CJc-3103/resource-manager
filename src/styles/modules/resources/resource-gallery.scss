@@ -1,5 +1,5 @@
-@use '@/styles/vars.scss' as *;
-@use '../vars.scss' as *;
+@use '@/styles/common/vars' as *;
+@use '../common/vars' as *;
 @use './vars.scss' as *;
 
 $resource-gallery-margin-top: 15px;
@@ -88,7 +88,7 @@ $tag-gap: 5px;
         height: $resource-item-description_panel-height;
         position: absolute;
         bottom: 0;
-        background-color: white;
+        background-color: var(--description-bg-color);
         border-radius: 0 0 var(--el-border-width) var(--el-border-width);
         display: flex;
         flex-direction: column;

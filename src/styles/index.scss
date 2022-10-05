@@ -1,12 +1,25 @@
-@use './normalize' as *;
-@use './vars' as *;
-@use './modules/vars' as *;
+@use './common/normalize' as *;
+@use './common/vars' as *;
+@use './modules/common/vars' as *;
 @use './modules/navbar' as *;
 
 html,
 body,
 #app {
   min-width: 700px;
+
+  font-family: Avenir, Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-align: center;
+}
+
+// 黑暗模式
+html.dark {
+  background: var(--el-bg-color);
+  color: var(--el-text-color-primary);
+
+  --description-bg-color: var(--el-fill-color-darker);
 }
 
 // 头部

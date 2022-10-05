@@ -1,4 +1,4 @@
-@use '../vars.scss' as *;
+@use '../common/vars.scss' as *;
 
 $main-content-height: calc($body-height - var(--el-main-padding) * 2);
 
