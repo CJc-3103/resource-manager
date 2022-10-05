@@ -3,20 +3,40 @@
     <!-- 搜索 -->
     <el-input
       clearable
-      :placeholder="$t('topicMenu.placeholder')"
+      :placeholder="$t('topicPicker.placeholder')"
       v-model="search"
     >
       <template #append>
         <el-button :icon="Search" @click="handleSearchTopic(search)" />
       </template>
     </el-input>
-    <!-- 排序 -->
-    <!-- 新增 -->
+    <!-- 功能区 -->
+    <!-- 增删改 -->
+
     <!-- 多选 -->
 
     <!-- 主题区域 -->
-    <div class="aside-title">{{ $t('topicMenu.title') }}</div>
-    <span class="action-group"> </span>
+    <div class="action-group">
+      <span class="aside-title">{{ $t('topicPicker.title') }}</span>
+      <el-dropdown
+        class="action-dropdown"
+        hide-on-click
+        popper-class="lang-menu-popper"
+      >
+        <span class="el-dropdown-link">
+          <el-icon>
+            <Menu />
+          </el-icon>
+        </span>
+        <template #dropdown>
+          <el-dropdown-menu class="action-menu">
+            <el-dropdown-item>
+              {{ $t(`navbar.dropdown.langs.${lang}`) }}</el-dropdown-item
+            >
+          </el-dropdown-menu>
+        </template>
+      </el-dropdown>
+    </div>
     <el-scrollbar>
       <el-menu
         class="aside-menu"
@@ -31,7 +51,7 @@
           :key="i"
         >
           <span class="aside-menu-item_title">{{
-            $t(`topicMenu.${name}`)
+            $t(`topicPicker.${name}`)
           }}</span>
         </el-menu-item>
         <!-- 自定义主题 -->
@@ -54,7 +74,7 @@
 //#region 依赖
 import { ref, computed, watch, onBeforeMount, onMounted } from 'vue';
 import { useStore } from 'vuex';
-import { Search } from '@element-plus/icons-vue';
+import { Search, Menu } from '@element-plus/icons-vue';
 import {
   getBackupLocal,
   setBackupLocal,
@@ -75,48 +95,6 @@ const defaultTopics = [
   },
 ];
 const topics = [
-  {
-    title: '网页收藏夹',
-  },
-  {
-    title: '图片收集',
-  },
-  {
-    title: '网页收藏夹',
-  },
-  {
-    title: '图片收集',
-  },
-  {
-    title: '网页收藏夹',
-  },
-  {
-    title: '图片收集',
-  },
-  {
-    title: '网页收藏夹',
-  },
-  {
-    title: '图片收集',
-  },
-  {
-    title: '网页收藏夹',
-  },
-  {
-    title: '图片收集',
-  },
-  {
-    title: '网页收藏夹',
-  },
-  {
-    title: '图片收集',
-  },
-  {
-    title: '网页收藏夹',
-  },
-  {
-    title: '图片收集',
-  },
   {
     title: '网页收藏夹',
   },

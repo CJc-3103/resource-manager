@@ -3,7 +3,7 @@
     <template #header> </template>
     <el-scrollbar class="resource-gallery_scroll">
       <div class="empty-panel" v-if="!resources.length">
-        <el-empty :description="$t('resourceContainer.emptyDescription')" />
+        <el-empty :description="$t('resourceGallery.emptyDescription')" />
       </div>
       <div v-else class="resource-group">
         <el-card
@@ -21,7 +21,7 @@
             <div v-else class="resource-pic">
               <img
                 :src="background"
-                :alt="$t('resourceContainer.resourceItem.noPicture')"
+                :alt="$t('resourceGallery.resourceItem.noPicture')"
               />
             </div>
           </div>

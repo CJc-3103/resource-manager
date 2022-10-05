@@ -16,7 +16,7 @@ const navbar = {
         }
     },
 }
-const topicMenu = {
+const topicPicker = {
     placeholder: 'Input topic name',
     title: 'Select topic',
     all: 'All',
@@ -36,7 +36,7 @@ const tagPicker = {
     pickedTitle: 'Picked',
     clearAll: 'Clear All',
 }
-const resourceContainer = {
+const resourceGallery = {
     emptyDescription: 'No resources',
     resourceItem: {
         noPicture: 'No picture',
@@ -46,8 +46,8 @@ const resourceContainer = {
 
 export default {
     navbar,
-    topicMenu,
+    topicPicker,
     bookMark,
     tagPicker,
-    resourceContainer,
+    resourceGallery,
 }

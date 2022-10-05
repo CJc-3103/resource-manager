@@ -16,7 +16,7 @@ const navbar = {
         }
     },
 };
-const topicMenu = {
+const topicPicker = {
     placeholder: '输入主题名',
     title: '选择主题',
     all: '全部',
@@ -36,7 +36,7 @@ const tagPicker = {
     pickedTitle: '已选标签',
     clearAll: '清除全部',
 }
-const resourceContainer = {
+const resourceGallery = {
     emptyDescription: '无资源',
     resourceItem: {
         noPicture: '无预览图',
@@ -46,8 +46,8 @@ const resourceContainer = {
 
 export default {
     navbar,
-    topicMenu,
+    topicPicker,
     bookMark,
     tagPicker,
-    resourceContainer,
+    resourceGallery,
 }
