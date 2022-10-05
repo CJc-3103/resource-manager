@@ -1,10 +1,7 @@
-@use './normalize.scss' as *;
+@use './normalize' as *;
 @use './vars' as *;
-
-$header-height: 60px;
-$body-height: calc(100vh - $header-height);
-$left-aside-max-width: 15em;
-$right-aside-max-width: 15em;
+@use './modules/vars' as *;
+@use './modules/navbar' as *;
 
 html,
 body,
@@ -30,4 +27,10 @@ body,
 .el-aside,
 .el-main {
   height: $body-height;
+  border-right: var(--border-base);
+  padding: $aside-padding-top 0;
+
+  .el-menu {
+    border: none;
+  }
 }

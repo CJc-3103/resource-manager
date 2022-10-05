@@ -13,7 +13,7 @@ import Resources from '../views/resources';
 import Tags from '../views/tags';
 import Settings from '../views/settings';
 import { useRouter } from 'vue-router';
-import '@/styles/modules/index.scss';
+import '@/styles/index.scss';
 
 const router = useRouter();
 const currentPath = router.currentRoute.value.fullPath;

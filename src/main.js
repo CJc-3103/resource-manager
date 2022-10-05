@@ -10,7 +10,6 @@ import App from './App.vue';
 //  样式
 import 'element-plus/dist/index.css';
 import 'element-plus/theme-chalk/dark/css-vars.css';
-import '@/styles/index.scss';
 
 // 初始化
 import { recoverGlobalStateLocal } from '@/utils/storage/backupState/backupGlobalState';
