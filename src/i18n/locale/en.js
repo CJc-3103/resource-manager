@@ -51,10 +51,17 @@ const resourceGallery = {
     },
 }
 
+const setting = {
+    view: {
+        darkMode: 'Dark Mode',
+    },
+}
+
 export default {
     navbar,
     topicPicker,
     bookMark,
     tagPicker,
     resourceGallery,
+    setting,
 }
