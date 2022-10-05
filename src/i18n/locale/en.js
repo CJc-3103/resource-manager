@@ -21,6 +21,13 @@ const topicPicker = {
     title: 'Select topic',
     all: 'All',
     noTopic: 'No Topic',
+    actions: {
+        multiCheck: 'Multi-Select',
+        add: 'Add New',
+        delete: 'Delete',
+    },
+    customized: 'Customized',
+    checkAll: 'Check All',
 };
 const bookMark = {
     placeholder: 'Input bookmark name',

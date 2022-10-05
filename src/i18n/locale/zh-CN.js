@@ -21,6 +21,13 @@ const topicPicker = {
     title: '选择主题',
     all: '全部',
     noTopic: '未分类',
+    actions: {
+        multiCheck: '多选',
+        add: '新增',
+        delete: '删除',
+    },
+    customized: '自定义主题',
+    checkAll: '全选',
 };
 const bookMark = {
     placeholder: '输入收藏夹名称',

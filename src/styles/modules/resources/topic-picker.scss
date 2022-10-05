@@ -1,19 +1,42 @@
+// 项目间通用
+@use '@/styles/vars.scss' as *;
+// 项目内通用
+@use '../vars.scss' as *;
+// 页面通用
+@use './vars.scss' as *;
+
 .topic-picker {
-  .aside-title {
-    font-size: 1em;
-    font-weight: bold;
-    margin: 1em 0;
+  display: flex;
+  flex-direction: column;
+
+  .check-all-topic {
+    display: flex;
+    justify-content: flex-start;
+    padding-left: var(--el-menu-base-level-padding);
   }
-  .topic-menu {
-    .topic-item {
-      .topic-txt {
-        width: calc(
-          var(--el-aside-width) - var(--el-menu-level-padding) * 2 -
-            var(--el-border-width)
-        );
-        text-overflow: ellipsis;
-        overflow: hidden;
-      }
+
+  .topic-scroll {
+    $default-scroll-height: calc(
+      $body-height - $aside-padding-top * 2 - var(--el-component-size) -
+        $aside-title-size * (2 + $bold-font-times) - var(--el-border-width) -
+        var(--topic-default-items-count) * var(--el-menu-item-height)
+    );
+    height: $default-scroll-height;
+
+    &.isShowCheckbox {
+      height: calc($default-scroll-height - var(--el-component-size));
     }
   }
+  //   .topic-menu {
+  //     .topic-item {
+  //       .topic-txt {
+  //         width: calc(
+  //           var(--el-aside-width) - var(--el-menu-level-padding) * 2 -
+  //             var(--el-border-width)
+  //         );
+  //         text-overflow: ellipsis;
+  //         overflow: hidden;
+  //       }
+  //     }
+  //   }
 }
