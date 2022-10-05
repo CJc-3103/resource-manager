@@ -13,6 +13,8 @@ $aside-title-size: 1em;
 
 .main-content {
   height: $main-content-height;
+  display: flex;
+  flex-direction: column;
 }
 
 .aside-container {
