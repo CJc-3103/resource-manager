@@ -1,7 +1,17 @@
-$tag-gap: 5px;
+@use '@/styles/common/vars' as *;
 
 .wrap-list {
   flex-wrap: wrap;
+}
+
+.form {
+  .label {
+    display: inline-flex;
+
+    .label-icon {
+      margin-left: var(--gap-small);
+    }
+  }
 }
 
 .tag-group {
@@ -11,7 +21,7 @@ $tag-gap: 5px;
     display: flex;
     justify-content: center;
     align-items: center;
-    margin-left: $tag-gap;
+    margin-left: var(--gap-small);
   }
 }
 

@@ -27,17 +27,17 @@
           <el-dropdown-menu class="action-menu">
             <el-dropdown-item @click="handleShowCheckbox">
               <el-icon> <Select /> </el-icon
-              >{{ $t(`topicPicker.actions.multiCheck`) }}</el-dropdown-item
+              >{{ $t(`topicPicker.dropdownMenu.multiCheck`) }}</el-dropdown-item
             >
-            <el-dropdown-item @click="handleAddTopic">
+            <el-dropdown-item @click="handleOpenAddTopicDialog">
               <el-icon> <Plus /> </el-icon
-              >{{ $t(`topicPicker.actions.add`) }}</el-dropdown-item
+              >{{ $t(`topicPicker.dropdownMenu.add`) }}</el-dropdown-item
             >
             <el-dropdown-item>
               <el-icon>
                 <Delete />
               </el-icon>
-              {{ $t(`topicPicker.actions.delete`) }}</el-dropdown-item
+              {{ $t(`topicPicker.dropdownMenu.delete`) }}</el-dropdown-item
             >
           </el-dropdown-menu>
         </template>
@@ -57,7 +57,7 @@
         :key="i"
       >
         <span class="aside-menu-item_title">{{
-          $t(`topicPicker.${name}`)
+          $t(`topicPicker.defaultTopics.${name}`)
         }}</span>
       </el-menu-item>
     </el-menu>
@@ -117,6 +117,9 @@
       </el-menu>
     </el-scrollbar>
   </div>
+
+  <!-- 这里的 :dialogVisible 非常重要，如果没有写上，子组件修改了内部值之后，及时成功调用了 emit() 方法，父组件也无法获取到更新值 -->
+  <TopicFormDialog v-model:dialogVisible="dialogVisible" />
 </template>
 
 <script setup>
@@ -128,6 +131,7 @@ import {
   getBackupLocal,
   setBackupLocal,
 } from '@/utils/storage/backupState/utils';
+import TopicFormDialog from './components/TopicFormDialog.vue';
 
 const store = useStore();
 //#endregion --
@@ -161,32 +165,6 @@ const topics = [
     title: '图片收集',
   },
 ];
-// const topics = [
-//   {
-//     title: '1',
-//   },
-//   {
-//     title: '2',
-//   },
-//   {
-//     title: '3',
-//   },
-//   {
-//     title: '4',
-//   },
-//   {
-//     title: '5',
-//   },
-//   {
-//     title: '6',
-//   },
-//   {
-//     title: '7',
-//   },
-//   {
-//     title: '8',
-//   },
-// ];
 
 const topicList = [];
 async function initTopicList(topics) {
@@ -236,10 +214,17 @@ const handleCheckedTopicsChange = (value) => {
 };
 
 // 添加主题
-
-const handleAddTopic = () => {
+const dialogVisible = ref(false);
+const handleOpenAddTopicDialog = () => {
+  dialogVisible.value = true;
   console.log('checkedTopics', checkedTopics.value);
 };
+
+// (() => {
+//   setInterval(() => {
+//     console.log('dialogVisible', dialogVisible);
+//   }, 3000);
+// })();
 
 // 选择主题
 const currentTopic = computed(() => store.state.resources.currentTopic);

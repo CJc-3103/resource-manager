@@ -19,15 +19,46 @@ const navbar = {
 const topicPicker = {
     placeholder: '输入主题名',
     title: '选择主题',
-    all: '全部',
-    noTopic: '未分类',
-    actions: {
+    defaultTopics: {
+        all: '全部',
+        noTopic: '未分类',
+    },
+    dropdownMenu: {
         multiCheck: '多选',
         add: '新增',
         delete: '删除',
     },
     customized: '自定义主题',
     checkAll: '全选',
+    form: {
+        formTitle: {
+            add: '新增主题',
+            edit: '编辑主题',
+        },
+        fields: {
+            topicName: {
+                title: '主题名称',
+                detail: '概括主题下资源的共同点',
+                message: {
+                    require: '主题名称不能为空',
+                    length: '长度不能拆超过 20 个字符',
+                },
+            },
+            pathType: {
+                title: '地址类型',
+                detail: '允许使用 url 、本地路径，或以上全部',
+                type: {
+                    network: '网络链接',
+                    local: '本地路径',
+                    all: '以上全部',
+                },
+            },
+        },
+        footer: {
+            confirm: '提交',
+            cancel: '取消',
+        },
+    },
 };
 const bookMark = {
     placeholder: '输入收藏夹名称',
