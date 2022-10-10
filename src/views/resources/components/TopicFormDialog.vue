@@ -1,27 +1,28 @@
 <template>
   <el-dialog
+    class="topic-form-dialog"
     v-model="visible"
-    :title="$t('topicPicker.form.formTitle.add')"
+    :title="$t(`topicFormDialog.formTitle.${formStatus}`)"
     width="30%"
     :before-close="handleCloseDialog"
   >
     <el-form
-      class="form"
+      class="topic-form"
       ref="TopicFormRef"
       :model="formData"
       :rules="rules"
       label-width="120px"
       label-position="top"
-      status-icon
+      formStatus-icon
     >
       <el-form-item prop="topicName">
         <span class="label"
-          >{{ $t('topicPicker.form.fields.topicName.title') }}
+          >{{ $t('topicFormDialog.fields.topicName.title') }}
           <el-popover
             placement="top-start"
             :width="200"
             trigger="hover"
-            :content="$t('topicPicker.form.fields.topicName.detail')"
+            :content="$t('topicFormDialog.fields.topicName.detail')"
           >
             <template #reference>
               <el-icon class="label-icon"><InfoFilled /></el-icon>
@@ -33,12 +34,12 @@
 
       <el-form-item prop="pathType">
         <span class="label"
-          >{{ $t('topicPicker.form.fields.pathType.title') }}
+          >{{ $t('topicFormDialog.fields.pathType.title') }}
           <el-popover
             placement="top-start"
             :width="200"
             trigger="hover"
-            :content="$t('topicPicker.form.fields.pathType.detail')"
+            :content="$t('topicFormDialog.fields.pathType.detail')"
           >
             <template #reference>
               <el-icon class="label-icon"><InfoFilled /></el-icon>
@@ -52,27 +53,54 @@
           @change="handleTypeChange"
         >
           <el-radio-button label="network" size="small">
-            {{ $t('topicPicker.form.fields.pathType.type.network') }}
+            {{ $t('topicFormDialog.fields.pathType.type.network') }}
           </el-radio-button>
           <el-radio-button label="local" size="small">
-            {{ $t('topicPicker.form.fields.pathType.type.local') }}
+            {{ $t('topicFormDialog.fields.pathType.type.local') }}
           </el-radio-button>
           <el-radio-button label="all" size="small">
-            {{ $t('topicPicker.form.fields.pathType.type.all') }}
+            {{ $t('topicFormDialog.fields.pathType.type.all') }}
           </el-radio-button>
         </el-radio-group>
       </el-form-item>
     </el-form>
 
     <template #footer>
-      <span class="dialog-footer">
-        <el-button @click="closeDialog">{{
-          $t('topicPicker.form.footer.cancel')
-        }}</el-button>
-        <el-button type="primary" @click="handleFormSubmit(TopicFormRef)">{{
-          $t('topicPicker.form.footer.confirm')
-        }}</el-button>
-      </span>
+      <div class="topic-form-dialog_footer-wrap">
+        <span
+          v-if="formStatus === 'add'"
+          class="topic-form-dialog_footer btn-group"
+        >
+          <el-button @click="closeDialog">{{ $t('form.cancel') }}</el-button>
+          <el-button type="primary" @click="handleFormSubmit(TopicFormRef)">{{
+            $t('form.submit')
+          }}</el-button>
+        </span>
+        <span
+          v-else-if="formStatus === 'view'"
+          class="topic-form-dialog_footer btn-group"
+        >
+          <el-button @click="closeDialog">{{ $t('form.confirm') }}</el-button>
+        </span>
+        <span
+          v-else-if="formStatus === 'edit'"
+          class="topic-form-dialog_footer btn-group"
+        >
+          <el-button @click="closeDialog">{{ $t('form.cancel') }}</el-button>
+          <el-button type="success" @click="handleFormSubmit(TopicFormRef)">{{
+            $t('form.submit')
+          }}</el-button>
+        </span>
+        <span
+          v-else-if="formStatus === 'delete'"
+          class="topic-form-dialog_footer btn-group"
+        >
+          <el-button @click="closeDialog">{{ $t('form.cancel') }}</el-button>
+          <el-button type="danger" @click="handleFormSubmit(TopicFormRef)">{{
+            $t('form.confirm')
+          }}</el-button>
+        </span>
+      </div>
     </template>
   </el-dialog>
 </template>
@@ -88,26 +116,42 @@ const { t: $t } = useI18n();
 const props = defineProps({
   dialogVisible: Boolean,
   readonly: Boolean,
+  formStatus: {
+    type: String,
+    default: 'view',
+    validator: (value) => {
+      return ['view', 'edit', 'add', 'delete'].includes(value);
+    },
+  },
+  topicName: String,
 });
 const emit = defineEmits(['update:dialogVisible']);
 //#endregion --
 
 //#region 视图构建--
-const formData = ref({
+const defaultFormData = {
   topicName: '',
   pathType: 'all',
-});
+};
+const formData = ref(
+  props.topicName
+    ? {
+        topicName: props.topicName,
+        pathType: 'all',
+      }
+    : defaultFormData
+);
 const rules = ref({
   topicName: [
     {
       required: true,
-      message: $t('topicPicker.form.fields.topicName.message.require'),
+      message: $t('topicFormDialog.fields.topicName.message.require'),
       trigger: 'blur',
     },
     {
       min: 1,
       max: 20,
-      message: $t('topicPicker.form.fields.topicName.message.length'),
+      message: $t('topicFormDialog.fields.topicName.message.length'),
       trigger: 'blur',
     },
   ],
@@ -159,7 +203,7 @@ const handleCloseDialog = (done) => {
 
 //#region 生命周期--
 onMounted(() => {
-  console.log('props.readonly', props.readonly);
+  console.log('props', props);
 });
 //#endregion --
 </script>

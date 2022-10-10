@@ -35,8 +35,20 @@
   .context-menu {
     border-right: 0;
 
-    .context-menu-item.is-active {
-      color: var(--el-menu-text-color); // 取消选中样式
+    .context-menu-item {
+      height: var(--el-menu-item-height-normal);
+
+      &.is-active {
+        color: var(--el-menu-text-color); // 取消选中样式
+      }
+
+      .el-tag {
+        padding: 0 4px;
+        margin-right: var(--gap-small);
+        .el-icon {
+          margin-right: 0;
+        }
+      }
     }
   }
 }

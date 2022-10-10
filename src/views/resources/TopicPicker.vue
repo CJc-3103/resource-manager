@@ -33,12 +33,12 @@
               <el-icon> <Plus /> </el-icon
               >{{ $t(`topicPicker.dropdownMenu.add`) }}</el-dropdown-item
             >
-            <el-dropdown-item>
+            <!-- <el-dropdown-item>
               <el-icon>
                 <Delete />
               </el-icon>
               {{ $t(`topicPicker.dropdownMenu.delete`) }}</el-dropdown-item
-            >
+            > -->
           </el-dropdown-menu>
         </template>
       </el-dropdown>
@@ -100,7 +100,9 @@
             v-for="({ title }, i) in filteredTopics"
             :key="i"
             :index="i + ''"
-            @mouseover.prevent="(e) => handleMouseoverTopic(e.currentTarget, i)"
+            @mouseover.prevent="
+              (e) => handleMouseoverTopic(e.currentTarget, title)
+            "
             @contextmenu.prevent="handleCtxMenuTopic"
           >
             <el-checkbox
@@ -128,39 +130,53 @@
       trigger="contextmenu"
       virtual-triggering
       placement="right"
-      :width="200"
     >
       <el-menu class="context-menu">
         <el-menu-item
           class="context-menu-item"
-          @click="handleViewTopic(currentCtxTopicId)"
-          >{{ $t('topicPicker.ctxMenu.view') }}</el-menu-item
+          @click="handleViewTopic(currentCtxTopicName)"
+        >
+          <el-tag round
+            ><el-icon><View /></el-icon
+          ></el-tag>
+          {{ $t('topicPicker.ctxMenu.view') }}</el-menu-item
         >
         <el-menu-item
           class="context-menu-item"
-          @click="handleEditTopic(currentCtxTopicId)"
+          @click="handleEditTopic(currentCtxTopicName)"
+        >
+          <el-tag type="success" round effect="dark"
+            ><el-icon><Edit /></el-icon></el-tag
           >{{ $t('topicPicker.ctxMenu.edit') }}</el-menu-item
+        >
+        <el-menu-item
+          class="context-menu-item"
+          @click="handleDeleteTopic(currentCtxTopicName)"
+        >
+          <el-tag type="danger" round effect="dark">
+            <el-icon><Delete /></el-icon></el-tag
+          >{{ $t('topicPicker.ctxMenu.delete') }}</el-menu-item
         >
       </el-menu>
     </el-popover>
   </div>
 
-  <!-- <Teleport :to="'.ctx-menu-' + currentCtxTopicId">
+  <!-- <Teleport :to="'.ctx-menu-' + currentCtxTopicName">
     <el-menu class="right menu" v-if="isAllowCtxMenu" v-show="isShowCtxMenu">
-      <el-menu-item @click="viewTopic(currentCtxTopicId)">{{
+      <el-menu-item @click="viewTopic(currentCtxTopicName)">{{
         $t('topicPicker.ctxMenu.view')
       }}</el-menu-item>
-      <el-menu-item @click="editTopic(currentCtxTopicId)">{{
+      <el-menu-item @click="editTopic(currentCtxTopicName)">{{
         $t('topicPicker.ctxMenu.edit')
       }}</el-menu-item>
     </el-menu>
   </Teleport> -->
 
   <!-- <CtxMenu>
-    <el-menu-item @click="viewTopic(currentCtxTopicId)">{{
+    <el-menu-item @click="viewTopic(currentCtxTopicName)">{{
       $t('topicPicker.ctxMenu.view')
     }}</el-menu-item>
-    <el-menu-item @click="editTopic(currentCtxTopicId)">{{
+    <el-menu-item @click="editTopic(currentCtxTopicName)">{{
       $t('topicPicker.ctxMenu.edit')
     }}</el-menu-item>
   </CtxMenu> -->
@@ -169,7 +185,9 @@
   <TopicFormDialog
     v-if="dialogVisible"
     v-model:dialogVisible="dialogVisible"
+    :formStatus="formStatus"
     :readonly="isDialogReadonly"
+    :topicName="currentCtxTopicName"
   />
 </template>
 
@@ -177,7 +195,15 @@
 //#region 依赖--
 import { ref, computed, watch, onBeforeMount, onMounted, unref } from 'vue';
 import { useStore } from 'vuex';
-import { Search, Menu, Select, Plus, Delete } from '@element-plus/icons-vue';
+import {
+  Search,
+  Menu,
+  Select,
+  Plus,
+  Delete,
+  View,
+  Edit,
+} from '@element-plus/icons-vue';
 import {
   getBackupLocal,
   setBackupLocal,
@@ -210,12 +236,12 @@ const handleShowCheckbox = () => {
 // 选中主题，右键菜单；初始加载时隐藏菜单
 const isAllowCtxMenu = ref(false);
 const isShowCtxMenu = ref(false);
-const setCtxMenuTopic = (topicItemRef, id) => {
-  currentCtxTopicId.value = id;
+const setCtxMenuTopic = (topicItemRef, topicName) => {
   currentCtxTopicRef.value = topicItemRef;
+  currentCtxTopicName.value = topicName;
 };
 
-const currentCtxTopicId = ref(-1);
+const currentCtxTopicName = ref('');
 const currentCtxTopicRef = ref(null);
 const allowCtxMenuTopic = () => (isAllowCtxMenu.value = true);
 const toggleCtxMenuTopic = () => (isShowCtxMenu.value = !isShowCtxMenu.value);
@@ -228,10 +254,12 @@ const hideTopicCtxMenu = () => {
 const handleCtxMenuTopic = () => {
   toggleCtxMenuTopic();
 };
-const handleMouseoverTopic = (topicItemRef, id) => {
+const handleMouseoverTopic = (topicItemRef, topicName) => {
   allowCtxMenuTopic();
-  setCtxMenuTopic(topicItemRef, id);
+  setCtxMenuTopic(topicItemRef, topicName);
 };
+
+const formStatus = ref('view');
 //#endregion --
 
 //#region 数据模型--
@@ -300,27 +328,33 @@ const isDialogReadonly = ref(true); //是否允许编辑信息
 const setDialogReadonly = () => (isDialogReadonly.value = true);
 const setDialogReadwrite = () => (isDialogReadonly.value = false);
 
+const setupDialog = (status, isReadonly, topicName) => {
+  formStatus.value = status;
+  isDialogReadonly.value = isReadonly;
+  currentCtxTopicName.value = topicName || '';
+};
+
 // 添加主题
 const handleAddTopic = () => {
-  setDialogReadwrite();
+  setupDialog('add', false);
   showDialog();
   console.log('checkedTopics', checkedTopics.value);
 };
-const handleViewTopic = () => {
+const handleViewTopic = (topicName) => {
   hideTopicCtxMenu();
-  setDialogReadonly();
+  setupDialog('view', true, topicName);
   showDialog();
   console.log('checkedTopics', checkedTopics.value);
 };
-const handleEditTopic = () => {
+const handleEditTopic = (topicName) => {
   hideTopicCtxMenu();
-  setDialogReadwrite();
+  setupDialog('edit', false, topicName);
   showDialog();
   console.log('checkedTopics', checkedTopics.value);
 };
-const handleDeleteTopic = () => {
+const handleDeleteTopic = (topicName) => {
   hideTopicCtxMenu();
-  setDialogReadonly();
+  setupDialog('delete', true, topicName);
   showDialog();
   console.log('checkedTopics', checkedTopics.value);
 };

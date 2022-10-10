@@ -1,3 +1,10 @@
+// 通用
+const form = {
+    submit: '提交',
+    cancel: '取消',
+    confirm: '确定',
+}
+// 组件
 const navbar = {
     resources: {
         title: '资源',
@@ -26,44 +33,42 @@ const topicPicker = {
     dropdownMenu: {
         multiCheck: '多选',
         add: '新增',
-        delete: '删除',
     },
     customized: '自定义主题',
     checkAll: '全选',
-    form: {
-        formTitle: {
-            add: '新增主题',
-            edit: '编辑主题',
-        },
-        fields: {
-            topicName: {
-                title: '主题名称',
-                detail: '概括主题下资源的共同点',
-                message: {
-                    require: '主题名称不能为空',
-                    length: '长度不能拆超过 20 个字符',
-                },
-            },
-            pathType: {
-                title: '地址类型',
-                detail: '允许使用 url 、本地路径，或以上全部',
-                type: {
-                    network: '网络链接',
-                    local: '本地路径',
-                    all: '以上全部',
-                },
-            },
-        },
-        footer: {
-            confirm: '提交',
-            cancel: '取消',
-        },
-    },
     ctxMenu: {
-        view: 'View Detail',
-        edit: 'Edit',
+        view: '查看',
+        edit: '编辑',
+        delete: '删除',
     },
 };
+const topicFormDialog = {
+    formTitle: {
+        view: '主题信息',
+        add: '新增主题',
+        edit: '编辑主题',
+        delete: '删除该主题？',
+    },
+    fields: {
+        topicName: {
+            title: '主题名称',
+            detail: '概括主题下资源的共同点',
+            message: {
+                require: '主题名称不能为空',
+                length: '长度不能拆超过 20 个字符',
+            },
+        },
+        pathType: {
+            title: '地址类型',
+            detail: '允许使用 url 、本地路径，或以上全部',
+            type: {
+                network: '网络链接',
+                local: '本地路径',
+                all: '以上全部',
+            },
+        },
+    },
+}
 const bookMark = {
     placeholder: '输入收藏夹名称',
     title: '选择收藏夹',
@@ -85,7 +90,6 @@ const resourceGallery = {
         noIcon: '无图标',
     },
 }
-
 const setting = {
     view: {
         darkMode: '暗黑模式',
@@ -93,8 +97,10 @@ const setting = {
 }
 
 export default {
+    form,
     navbar,
     topicPicker,
+    topicFormDialog,
     bookMark,
     tagPicker,
     resourceGallery,

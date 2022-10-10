@@ -1,0 +1,18 @@
+// 项目间通用
+@use '@/styles/common/vars' as *;
+// 项目内通用
+@use '../common/vars' as *;
+@use '../common/index' as *;
+// 页面通用
+@use './vars.scss' as *;
+
+.topic-form-dialog {
+  .topic-form-dialog_footer-wrap {
+    display: flex;
+    justify-content: center;
+
+    .topic-form-dialog_footer {
+      width: 50%;
+    }
+  }
+}

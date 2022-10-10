@@ -1,3 +1,10 @@
+// 通用
+const form = {
+    submit: 'submit',
+    cancel: 'cancel',
+    confirm: 'confirm',
+}
+// 组件
 const navbar = {
     resources: {
         title: 'Resources',
@@ -26,44 +33,42 @@ const topicPicker = {
     dropdownMenu: {
         multiCheck: 'Multi-Select',
         add: 'Add New',
-        delete: 'Delete',
     },
     customized: 'Customized',
     checkAll: 'Check All',
-    form: {
-        formTitle: {
-            add: 'Create New Topic',
-            edit: 'Edit Topic Info',
-        },
-        fields: {
-            topicName: {
-                title: 'Topic Name',
-                detail: 'Describe the main concept of the this group',
-                message: {
-                    require: 'Please input Topic name',
-                    length: 'Length should be 1 to 20',
-                },
-            },
-            pathType: {
-                title: 'Path Type',
-                detail: 'Allow url, local path or the above all',
-                type: {
-                    network: 'Network Url',
-                    local: 'Local Path',
-                    all: 'Above All',
-                },
-            },
-        },
-        footer: {
-            confirm: 'Confirm',
-            cancel: 'Cancel',
-        },
-    },
     ctxMenu: {
         view: 'View Detail',
         edit: 'Edit',
+        delete: 'Delete',
     },
 };
+const topicFormDialog = {
+    formTitle: {
+        view: 'Topic Info',
+        add: 'Create New Topic',
+        edit: 'Edit Topic Info',
+        delete: 'Delete the Topic?',
+    },
+    fields: {
+        topicName: {
+            title: 'Topic Name',
+            detail: 'Describe the main concept of the this group',
+            message: {
+                require: 'Please input Topic name',
+                length: 'Length should be 1 to 20',
+            },
+        },
+        pathType: {
+            title: 'Path Type',
+            detail: 'Allow url, local path or the above all',
+            type: {
+                network: 'Network Url',
+                local: 'Local Path',
+                all: 'Above All',
+            },
+        },
+    },
+}
 const bookMark = {
     placeholder: 'Input bookmark name',
     title: 'Select bookmark',
@@ -85,7 +90,6 @@ const resourceGallery = {
         noIcon: 'No icon',
     },
 }
-
 const setting = {
     view: {
         darkMode: 'Dark Mode',
@@ -93,8 +97,10 @@ const setting = {
 }
 
 export default {
+    form,
     navbar,
     topicPicker,
+    topicFormDialog,
     bookMark,
     tagPicker,
     resourceGallery,
