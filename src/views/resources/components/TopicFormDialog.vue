@@ -7,6 +7,7 @@
   >
     <el-form
       class="form"
+      ref="TopicFormRef"
       :model="formData"
       :rules="rules"
       label-width="120px"
@@ -27,7 +28,7 @@
             </template>
           </el-popover>
         </span>
-        <el-input v-model="formData.topicName" />
+        <el-input :disabled="readonly" v-model="formData.topicName" />
       </el-form-item>
 
       <el-form-item prop="pathType">
@@ -45,7 +46,11 @@
           </el-popover>
         </span>
 
-        <el-radio-group v-model="formData.pathType" @change="handleTypeChange">
+        <el-radio-group
+          :disabled="readonly"
+          v-model="formData.pathType"
+          @change="handleTypeChange"
+        >
           <el-radio-button label="network" size="small">
             {{ $t('topicPicker.form.fields.pathType.type.network') }}
           </el-radio-button>
@@ -64,7 +69,7 @@
         <el-button @click="closeDialog">{{
           $t('topicPicker.form.footer.cancel')
         }}</el-button>
-        <el-button type="primary" @click="closeDialog">{{
+        <el-button type="primary" @click="handleFormSubmit(TopicFormRef)">{{
           $t('topicPicker.form.footer.confirm')
         }}</el-button>
       </span>
@@ -75,23 +80,24 @@
 <script setup>
 //#region 依赖--
 import { InfoFilled } from '@element-plus/icons-vue';
-import { computed } from 'vue';
+import { ref, computed, onMounted } from 'vue';
 import { useI18n } from 'vue-i18n';
 
 const { t: $t } = useI18n();
 
 const props = defineProps({
   dialogVisible: Boolean,
+  readonly: Boolean,
 });
 const emit = defineEmits(['update:dialogVisible']);
 //#endregion --
 
 //#region 视图构建--
-const formData = {
+const formData = ref({
   topicName: '',
   pathType: 'all',
-};
-const rules = {
+});
+const rules = ref({
   topicName: [
     {
       required: true,
@@ -106,7 +112,7 @@ const rules = {
     },
   ],
   pathType: [{ required: true, message: '', trigger: 'blur' }],
-};
+});
 //#endregion --
 
 //#region 交互--
@@ -117,13 +123,27 @@ const handleTypeChange = (value) => {
   console.log('Path Type Changed');
 };
 
+// 提交
+const TopicFormRef = ref(null);
+const handleFormSubmit = (formEl) => {
+  if (!formEl) return;
+  formEl.validate((valid, fields) => {
+    console.log('valid', valid);
+    if (valid) {
+      console.log('submit!');
+      closeDialog();
+    } else {
+      console.log('error submit!', fields);
+    }
+  });
+};
+
 // 控制对话框
 const visible = computed({
   get() {
     return props.dialogVisible;
   },
   set(value) {
-    console.log('value', value);
     emit('update:dialogVisible', value);
   },
 });
@@ -135,5 +155,11 @@ const handleCloseDialog = (done) => {
   done();
 };
 
+//#endregion --
+
+//#region 生命周期--
+onMounted(() => {
+  console.log('props.readonly', props.readonly);
+});
 //#endregion --
 </script>

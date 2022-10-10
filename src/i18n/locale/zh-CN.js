@@ -59,6 +59,10 @@ const topicPicker = {
             cancel: '取消',
         },
     },
+    ctxMenu: {
+        view: 'View Detail',
+        edit: 'Edit',
+    },
 };
 const bookMark = {
     placeholder: '输入收藏夹名称',

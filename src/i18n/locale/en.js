@@ -59,6 +59,10 @@ const topicPicker = {
             cancel: 'Cancel',
         },
     },
+    ctxMenu: {
+        view: 'View Detail',
+        edit: 'Edit',
+    },
 };
 const bookMark = {
     placeholder: 'Input bookmark name',
