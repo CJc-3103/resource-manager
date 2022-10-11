@@ -1,8 +1,14 @@
 // 通用
 const form = {
-    submit: '提交',
-    cancel: '取消',
-    confirm: '确定',
+    action: {
+        submit: '提交',
+        cancel: '取消',
+        confirm: '确定',
+        reset: '重置',
+    },
+}
+const marks = {
+    dot: '，',
 }
 // 组件
 const navbar = {
@@ -67,6 +73,25 @@ const topicFormDialog = {
                 all: '以上全部',
             },
         },
+    },
+    message: {
+        action: {
+            add: {
+                success: '添加新主题成功',
+                fail: '添加新主题失败，',
+            },
+            edit: {
+                success: '编辑主题成功',
+                fail: '编辑主题失败，',
+            },
+            delete: {
+                success: '已删除主题',
+                fail: '未成功删除主题，',
+            },
+        },
+        exception: {
+            constraint: '已存在同名主题',
+        }
     },
 }
 const bookMark = {

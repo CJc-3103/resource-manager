@@ -1,17 +1,10 @@
-import http from '../utils/http';
-import store from '@/store';
+import { idbAddTopic, idbQueryTopic, idbUpdateTopic, idbDeleteTopic } from '@/indexedDB'
 
-// topic
-export function fetchTopic() {
-    return http.get('');
-}
+const addTopic = (topicObj) => {
+    return idbAddTopic(topicObj)
+};
+const getTopicById = (id, changes) => { return idbQueryTopic(id, changes); }
+const updateTopic = (topicObj) => { return idbUpdateTopic(topicObj); }
+const deleteTopic = (topicName) => { return idbDeleteTopic(topicName); }
 
-// resource
-export function fetchResource() {
-    return http.get('');
-}
-
-// tag
-export function fetchTag() {
-    return http.get('');
-}
+export { addTopic, getTopicById, updateTopic, deleteTopic } 

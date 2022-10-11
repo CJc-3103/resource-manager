@@ -1,8 +1,11 @@
 // 通用
 const form = {
-    submit: 'submit',
-    cancel: 'cancel',
-    confirm: 'confirm',
+    action: {
+        submit: 'submit',
+        cancel: 'cancel',
+        confirm: 'confirm',
+        reset: 'Reset',
+    },
 }
 // 组件
 const navbar = {
@@ -67,6 +70,25 @@ const topicFormDialog = {
                 all: 'Above All',
             },
         },
+    },
+    message: {
+        action: {
+            add: {
+                success: 'New topic added',
+                fail: 'Failed to add new topic,',
+            },
+            edit: {
+                success: 'Topic updated',
+                fail: 'Failed to update topic,',
+            },
+            delete: {
+                success: 'Topic deleted',
+                fail: 'Failed to delete topic,',
+            },
+        },
+        exception: {
+            constraint: 'Same topic name existing'
+        }
     },
 }
 const bookMark = {

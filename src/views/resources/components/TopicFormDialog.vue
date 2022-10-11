@@ -71,33 +71,41 @@
           v-if="formStatus === 'add'"
           class="topic-form-dialog_footer btn-group"
         >
-          <el-button @click="closeDialog">{{ $t('form.cancel') }}</el-button>
-          <el-button type="primary" @click="handleFormSubmit(TopicFormRef)">{{
-            $t('form.submit')
+          <el-button @click="closeDialog">{{
+            $t('form.action.cancel')
+          }}</el-button>
+          <el-button type="primary" @click="handleAddTopic(TopicFormRef)">{{
+            $t('form.action.submit')
           }}</el-button>
         </span>
         <span
           v-else-if="formStatus === 'view'"
           class="topic-form-dialog_footer btn-group"
         >
-          <el-button @click="closeDialog">{{ $t('form.confirm') }}</el-button>
+          <el-button @click="closeDialog">{{
+            $t('form.action.confirm')
+          }}</el-button>
         </span>
         <span
           v-else-if="formStatus === 'edit'"
           class="topic-form-dialog_footer btn-group"
         >
-          <el-button @click="closeDialog">{{ $t('form.cancel') }}</el-button>
-          <el-button type="success" @click="handleFormSubmit(TopicFormRef)">{{
-            $t('form.submit')
+          <el-button @click="closeDialog">{{
+            $t('form.action.cancel')
+          }}</el-button>
+          <el-button type="success" @click="handleEditTopic(TopicFormRef)">{{
+            $t('form.action.submit')
           }}</el-button>
         </span>
         <span
           v-else-if="formStatus === 'delete'"
           class="topic-form-dialog_footer btn-group"
         >
-          <el-button @click="closeDialog">{{ $t('form.cancel') }}</el-button>
-          <el-button type="danger" @click="handleFormSubmit(TopicFormRef)">{{
-            $t('form.confirm')
+          <el-button @click="closeDialog">{{
+            $t('form.action.cancel')
+          }}</el-button>
+          <el-button type="danger" @click="handleDeleteTopic(TopicFormRef)">{{
+            $t('form.action.confirm')
           }}</el-button>
         </span>
       </div>
@@ -108,8 +116,12 @@
 <script setup>
 //#region 依赖--
 import { InfoFilled } from '@element-plus/icons-vue';
-import { ref, computed, onMounted } from 'vue';
+import { ref, computed, onMounted, toRaw } from 'vue';
 import { useI18n } from 'vue-i18n';
+import { addTopic, getTopicById } from '@/api';
+import { ElMessage } from 'element-plus';
+import { formUtils } from '@/utils/element-plus-utils';
+// import { db } from '@/indexedDB';
 
 const { t: $t } = useI18n();
 
@@ -123,7 +135,7 @@ const props = defineProps({
       return ['view', 'edit', 'add', 'delete'].includes(value);
     },
   },
-  topicName: String,
+  topicId: String,
 });
 const emit = defineEmits(['update:dialogVisible']);
 //#endregion --
@@ -133,14 +145,7 @@ const defaultFormData = {
   topicName: '',
   pathType: 'all',
 };
-const formData = ref(
-  props.topicName
-    ? {
-        topicName: props.topicName,
-        pathType: 'all',
-      }
-    : defaultFormData
-);
+const formData = ref(defaultFormData);
 const rules = ref({
   topicName: [
     {
@@ -157,30 +162,6 @@ const rules = ref({
   ],
   pathType: [{ required: true, message: '', trigger: 'blur' }],
 });
-//#endregion --
-
-//#region 交互--
-
-// 选择地址类型
-const handleTypeChange = (value) => {
-  console.log('value', value);
-  console.log('Path Type Changed');
-};
-
-// 提交
-const TopicFormRef = ref(null);
-const handleFormSubmit = (formEl) => {
-  if (!formEl) return;
-  formEl.validate((valid, fields) => {
-    console.log('valid', valid);
-    if (valid) {
-      console.log('submit!');
-      closeDialog();
-    } else {
-      console.log('error submit!', fields);
-    }
-  });
-};
 
 // 控制对话框
 const visible = computed({
@@ -198,12 +179,71 @@ const closeDialog = () => {
 const handleCloseDialog = (done) => {
   done();
 };
+//#endregion --
+
+//#region 数据模型--
+const topic = null;
+const initFormData = () => {
+  if (['view', 'edit', 'delete'].includes(props.formStatus)) {
+    console.log('formStatus', props.formStatus);
+    // topic = getTopicById(props.topicId);
+    // formData.value = topic;
+  }
+};
+// initFormData();
+//#endregion --
+
+//#region 交互--
+
+//#region 选择地址类型----
+const handleTypeChange = (value) => {
+  // console.log('value', value);
+  // console.log('Path Type Changed');
+};
+//#endregion ----
+
+//#region 提交新增----
+const TopicFormRef = ref(null);
+
+const ERROR_TYPE = {
+  ConstraintError: 'constraint',
+};
+
+const handleAddTopic = (formEl) => {
+  formUtils.validForm(formEl).then(() => {
+    addTopic(toRaw(formData.value))
+      .then(() => {
+        ElMessage({
+          message: $t(`topicFormDialog.message.action.add.success`),
+          type: 'success',
+        });
+        closeDialog();
+      })
+      .catch((err) => {
+        ElMessage({
+          message:
+            $t(`topicFormDialog.message.action.add.fail`) +
+            $t(`topicFormDialog.message.exception.${ERROR_TYPE[err.name]}`),
+          type: 'error',
+        });
+      });
+  });
+};
+//#endregion ----
+
+//#region 提交修改----
+
+//#endregion ----
+
+//#region 提交删除----
+
+//#endregion ----
 
 //#endregion --
 
 //#region 生命周期--
 onMounted(() => {
-  console.log('props', props);
+  initFormData();
 });
 //#endregion --
 </script>

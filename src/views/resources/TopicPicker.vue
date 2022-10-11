@@ -43,13 +43,12 @@
         </template>
       </el-dropdown>
     </div>
-    <!-- 主题列表 -->
+    <!-- 默认主题 -->
     <el-menu
       class="aside-menu"
       :default-active="currentTopic"
       @select="handleSelectTopic"
     >
-      <!-- 默认主题 -->
       <el-menu-item
         class="aside-menu-item"
         :index="index"
@@ -97,11 +96,11 @@
           > -->
           <el-menu-item
             class="aside-menu-item"
-            v-for="({ title }, i) in filteredTopics"
-            :key="i"
-            :index="i + ''"
+            v-for="{ title, id } in filteredTopics"
+            :key="id"
+            :index="id + ''"
             @mouseover.prevent="
-              (e) => handleMouseoverTopic(e.currentTarget, title)
+              (e) => handleMouseoverTopic(e.currentTarget, id)
             "
             @contextmenu.prevent="handleCtxMenuTopic"
           >
@@ -134,7 +133,7 @@
       <el-menu class="context-menu">
         <el-menu-item
           class="context-menu-item"
-          @click="handleViewTopic(currentCtxTopicName)"
+          @click="handleViewTopic(currentCtxTopicId)"
         >
           <el-tag round
             ><el-icon><View /></el-icon
@@ -143,7 +142,7 @@
         >
         <el-menu-item
           class="context-menu-item"
-          @click="handleEditTopic(currentCtxTopicName)"
+          @click="handleEditTopic(currentCtxTopicId)"
         >
           <el-tag type="success" round effect="dark"
             ><el-icon><Edit /></el-icon></el-tag
@@ -151,7 +150,7 @@
         >
         <el-menu-item
           class="context-menu-item"
-          @click="handleDeleteTopic(currentCtxTopicName)"
+          @click="handleDeleteTopic(currentCtxTopicId)"
         >
           <el-tag type="danger" round effect="dark">
             <el-icon><Delete /></el-icon></el-tag
@@ -161,22 +160,22 @@
     </el-popover>
   </div>
 
-  <!-- <Teleport :to="'.ctx-menu-' + currentCtxTopicName">
+  <!-- <Teleport :to="'.ctx-menu-' + currentCtxTopicId">
     <el-menu class="right menu" v-if="isAllowCtxMenu" v-show="isShowCtxMenu">
-      <el-menu-item @click="viewTopic(currentCtxTopicName)">{{
+      <el-menu-item @click="viewTopic(currentCtxTopicId)">{{
         $t('topicPicker.ctxMenu.view')
       }}</el-menu-item>
-      <el-menu-item @click="editTopic(currentCtxTopicName)">{{
+      <el-menu-item @click="editTopic(currentCtxTopicId)">{{
         $t('topicPicker.ctxMenu.edit')
       }}</el-menu-item>
     </el-menu>
   </Teleport> -->
 
   <!-- <CtxMenu>
-    <el-menu-item @click="viewTopic(currentCtxTopicName)">{{
+    <el-menu-item @click="viewTopic(currentCtxTopicId)">{{
       $t('topicPicker.ctxMenu.view')
     }}</el-menu-item>
-    <el-menu-item @click="editTopic(currentCtxTopicName)">{{
+    <el-menu-item @click="editTopic(currentCtxTopicId)">{{
       $t('topicPicker.ctxMenu.edit')
     }}</el-menu-item>
   </CtxMenu> -->
@@ -187,7 +186,7 @@
     v-model:dialogVisible="dialogVisible"
     :formStatus="formStatus"
     :readonly="isDialogReadonly"
-    :topicName="currentCtxTopicName"
+    :topicName="currentCtxTopicId"
   />
 </template>
 
@@ -236,13 +235,13 @@ const handleShowCheckbox = () => {
 // 选中主题，右键菜单；初始加载时隐藏菜单
 const isAllowCtxMenu = ref(false);
 const isShowCtxMenu = ref(false);
-const setCtxMenuTopic = (topicItemRef, topicName) => {
+const setCtxMenuTopic = (topicItemRef, topicId) => {
   currentCtxTopicRef.value = topicItemRef;
-  currentCtxTopicName.value = topicName;
+  currentCtxTopicId.value = topicId;
 };
 
-const currentCtxTopicName = ref('');
 const currentCtxTopicRef = ref(null);
+const currentCtxTopicId = ref('');
 const allowCtxMenuTopic = () => (isAllowCtxMenu.value = true);
 const toggleCtxMenuTopic = () => (isShowCtxMenu.value = !isShowCtxMenu.value);
 
@@ -254,9 +253,9 @@ const hideTopicCtxMenu = () => {
 const handleCtxMenuTopic = () => {
   toggleCtxMenuTopic();
 };
-const handleMouseoverTopic = (topicItemRef, topicName) => {
+const handleMouseoverTopic = (topicItemRef, topicId) => {
   allowCtxMenuTopic();
-  setCtxMenuTopic(topicItemRef, topicName);
+  setCtxMenuTopic(topicItemRef, topicId);
 };
 
 const formStatus = ref('view');
@@ -331,14 +330,13 @@ const setDialogReadwrite = () => (isDialogReadonly.value = false);
 const setupDialog = (status, isReadonly, topicName) => {
   formStatus.value = status;
   isDialogReadonly.value = isReadonly;
-  currentCtxTopicName.value = topicName || '';
+  currentCtxTopicId.value = topicName || '';
 };
 
 // 添加主题
 const handleAddTopic = () => {
   setupDialog('add', false);
   showDialog();
-  console.log('checkedTopics', checkedTopics.value);
 };
 const handleViewTopic = (topicName) => {
   hideTopicCtxMenu();
