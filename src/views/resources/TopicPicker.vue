@@ -89,30 +89,30 @@
           @change="handleCheckedTopicsChange"
         >
           <!-- <el-tooltip
-            :content="title"
+            :content="topicName"
             placement="right"
-            v-for="({ title }, i) in filteredTopics"
+            v-for="({ topicName }, i) in filteredTopics"
             :key="i"
           > -->
           <el-menu-item
             class="aside-menu-item"
-            v-for="{ title, id } in filteredTopics"
-            :key="id"
-            :index="id + ''"
+            v-for="topic in filteredTopics"
+            :key="topic.id"
+            :index="topic.id + ''"
             @mouseover.prevent="
-              (e) => handleMouseoverTopic(e.currentTarget, id)
+              (e) => handleMouseoverTopic(e.currentTarget, topic)
             "
             @contextmenu.prevent="handleCtxMenuTopic"
           >
             <el-checkbox
               v-if="isAllowCheck"
               v-show="isShowCheckbox"
-              :label="title"
+              :label="topicName"
             >
-              {{ title }}</el-checkbox
+              {{ topic.topicName }}</el-checkbox
             >
             <span v-show="!isShowCheckbox" class="aside-menu-item_title">{{
-              title
+              topic.topicName
             }}</span>
           </el-menu-item>
         </el-checkbox-group>
@@ -133,7 +133,7 @@
       <el-menu class="context-menu">
         <el-menu-item
           class="context-menu-item"
-          @click="handleViewTopic(currentCtxTopicId)"
+          @click="handleViewTopic(currentCtxTopic)"
         >
           <el-tag round
             ><el-icon><View /></el-icon
@@ -142,7 +142,7 @@
         >
         <el-menu-item
           class="context-menu-item"
-          @click="handleEditTopic(currentCtxTopicId)"
+          @click="handleEditTopic(currentCtxTopic)"
         >
           <el-tag type="success" round effect="dark"
             ><el-icon><Edit /></el-icon></el-tag
@@ -150,7 +150,7 @@
         >
         <el-menu-item
           class="context-menu-item"
-          @click="handleDeleteTopic(currentCtxTopicId)"
+          @click="handleDeleteTopic(currentCtxTopic)"
         >
           <el-tag type="danger" round effect="dark">
             <el-icon><Delete /></el-icon></el-tag
@@ -160,40 +160,20 @@
     </el-popover>
   </div>
 
-  <!-- <Teleport :to="'.ctx-menu-' + currentCtxTopicId">
-    <el-menu class="right menu" v-if="isAllowCtxMenu" v-show="isShowCtxMenu">
-      <el-menu-item @click="viewTopic(currentCtxTopicId)">{{
-        $t('topicPicker.ctxMenu.view')
-      }}</el-menu-item>
-      <el-menu-item @click="editTopic(currentCtxTopicId)">{{
-        $t('topicPicker.ctxMenu.edit')
-      }}</el-menu-item>
-    </el-menu>
-  </Teleport> -->
-
-  <!-- <CtxMenu>
-    <el-menu-item @click="viewTopic(currentCtxTopicId)">{{
-      $t('topicPicker.ctxMenu.view')
-    }}</el-menu-item>
-    <el-menu-item @click="editTopic(currentCtxTopicId)">{{
-      $t('topicPicker.ctxMenu.edit')
-    }}</el-menu-item>
-  </CtxMenu> -->
-
   <!-- 这里的 :dialogVisible 非常重要，如果没有写上，子组件修改了内部值之后，及时成功调用了 emit() 方法，父组件也无法获取到更新值 -->
   <TopicFormDialog
     v-if="dialogVisible"
     v-model:dialogVisible="dialogVisible"
-    :formStatus="formStatus"
-    :readonly="isDialogReadonly"
-    :topicName="currentCtxTopicId"
+    v-model:formStatus="formStatus"
+    :formType="formType"
+    :topicData="currentCtxTopic"
   />
 </template>
 
 <script setup>
 //#region 依赖--
-import { ref, computed, watch, onBeforeMount, onMounted, unref } from 'vue';
-import { useStore } from 'vuex';
+
+//#region 组件----
 import {
   Search,
   Menu,
@@ -203,13 +183,21 @@ import {
   View,
   Edit,
 } from '@element-plus/icons-vue';
+import TopicFormDialog from './components/TopicFormDialog.vue';
+import CtxMenu from '@/components/globals/CtxMenu.vue';
+import { useActions } from '@/utils/vueHooks/useStore';
+//#endregion ----
+
+//#region 逻辑----
+import { ref, computed, watch, onBeforeMount, onMounted, toRaw } from 'vue';
+import { useStore } from 'vuex';
 import {
   getBackupLocal,
   setBackupLocal,
 } from '@/utils/storage/backupState/utils';
-import TopicFormDialog from './components/TopicFormDialog.vue';
-import CtxMenu from '@/components/globals/CtxMenu.vue';
-import { useActions } from '@/utils/vueHooks/useStore';
+import { getAllTopics } from '@/api';
+import { db } from '@/indexedDB';
+//#endregion ----
 
 const store = useStore();
 //#endregion --
@@ -225,6 +213,7 @@ const defaultTopics = [
     index: 'NoTopic',
   },
 ];
+const filteredTopics = ref([]);
 // 初始加载时隐藏多选框
 const isAllowCheck = ref(false);
 const isShowCheckbox = ref(false);
@@ -235,66 +224,63 @@ const handleShowCheckbox = () => {
 // 选中主题，右键菜单；初始加载时隐藏菜单
 const isAllowCtxMenu = ref(false);
 const isShowCtxMenu = ref(false);
-const setCtxMenuTopic = (topicItemRef, topicId) => {
-  currentCtxTopicRef.value = topicItemRef;
-  currentCtxTopicId.value = topicId;
-};
-
-const currentCtxTopicRef = ref(null);
-const currentCtxTopicId = ref('');
 const allowCtxMenuTopic = () => (isAllowCtxMenu.value = true);
 const toggleCtxMenuTopic = () => (isShowCtxMenu.value = !isShowCtxMenu.value);
+
+const currentCtxTopicRef = ref(null);
+const currentCtxTopic = ref(null);
+const setCtxMenuTopic = (topicItemRef, topic) => {
+  currentCtxTopicRef.value = topicItemRef;
+  currentCtxTopic.value = topic;
+};
 
 const topicCtxMenuRef = ref(null);
 const hideTopicCtxMenu = () => {
   topicCtxMenuRef.value.hide();
 };
 
+const handleMouseoverTopic = (topicItemRef, topic) => {
+  allowCtxMenuTopic();
+  setCtxMenuTopic(topicItemRef, topic);
+};
 const handleCtxMenuTopic = () => {
   toggleCtxMenuTopic();
 };
-const handleMouseoverTopic = (topicItemRef, topicId) => {
-  allowCtxMenuTopic();
-  setCtxMenuTopic(topicItemRef, topicId);
-};
-
-const formStatus = ref('view');
+// 主题表单
+const formType = ref('view');
+const formStatus = ref('pending');
 //#endregion --
 
 //#region 数据模型--
-const topics = [
-  {
-    title: '网页收藏夹',
-  },
-  {
-    title: '图片收集',
-  },
-];
-
-const topicList = [];
-async function initTopicList(topics) {
-  topics.forEach((topic) => {
-    topicList.push(topic.title);
+let topicList = [];
+const initTopicList = (search) => {
+  getAllTopics().then((topics) => {
+    topicList = topics;
+    searchTopics(search);
   });
-}
+};
+watch(formStatus, (status) => {
+  if (status === 'success') initTopicList(search.value);
+});
 
-const totalTopicCount = computed(() => topics.length);
+const totalTopicCount = computed(() => topicList.length);
 //#endregion --
 
 //#region 交互--
 
 //#region 搜索主题----
 const search = ref('');
-const filteredTopics = ref(topics);
 watch(search, (search) => {
   if (!search) searchTopics(search);
 });
 const searchTopics = (search) => {
   let filter = [];
   if (search) {
-    filter = topics.filter((topic) => topic.title.indexOf(search) > -1);
+    filter = topicList.filter(
+      ({ topicName }) => topicName.indexOf(search) > -1
+    );
   } else {
-    filter = topics;
+    filter = topicList;
   }
   filteredTopics.value = filter;
 };
@@ -322,38 +308,33 @@ const handleCheckedTopicsChange = (value) => {
 
 //#region 主题的 CURD----
 const dialogVisible = ref(false);
-const showDialog = () => (dialogVisible.value = true);
-const isDialogReadonly = ref(true); //是否允许编辑信息
-const setDialogReadonly = () => (isDialogReadonly.value = true);
-const setDialogReadwrite = () => (isDialogReadonly.value = false);
-
-const setupDialog = (status, isReadonly, topicName) => {
-  formStatus.value = status;
-  isDialogReadonly.value = isReadonly;
-  currentCtxTopicId.value = topicName || '';
+const showDialog = (status, topic) => {
+  formStatus.value = 'pending';
+  formType.value = status;
+  currentCtxTopic.value = topic || '';
+  dialogVisible.value = true;
 };
 
 // 添加主题
 const handleAddTopic = () => {
-  setupDialog('add', false);
-  showDialog();
+  showDialog('add');
 };
+// 查看主题
 const handleViewTopic = (topicName) => {
   hideTopicCtxMenu();
-  setupDialog('view', true, topicName);
-  showDialog();
+  showDialog('view', topicName);
   console.log('checkedTopics', checkedTopics.value);
 };
+// 编辑主题
 const handleEditTopic = (topicName) => {
   hideTopicCtxMenu();
-  setupDialog('edit', false, topicName);
-  showDialog();
+  showDialog('edit', topicName);
   console.log('checkedTopics', checkedTopics.value);
 };
+// 删除主题
 const handleDeleteTopic = (topicName) => {
   hideTopicCtxMenu();
-  setupDialog('delete', true, topicName);
-  showDialog();
+  showDialog('delete', topicName);
   console.log('checkedTopics', checkedTopics.value);
 };
 //#endregion ----
@@ -363,7 +344,7 @@ const currentTopic = computed(() => store.state.resources.currentTopic);
 const setCurrentTopic = (topic) =>
   store.commit('resources/setCurrentTopic', topic);
 
-function initTopic(currentTopic) {
+function initTopicMenu(currentTopic) {
   if (!currentTopic) setCurrentTopic(defaultTopics[0].index);
 }
 
@@ -380,10 +361,8 @@ const backupKey = 'backupTopicPicker';
 function init() {
   const backup = getBackupLocal(backupKey);
   search.value = backup?.search || '';
-  initTopic(currentTopic.value);
-  // 若之前有筛选，切回来时保持
-  searchTopics(search.value);
-  initTopicList(topics);
+  initTopicMenu(currentTopic.value);
+  initTopicList(search.value); // 若之前有筛选，切回来时保持
 }
 const backupState = () =>
   setBackupLocal(backupKey, {

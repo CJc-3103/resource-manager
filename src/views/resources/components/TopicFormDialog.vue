@@ -2,7 +2,7 @@
   <el-dialog
     class="topic-form-dialog"
     v-model="visible"
-    :title="$t(`topicFormDialog.formTitle.${formStatus}`)"
+    :title="$t(`topicFormDialog.formTitle.${formType}`)"
     width="30%"
     :before-close="handleCloseDialog"
   >
@@ -13,7 +13,7 @@
       :rules="rules"
       label-width="120px"
       label-position="top"
-      formStatus-icon
+      formType-icon
     >
       <el-form-item prop="topicName">
         <span class="label"
@@ -47,11 +47,7 @@
           </el-popover>
         </span>
 
-        <el-radio-group
-          :disabled="readonly"
-          v-model="formData.pathType"
-          @change="handleTypeChange"
-        >
+        <el-radio-group :disabled="readonly" v-model="formData.pathType">
           <el-radio-button label="network" size="small">
             {{ $t('topicFormDialog.fields.pathType.type.network') }}
           </el-radio-button>
@@ -68,7 +64,7 @@
     <template #footer>
       <div class="topic-form-dialog_footer-wrap">
         <span
-          v-if="formStatus === 'add'"
+          v-if="formType === 'add'"
           class="topic-form-dialog_footer btn-group"
         >
           <el-button @click="closeDialog">{{
@@ -79,7 +75,7 @@
           }}</el-button>
         </span>
         <span
-          v-else-if="formStatus === 'view'"
+          v-else-if="formType === 'view'"
           class="topic-form-dialog_footer btn-group"
         >
           <el-button @click="closeDialog">{{
@@ -87,24 +83,24 @@
           }}</el-button>
         </span>
         <span
-          v-else-if="formStatus === 'edit'"
+          v-else-if="formType === 'edit'"
           class="topic-form-dialog_footer btn-group"
         >
           <el-button @click="closeDialog">{{
             $t('form.action.cancel')
           }}</el-button>
-          <el-button type="success" @click="handleEditTopic(TopicFormRef)">{{
+          <el-button type="success" @click="handleUpdateTopic(formData)">{{
             $t('form.action.submit')
           }}</el-button>
         </span>
         <span
-          v-else-if="formStatus === 'delete'"
+          v-else-if="formType === 'delete'"
           class="topic-form-dialog_footer btn-group"
         >
           <el-button @click="closeDialog">{{
             $t('form.action.cancel')
           }}</el-button>
-          <el-button type="danger" @click="handleDeleteTopic(TopicFormRef)">{{
+          <el-button type="danger" @click="handleDeleteTopic(topicData.id)">{{
             $t('form.action.confirm')
           }}</el-button>
         </span>
@@ -115,29 +111,44 @@
 
 <script setup>
 //#region 依赖--
+
+// component
 import { InfoFilled } from '@element-plus/icons-vue';
+import { ElMessage } from 'element-plus';
+
+// logic
 import { ref, computed, onMounted, toRaw } from 'vue';
 import { useI18n } from 'vue-i18n';
-import { addTopic, getTopicById } from '@/api';
-import { ElMessage } from 'element-plus';
 import { formUtils } from '@/utils/element-plus-utils';
-// import { db } from '@/indexedDB';
+import { addTopic, updateTopic, deleteTopic } from '@/api';
 
 const { t: $t } = useI18n();
 
 const props = defineProps({
   dialogVisible: Boolean,
-  readonly: Boolean,
-  formStatus: {
+  formType: {
     type: String,
     default: 'view',
     validator: (value) => {
       return ['view', 'edit', 'add', 'delete'].includes(value);
     },
   },
-  topicId: String,
+  topicData: Object,
+  formStatus: {
+    type: String,
+    default: 'pending',
+    validator: (value) => {
+      return ['pending', 'success', 'fail'].includes(value);
+    },
+  },
 });
-const emit = defineEmits(['update:dialogVisible']);
+const emit = defineEmits(['update:dialogVisible', 'update:formStatus']);
+const setFormStatusSuccess = () => {
+  emit('update:formStatus', 'success');
+};
+const setFormStatusFail = () => {
+  emit('update:formStatus', 'fail');
+};
 //#endregion --
 
 //#region 视图构建--
@@ -162,6 +173,9 @@ const rules = ref({
   ],
   pathType: [{ required: true, message: '', trigger: 'blur' }],
 });
+const readonly = ['view', 'delete'].includes(props.formType); // 查看与删除时，不允许编辑内容
+
+const TopicFormRef = ref(null);
 
 // 控制对话框
 const visible = computed({
@@ -184,31 +198,18 @@ const handleCloseDialog = (done) => {
 //#region 数据模型--
 const topic = null;
 const initFormData = () => {
-  if (['view', 'edit', 'delete'].includes(props.formStatus)) {
-    console.log('formStatus', props.formStatus);
-    // topic = getTopicById(props.topicId);
-    // formData.value = topic;
+  if (['view', 'edit', 'delete'].includes(props.formType)) {
+    formData.value = props.topicData;
   }
 };
-// initFormData();
 //#endregion --
 
 //#region 交互--
-
-//#region 选择地址类型----
-const handleTypeChange = (value) => {
-  // console.log('value', value);
-  // console.log('Path Type Changed');
-};
-//#endregion ----
-
-//#region 提交新增----
-const TopicFormRef = ref(null);
-
 const ERROR_TYPE = {
   ConstraintError: 'constraint',
 };
 
+//#region 提交新增----
 const handleAddTopic = (formEl) => {
   formUtils.validForm(formEl).then(() => {
     addTopic(toRaw(formData.value))
@@ -217,6 +218,7 @@ const handleAddTopic = (formEl) => {
           message: $t(`topicFormDialog.message.action.add.success`),
           type: 'success',
         });
+        setFormStatusSuccess();
         closeDialog();
       })
       .catch((err) => {
@@ -226,17 +228,55 @@ const handleAddTopic = (formEl) => {
             $t(`topicFormDialog.message.exception.${ERROR_TYPE[err.name]}`),
           type: 'error',
         });
+        setFormStatusFail();
       });
   });
 };
 //#endregion ----
 
 //#region 提交修改----
-
+const handleUpdateTopic = (formData) => {
+  updateTopic(toRaw(formData))
+    .then(() => {
+      ElMessage({
+        message: $t(`topicFormDialog.message.action.edit.success`),
+        type: 'success',
+      });
+      setFormStatusSuccess();
+      closeDialog();
+    })
+    .catch((err) => {
+      ElMessage({
+        message:
+          $t(`topicFormDialog.message.action.edit.fail`) +
+          $t(`topicFormDialog.message.exception.${ERROR_TYPE[err.name]}`),
+        type: 'error',
+      });
+      setFormStatusFail();
+    });
+};
 //#endregion ----
 
 //#region 提交删除----
-
+const handleDeleteTopic = (id) => {
+  try {
+    deleteTopic(id);
+    ElMessage({
+      message: $t(`topicFormDialog.message.action.delete.success`),
+      type: 'success',
+    });
+    setFormStatusSuccess();
+    closeDialog();
+  } catch (error) {
+    ElMessage({
+      message: $t(`topicFormDialog.message.action.delete.fail`),
+      // $t(`topicFormDialog.message.action.delete.fail`) +
+      // $t(`topicFormDialog.message.exception.${ERROR_TYPE[err.name]}`),
+      type: 'error',
+    });
+    setFormStatusFail();
+  }
+};
 //#endregion ----
 
 //#endregion --

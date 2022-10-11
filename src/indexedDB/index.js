@@ -30,11 +30,18 @@ export const idbAddTopic = (topicObj) => {
     // })
 }
 
-export const idbGetTopicById = (id) => { return db.topic.get(id); }
+export const idbGetAllTopics = () => { return db.topic.toArray() }
 
-export const idbUpdateTopic = (topicObj) => {
-    const id = db.topic.put(topicObj);
-    db.topic.put(topicObj);
+export const idbGetTopicById = (id) => { return db.topic.get(id) }
+
+export const idbUpdateTopic = (topicObj) => { return db.topic.put(topicObj); }
+
+export const idbDeleteTopic = (topicId) => db.topic.delete(topicId);
+
+export const idbTopic = {
+    idbAddTopic,
+    idbGetAllTopics,
+    idbGetTopicById,
+    idbUpdateTopic,
+    idbDeleteTopic,
 }
-
-export const idbDeleteTopic = (topicName) => db.topic.add(topicName);

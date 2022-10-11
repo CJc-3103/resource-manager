@@ -1,10 +1,11 @@
-import { idbAddTopic, idbQueryTopic, idbUpdateTopic, idbDeleteTopic } from '@/indexedDB'
+import { idbTopic } from '@/indexedDB'
 
 const addTopic = (topicObj) => {
-    return idbAddTopic(topicObj)
+    return idbTopic.idbAddTopic(topicObj)
 };
-const getTopicById = (id, changes) => { return idbQueryTopic(id, changes); }
-const updateTopic = (topicObj) => { return idbUpdateTopic(topicObj); }
-const deleteTopic = (topicName) => { return idbDeleteTopic(topicName); }
+const getAllTopics = () => { return idbTopic.idbGetAllTopics() }
+const getTopicById = (id) => { return idbTopic.idbQueryTopic(id) }
+const updateTopic = (topicObj) => { return idbTopic.idbUpdateTopic(topicObj) }
+const deleteTopic = (topicId) => { return idbTopic.idbDeleteTopic(topicId) }
 
-export { addTopic, getTopicById, updateTopic, deleteTopic }
+export { addTopic, getAllTopics, getTopicById, updateTopic, deleteTopic }
