@@ -38,4 +38,3 @@ export const idbUpdateTopic = (topicObj) => {
 }
 
 export const idbDeleteTopic = (topicName) => db.topic.add(topicName);
-

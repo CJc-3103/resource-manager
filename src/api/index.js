@@ -7,4 +7,4 @@ const getTopicById = (id, changes) => { return idbQueryTopic(id, changes); }
 const updateTopic = (topicObj) => { return idbUpdateTopic(topicObj); }
 const deleteTopic = (topicName) => { return idbDeleteTopic(topicName); }
 
-export { addTopic, getTopicById, updateTopic, deleteTopic } 
+export { addTopic, getTopicById, updateTopic, deleteTopic }
